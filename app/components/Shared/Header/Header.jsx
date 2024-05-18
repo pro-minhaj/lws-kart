@@ -38,7 +38,7 @@ const Header = () => {
 
                 <div className="hidden w-full max-w-xl lg:block">
                     <div className='flex'>
-                        <div className='flex items-center w-full px-3 py-1.5 border border-r-0 border-primary rounded-l-md'>
+                        <div className='flex items-center w-full px-3 py-0.5 border border-r-0 border-primary rounded-l-md'>
                             <span className="text-lg text-gray-400">
                                 <IoSearch />
                             </span>
@@ -51,7 +51,7 @@ const Header = () => {
                             />
                         </div>
                         <button
-                            className="items-center hidden px-8 text-white transition-colors border bg-primary border-primary rounded-r-md hover:bg-transparent hover:text-primary md:flex"
+                            className="px-5 text-white transition-colors border bg-primary border-primary rounded-r-md hover:bg-transparent hover:text-primary"
                         >
                             Search
                         </button>
