@@ -1,0 +1,26 @@
+[
+    {
+        "name": "bedroom",
+        "image": "https://i.ibb.co/L6RwSgN/category-1.jpg"
+    },
+    {
+        "name": "mattrass",
+        "image": "https://i.ibb.co/5nwrcRC/category-2.jpg"
+    },
+    {
+        "name": "outdoor",
+        "image": "https://i.ibb.co/pLk7HZd/category-3.jpg"
+    },
+    {
+        "name": "sofa",
+        "image": "https://i.ibb.co/brG70F6/category-4.jpg"
+    },
+    {
+        "name": "living room",
+        "image": "https://i.ibb.co/3Tpd5SR/category-5.jpg"
+    },
+    {
+        "name": "kitchen",
+        "image": "https://i.ibb.co/Fxf8D2W/category-6.jpg"
+    }
+]
