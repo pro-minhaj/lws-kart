@@ -1938,6 +1938,10 @@ h6 {
     opacity: 1;
 }
 
+.bannerBg {
+    background-image: url('../assets/images/banner-bg.jpg');
+}
+
 @media (prefers-color-scheme: dark) {
     .dark\:border-gray-600 {
         --tw-border-opacity: 1;
