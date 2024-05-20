@@ -22,10 +22,10 @@ export default function RootLayout({ children, params }) {
                 <link rel='icon' href='/favicon.ico' sizes='any' />
             </head>
             <body className={inter.className}>
-                <Header />
-                <Navbar />
+                <Header lang={params.lang} />
+                <Navbar lang={params.lang} />
                 {children}
-                <Footer />
+                <Footer lang={params.lang} />
             </body>
         </html>
     );

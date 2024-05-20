@@ -5,24 +5,27 @@ import logo from '@/assets/images/logo.svg';
 import { FaHeart, FaUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
+import { getDictionary } from '@/app/[lang]/dictionaries/dictionaries';
 
-const Header = () => {
+const Header = async ({ lang }) => {
+    const dict = await getDictionary(lang);
+
     // Header Items
     const headerItems = [
         {
-            name: "Wishlist",
+            name: dict.header.wishlist,
             link: "/wishlist",
             icon: <FaHeart />,
             count: 8
         },
         {
-            name: "Cart",
+            name: dict.header.cart,
             link: "/cart",
             icon: <FaShoppingCart />,
             count: 2
         },
         {
-            name: "Account",
+            name: dict.header.account,
             link: "/account",
             icon: <FaUser />,
             count: null
@@ -47,13 +50,13 @@ const Header = () => {
                                 name="search"
                                 id="search"
                                 className="w-full border-transparent !ring-transparent !border-none outline-none !focus:border-none focus:outline-none"
-                                placeholder="Search..."
+                                placeholder={`${dict.header.search}...`}
                             />
                         </div>
                         <button
                             className="px-5 text-white transition-colors border bg-primary border-primary rounded-r-md hover:bg-transparent hover:text-primary"
                         >
-                            Search
+                            {dict.header.search}
                         </button>
                     </div>
                 </div>
