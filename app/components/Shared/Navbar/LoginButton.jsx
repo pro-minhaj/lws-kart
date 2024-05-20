@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const LoginButton = () => {
+const LoginButton = ({ dict }) => {
     const pathname = usePathname();
     const isLoginPage = pathname === "/login" || pathname === '/register';
     if (isLoginPage) {
@@ -10,9 +10,9 @@ const LoginButton = () => {
     }
     return (
         <div className="flex items-center">
-            <Link href="/login" className="text-gray-200 transition hover:text-white">Login</Link>
+            <Link href="/login" className="text-gray-200 transition hover:text-white">{dict.login}</Link>
             <span className="text-gray-200 transition hover:text-white">/</span>
-            <Link href="/register" className="text-gray-200 transition hover:text-white">Register</Link>
+            <Link href="/register" className="text-gray-200 transition hover:text-white">{dict.register}</Link>
         </div>
     );
 };

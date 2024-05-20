@@ -10,36 +10,39 @@ import office from "@/assets/images/icons/office.svg";
 import outdoor from "@/assets/images/icons/outdoor-cafe.svg";
 import bed_2 from "@/assets/images/icons/bed-2.svg";
 import LoginButton from './LoginButton';
+import { getDictionary } from '@/app/[lang]/dictionaries/dictionaries';
 
-// All Category Items
-const allCategoryItems = [
-    {
-        name: "Sofa",
-        image: sofa
-    },
-    {
-        name: "Living Room",
-        image: terrace
-    },
-    {
-        name: "Bedroom",
-        image: bed
-    },
-    {
-        name: "Office",
-        image: office
-    },
-    {
-        name: "Outdoor",
-        image: outdoor
-    },
-    {
-        name: "Mattress",
-        image: bed_2
-    },
-]
+const Navbar = async ({ lang }) => {
+    const dict = await getDictionary(lang);
 
-const Navbar = () => {
+    // All Category Items
+    const allCategoryItems = [
+        {
+            name: dict.navbar.category.sofa,
+            image: sofa
+        },
+        {
+            name: dict.navbar.category.living_room,
+            image: terrace
+        },
+        {
+            name: dict.navbar.category.bedroom,
+            image: bed
+        },
+        {
+            name: dict.navbar.category.office,
+            image: office
+        },
+        {
+            name: dict.navbar.category.outdoor,
+            image: outdoor
+        },
+        {
+            name: dict.navbar.category.mattress,
+            image: bed_2
+        },
+    ]
+
     return (
         <nav className="bg-gray-800">
             <div className="container flex">
@@ -47,7 +50,7 @@ const Navbar = () => {
                     <span className="text-white">
                         <FaBars />
                     </span>
-                    <span className="ml-2 text-white capitalize">All Categories</span>
+                    <span className="ml-2 text-white capitalize">{dict.navbar.all_category}</span>
 
                     {/* dropdown */}
                     <div className="absolute left-0 top-full bg-white shadow-md py-3 divide-y divide-gray-300 divide-dashed opacity-0 group-hover:opacity-100 transition duration-300 invisible group-hover:visible w-[300px]">
@@ -63,12 +66,12 @@ const Navbar = () => {
 
                 <div className="flex flex-wrap items-center justify-between flex-grow py-5 md:pl-12">
                     <div className="flex flex-wrap items-center gap-2 capitalize sm:gap-3 md:gap-5">
-                        <Link href="/" className="text-gray-200 transition hover:text-white">Home</Link>
-                        <Link href="/shop" className="text-gray-200 transition hover:text-white">Shop</Link>
-                        <Link href="#" className="text-gray-200 transition hover:text-white">About us</Link>
-                        <Link href="#" className="text-gray-200 transition hover:text-white">Contact us</Link>
+                        <Link href="/" className="text-gray-200 transition hover:text-white">{dict.navbar.home}</Link>
+                        <Link href="/shop" className="text-gray-200 transition hover:text-white">{dict.navbar.shop}</Link>
+                        <Link href="#" className="text-gray-200 transition hover:text-white">{dict.navbar.about}</Link>
+                        <Link href="#" className="text-gray-200 transition hover:text-white">{dict.navbar.contact}</Link>
                     </div>
-                    <LoginButton />
+                    <LoginButton dict={dict.navbar} />
                 </div>
             </div>
         </nav>

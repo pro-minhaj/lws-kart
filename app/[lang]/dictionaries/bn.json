@@ -4,5 +4,22 @@
         "cart": "কার্ট",
         "account": "অ্যাকাউন্ট",
         "search": "অনুসন্ধান"
+    },
+    "navbar": {
+        "home": "বাড়ি",
+        "shop": "দোকান",
+        "about": "আমাদের সম্পর্কে",
+        "contact": "যোগাযোগ করুন",
+        "login": "প্রবেশ করুন",
+        "register": "নিবন্ধন",
+        "all_category": "সব ধরনের",
+        "category": {
+            "sofa": "সোফা",
+            "living_room": "বসার ঘর",
+            "bedroom": "শয়নকক্ষ",
+            "office": "দপ্তর",
+            "outdoor": "আউটডোর",
+            "mattress": "গদি"
+        }
     }
 }

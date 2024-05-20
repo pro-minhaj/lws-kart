@@ -4,5 +4,22 @@
         "cart": "Cart",
         "account": "Account",
         "search": "Search"
+    },
+    "navbar": {
+        "home": "Home",
+        "shop": "Shop",
+        "about": "About Us",
+        "contact": "Contact Us",
+        "login": "Login",
+        "register": "Register",
+        "all_category": "All Categories",
+        "category": {
+            "sofa": "Sofa",
+            "living_room": "Living Room",
+            "bedroom": "Bedroom",
+            "office": "Office",
+            "outdoor": "Outdoor",
+            "mattress": "Mattress"
+        }
     }
 }
