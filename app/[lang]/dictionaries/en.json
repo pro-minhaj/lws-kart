@@ -29,6 +29,22 @@
             "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam",
             "sub_description": "accusantium perspiciatis, sapiente magni eos dolorum ex quos dolores odio",
             "shop_now": "Shop Now"
+        },
+        "features_section": {
+            "all_features_items": {
+                "feature_1": {
+                    "title": "Free Shipping",
+                    "description": "Order over $200"
+                },
+                "feature_2": {
+                    "title": "Money Returns",
+                    "description": "30 days money returns"
+                },
+                "feature_3": {
+                    "title": "24/7 Support",
+                    "description": "Customer support"
+                }
+            }
         }
     },
     "footer": {

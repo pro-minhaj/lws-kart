@@ -29,6 +29,22 @@
             "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam",
             "sub_description": "accusantium perspiciatis, sapiente magni eos dolorum ex quos dolores odio",
             "shop_now": "এখনই কিনুন"
+        },
+        "features_section": {
+            "all_features_items": {
+                "feature_1": {
+                    "title": "বিনামূল্যে পরিবহন",
+                    "description": "$200 এর বেশি অর্ডার করুন"
+                },
+                "feature_2": {
+                    "title": "টাকা ফেরত",
+                    "description": "30 দিনের টাকা ফেরত"
+                },
+                "feature_3": {
+                    "title": "24/7 সমর্থন",
+                    "description": "গ্রাহক সমর্থন"
+                }
+            }
         }
     },
     "footer": {
