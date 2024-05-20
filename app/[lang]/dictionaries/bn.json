@@ -45,6 +45,15 @@
                     "description": "গ্রাহক সমর্থন"
                 }
             }
+        },
+        "shop_by_category_section": {
+            "shop_by_category": "বিভাগ দ্বারা কেনাকাটা"
+        },
+        "top_new_arrival_section": {
+            "top_new_arrival": "শীর্ষ নতুন আগমন"
+        },
+        "trending_products_section": {
+            "trending_products": "প্রবণতা পণ্য"
         }
     },
     "footer": {

@@ -1,15 +1,20 @@
 import getAllCategories from '@/app/server/getData/getCategories';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getDictionary } from '../../dictionaries/dictionaries';
 
-const CategorySection = async () => {
+const CategorySection = async ({ params: { lang } }) => {
     const req = await getAllCategories();
     const allCategories = JSON.parse(req);
+    // Language
+    const {
+        home_page: { shop_by_category_section }
+    } = await getDictionary(lang);
 
     return (
         <div className='container py-10 md:py-16'>
             <h2 className='mb-6 text-xl font-medium text-gray-800 uppercase md:text-2xl'>
-                shop by category
+                {shop_by_category_section.shop_by_category}
             </h2>
             <div className='grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3'>
                 {allCategories.map(({ _id, name, image }) => (

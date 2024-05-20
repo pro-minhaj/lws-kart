@@ -45,6 +45,15 @@
                     "description": "Customer support"
                 }
             }
+        },
+        "shop_by_category_section": {
+            "shop_by_category": "shop by category"
+        },
+        "top_new_arrival_section": {
+            "top_new_arrival": "top new arrival"
+        },
+        "trending_products_section": {
+            "trending_products": "Trending Products"
         }
     },
     "footer": {
