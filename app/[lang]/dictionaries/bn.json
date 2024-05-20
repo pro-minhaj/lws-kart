@@ -21,5 +21,24 @@
             "outdoor": "আউটডোর",
             "mattress": "গদি"
         }
+    },
+    "footer": {
+        "heading": {
+            "solutions": "সমাধান",
+            "support": "সমর্থন"
+        },
+        "solutions": {
+            "marketing": "মার্কেটিং",
+            "analytics": "বিশ্লেষণ",
+            "commerce": "বাণিজ্য",
+            "insights": "অন্তর্দৃষ্টি"
+        },
+        "support": {
+            "pricing": "মূল্য নির্ধারণ",
+            "documentation": "ডকুমেন্টেশন",
+            "guides": "গাইড",
+            "api_status": "API স্থিতি"
+        },
+        "copy_right": "© TailCommerce - সমস্ত অধিকার সংরক্ষিত"
     }
 }

@@ -13,32 +13,32 @@ import LoginButton from './LoginButton';
 import { getDictionary } from '@/app/[lang]/dictionaries/dictionaries';
 
 const Navbar = async ({ lang }) => {
-    const dict = await getDictionary(lang);
+    const { navbar } = await getDictionary(lang);
 
     // All Category Items
     const allCategoryItems = [
         {
-            name: dict.navbar.category.sofa,
+            name: navbar.category.sofa,
             image: sofa
         },
         {
-            name: dict.navbar.category.living_room,
+            name: navbar.category.living_room,
             image: terrace
         },
         {
-            name: dict.navbar.category.bedroom,
+            name: navbar.category.bedroom,
             image: bed
         },
         {
-            name: dict.navbar.category.office,
+            name: navbar.category.office,
             image: office
         },
         {
-            name: dict.navbar.category.outdoor,
+            name: navbar.category.outdoor,
             image: outdoor
         },
         {
-            name: dict.navbar.category.mattress,
+            name: navbar.category.mattress,
             image: bed_2
         },
     ]
@@ -50,7 +50,7 @@ const Navbar = async ({ lang }) => {
                     <span className="text-white">
                         <FaBars />
                     </span>
-                    <span className="ml-2 text-white capitalize">{dict.navbar.all_category}</span>
+                    <span className="ml-2 text-white capitalize">{navbar.all_category}</span>
 
                     {/* dropdown */}
                     <div className="absolute left-0 top-full bg-white shadow-md py-3 divide-y divide-gray-300 divide-dashed opacity-0 group-hover:opacity-100 transition duration-300 invisible group-hover:visible w-[300px]">
@@ -66,12 +66,12 @@ const Navbar = async ({ lang }) => {
 
                 <div className="flex flex-wrap items-center justify-between flex-grow py-5 md:pl-12">
                     <div className="flex flex-wrap items-center gap-2 capitalize sm:gap-3 md:gap-5">
-                        <Link href="/" className="text-gray-200 transition hover:text-white">{dict.navbar.home}</Link>
-                        <Link href="/shop" className="text-gray-200 transition hover:text-white">{dict.navbar.shop}</Link>
-                        <Link href="#" className="text-gray-200 transition hover:text-white">{dict.navbar.about}</Link>
-                        <Link href="#" className="text-gray-200 transition hover:text-white">{dict.navbar.contact}</Link>
+                        <Link href="/" className="text-gray-200 transition hover:text-white">{navbar.home}</Link>
+                        <Link href="/shop" className="text-gray-200 transition hover:text-white">{navbar.shop}</Link>
+                        <Link href="#" className="text-gray-200 transition hover:text-white">{navbar.about}</Link>
+                        <Link href="#" className="text-gray-200 transition hover:text-white">{navbar.contact}</Link>
                     </div>
-                    <LoginButton dict={dict.navbar} />
+                    <LoginButton dict={navbar} />
                 </div>
             </div>
         </nav>

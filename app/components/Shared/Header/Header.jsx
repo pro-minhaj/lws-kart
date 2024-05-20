@@ -8,24 +8,24 @@ import { IoSearch } from "react-icons/io5";
 import { getDictionary } from '@/app/[lang]/dictionaries/dictionaries';
 
 const Header = async ({ lang }) => {
-    const dict = await getDictionary(lang);
+    const { header } = await getDictionary(lang);
 
     // Header Items
     const headerItems = [
         {
-            name: dict.header.wishlist,
+            name: header.wishlist,
             link: "/wishlist",
             icon: <FaHeart />,
             count: 8
         },
         {
-            name: dict.header.cart,
+            name: header.cart,
             link: "/cart",
             icon: <FaShoppingCart />,
             count: 2
         },
         {
-            name: dict.header.account,
+            name: header.account,
             link: "/account",
             icon: <FaUser />,
             count: null
@@ -50,13 +50,13 @@ const Header = async ({ lang }) => {
                                 name="search"
                                 id="search"
                                 className="w-full border-transparent !ring-transparent !border-none outline-none !focus:border-none focus:outline-none"
-                                placeholder={`${dict.header.search}...`}
+                                placeholder={`${header.search}...`}
                             />
                         </div>
                         <button
                             className="px-5 text-white transition-colors border bg-primary border-primary rounded-r-md hover:bg-transparent hover:text-primary"
                         >
-                            {dict.header.search}
+                            {header.search}
                         </button>
                     </div>
                 </div>

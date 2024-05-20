@@ -21,5 +21,24 @@
             "outdoor": "Outdoor",
             "mattress": "Mattress"
         }
+    },
+    "footer": {
+        "heading": {
+            "solutions": "Solutions",
+            "support": "Support"
+        },
+        "solutions": {
+            "marketing": "Marketing",
+            "analytics": "Analitycs",
+            "commerce": "Commerce",
+            "insights": "Insights"
+        },
+        "support": {
+            "pricing": "Pricing",
+            "documentation": "Documentation",
+            "guides": "Guides",
+            "api_status": "API Status"
+        },
+        "copy_right": "© TailCommerce - All Right Reserved"
     }
 }

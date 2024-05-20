@@ -3,6 +3,7 @@ import logo from '@/assets/images/logo.svg';
 import { FaFacebook, FaInstagram, FaTwitter, FaGithub } from "react-icons/fa";
 import Link from 'next/link';
 import methodImg from '@/assets/images/methods.png';
+import { getDictionary } from '@/app/[lang]/dictionaries/dictionaries';
 
 // socialMedia Items
 const socialMedias = [
@@ -24,7 +25,8 @@ const socialMedias = [
     },
 ]
 
-const Footer = () => {
+const Footer = async ({ lang }) => {
+    const { footer } = await getDictionary(lang);
 
     return (
         <>
@@ -44,44 +46,44 @@ const Footer = () => {
                         </div>
                     </div>
                     <div>
-                        <h3 className="text-sm font-semibold tracking-wider text-gray-400 uppercase">Solutions</h3>
+                        <h3 className="text-sm font-semibold tracking-wider text-gray-400 uppercase">{footer.heading.solutions}</h3>
                         <div className="mt-4 space-y-4">
-                            <span className="block text-base text-gray-500 hover:text-gray-900">Marketing</span>
-                            <span className="block text-base text-gray-500 hover:text-gray-900">Analitycs</span>
-                            <span className="block text-base text-gray-500 hover:text-gray-900">Commerce</span>
-                            <span className="block text-base text-gray-500 hover:text-gray-900">Insights</span>
+                            <span className="block text-base text-gray-500 hover:text-gray-900">{footer.solutions.marketing}</span>
+                            <span className="block text-base text-gray-500 hover:text-gray-900">{footer.solutions.analytics}</span>
+                            <span className="block text-base text-gray-500 hover:text-gray-900">{footer.solutions.commerce}</span>
+                            <span className="block text-base text-gray-500 hover:text-gray-900">{footer.solutions.insights}</span>
                         </div>
                     </div>
 
                     <div>
-                        <h3 className="text-sm font-semibold tracking-wider text-gray-400 uppercase">Support</h3>
+                        <h3 className="text-sm font-semibold tracking-wider text-gray-400 uppercase">{footer.heading.support}</h3>
                         <div className="mt-4 space-y-4">
-                            <span className="block text-base text-gray-500 hover:text-gray-900">Pricing</span>
-                            <span className="block text-base text-gray-500 hover:text-gray-900">Documentation</span>
-                            <span className="block text-base text-gray-500 hover:text-gray-900">Guides</span>
-                            <span className="block text-base text-gray-500 hover:text-gray-900">API Status</span>
+                            <span className="block text-base text-gray-500 hover:text-gray-900">{footer.support.pricing}</span>
+                            <span className="block text-base text-gray-500 hover:text-gray-900">{footer.support.documentation}</span>
+                            <span className="block text-base text-gray-500 hover:text-gray-900">{footer.support.guides}</span>
+                            <span className="block text-base text-gray-500 hover:text-gray-900">{footer.support.api_status}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 className="text-sm font-semibold tracking-wider text-gray-400 uppercase">{footer.heading.solutions}</h3>
+                        <div className="mt-4 space-y-4">
+                            <span className="block text-base text-gray-500 hover:text-gray-900">{footer.solutions.marketing}</span>
+                            <span className="block text-base text-gray-500 hover:text-gray-900">{footer.solutions.analytics}</span>
+                            <span className="block text-base text-gray-500 hover:text-gray-900">{footer.solutions.commerce}</span>
+                            <span className="block text-base text-gray-500 hover:text-gray-900">{footer.solutions.insights}</span>
                         </div>
                     </div>
 
                     <div>
-                        <h3 className="text-sm font-semibold tracking-wider text-gray-400 uppercase">Solutions</h3>
+                        <h3 className="text-sm font-semibold tracking-wider text-gray-400 uppercase">{footer.heading.support}</h3>
                         <div className="mt-4 space-y-4">
-                            <span className="block text-base text-gray-500 hover:text-gray-900">Marketing</span>
-                            <span className="block text-base text-gray-500 hover:text-gray-900">Analitycs</span>
-                            <span className="block text-base text-gray-500 hover:text-gray-900">Commerce</span>
-                            <span className="block text-base text-gray-500 hover:text-gray-900">Insights</span>
+                            <span className="block text-base text-gray-500 hover:text-gray-900">{footer.support.pricing}</span>
+                            <span className="block text-base text-gray-500 hover:text-gray-900">{footer.support.documentation}</span>
+                            <span className="block text-base text-gray-500 hover:text-gray-900">{footer.support.guides}</span>
+                            <span className="block text-base text-gray-500 hover:text-gray-900">{footer.support.api_status}</span>
                         </div>
                     </div>
 
-                    <div>
-                        <h3 className="text-sm font-semibold tracking-wider text-gray-400 uppercase">Support</h3>
-                        <div className="mt-4 space-y-4">
-                            <span className="block text-base text-gray-500 hover:text-gray-900">Pricing</span>
-                            <span className="block text-base text-gray-500 hover:text-gray-900">Documentation</span>
-                            <span className="block text-base text-gray-500 hover:text-gray-900">Guides</span>
-                            <span className="block text-base text-gray-500 hover:text-gray-900">API Status</span>
-                        </div>
-                    </div>
                 </div>
             </footer>
             {/* ./footer */}
@@ -89,7 +91,7 @@ const Footer = () => {
             {/* copyright */}
             <div className="py-4 bg-gray-800">
                 <div className="container flex flex-col items-center justify-between gap-2 sm:flex-row">
-                    <p className="text-white">&copy; TailCommerce - All Right Reserved</p>
+                    <p className="text-white">{footer.copy_right}</p>
                     <div>
                         <Image src={methodImg} className='w-auto h-auto' alt="methods" width={150} height={60} />
                     </div>
