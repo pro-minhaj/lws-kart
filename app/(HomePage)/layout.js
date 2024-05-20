@@ -1,9 +1,10 @@
-const HomePageLayout = ({ children, category, newArrival }) => {
+const HomePageLayout = ({ children, category, newArrival, trendingProducts }) => {
     return (
         <>
             {children}
             {category}
             {newArrival}
+            {trendingProducts}
         </>
     );
 };
