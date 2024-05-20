@@ -1,8 +1,9 @@
-const HomePageLayout = ({ children, category }) => {
+const HomePageLayout = ({ children, category, newArrival }) => {
     return (
         <>
             {children}
             {category}
+            {newArrival}
         </>
     );
 };
