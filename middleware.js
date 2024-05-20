@@ -10,7 +10,7 @@ function getLocale(request) {
     const headers = { 'accept-language': acceptedLanguage };
     const languages = new Negotiator({ headers }).languages();
 
-    return match(languages, locales, defaultLocale); // en or bn
+    return match(languages, locales, defaultLocale);
 }
 
 export function middleware(request) {
@@ -22,7 +22,6 @@ export function middleware(request) {
     );
 
     if (pathNameIsMissingLocale) {
-        // detect user's preference & redirect with a locale with a path eg: /en/about
         const locale = getLocale(request);
 
         return NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url));
