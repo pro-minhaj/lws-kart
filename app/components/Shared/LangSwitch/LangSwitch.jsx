@@ -9,22 +9,17 @@ export default function LanguageSwitcher() {
     const [currentLang, setCurrentLang] = useState('en');
 
     useEffect(() => {
-        // Set the initial language from the cookie
         const lang = Cookies.get('lang') || 'en';
         setCurrentLang(lang);
-    }, []);
+    }, [currentLang]);
 
     const changeLanguage = (locale) => {
         Cookies.set('lang', locale);
-
-        // Construct the new path
-        let newPathname = `/${locale}`;
-        if (router.asPath && router.asPath !== '/') {
-            newPathname += router.asPath;
-        }
-
+        const currentPathname = window.location.pathname;
+        const newPathname = currentPathname.replace(`/${currentLang}`, `/${locale}`);
         router.push(newPathname);
     };
+
 
     return (
         <div>

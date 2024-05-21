@@ -6,7 +6,7 @@ import { FaHeart, FaUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 import { getDictionary } from '@/app/[lang]/dictionaries/dictionaries';
-import LangSwitch from '../LangSwitch/LangSwitch';
+import LanguageSwitcher from '../LangSwitch/LangSwitch';
 
 const Header = async ({ lang }) => {
     const { header } = await getDictionary(lang);
@@ -37,7 +37,7 @@ const Header = async ({ lang }) => {
         <header className="py-4 bg-white shadow-sm">
             <div className="container flex items-center justify-between mx-auto">
                 <Link href="/">
-                    <Image width={150} height={100} src={logo} alt="Logo" priority className="w-32" />
+                    <Image width={150} height={100} src={logo} alt="Logo" priority={true} className="w-32" />
                 </Link>
 
                 <div className="hidden w-full max-w-xl lg:block">
@@ -79,7 +79,7 @@ const Header = async ({ lang }) => {
                             </div>
                         </Link>)
                     }
-                    <LangSwitch />
+                    <LanguageSwitcher />
                 </div>
             </div>
         </header>

@@ -30,7 +30,7 @@ export function middleware(request) {
     if (pathNameIsMissingLocale) {
         const locale = getLocale(request);
 
-        const url = new URL(`/${locale}${pathname}`, request.url);
+        const url = new URL(`/${locale}/${pathname}`, request.url);
         const response = NextResponse.redirect(url);
 
         response.cookies.set(LOCALE_COOKIE_NAME, locale, { path: '/' });

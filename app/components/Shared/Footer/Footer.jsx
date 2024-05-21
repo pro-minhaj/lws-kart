@@ -33,7 +33,7 @@ const Footer = async ({ lang }) => {
             <footer className="py-5 bg-white border-t border-gray-100 sm:py-10">
                 <div className="container grid items-start justify-center grid-cols-1 gap-5 mx-auto sm:grid-cols-2 md:grid-cols-3 xl:justify-between xl:grid-cols-5">
                     <div className="sm:space-y-5">
-                        <Image src={logo} alt="logo" className='w-[12.5rem] h-[5rem]' width={180} height={70} />
+                        <Image src={logo} alt="logo" className='w-[12.5rem] h-[5rem]' priority={true} width={180} height={70} />
                         <div className="flex flex-wrap items-center gap-3">
                             {/* Social Media */}
                             {
