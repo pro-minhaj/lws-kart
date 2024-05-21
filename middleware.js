@@ -2,20 +2,26 @@ import { match } from '@formatjs/intl-localematcher';
 import Negotiator from 'negotiator';
 import { NextResponse } from 'next/server';
 
-let defaultLocale = 'en';
-let locales = ['en', 'bn'];
+const defaultLocale = 'en';
+const locales = ['en', 'bn'];
+const LOCALE_COOKIE_NAME = 'lang';
 
 function getLocale(request) {
-    const acceptedLanguage = request.headers.get('accept-language') ?? undefined;
-    const headers = { 'accept-language': acceptedLanguage };
-    const languages = new Negotiator({ headers }).languages();
+    const localeCookie = request.cookies.get(LOCALE_COOKIE_NAME)?.value;
+
+    if (localeCookie && locales.includes(localeCookie)) {
+        return localeCookie;
+    }
+
+    const acceptedLanguage = request.headers.get('accept-language') ?? '';
+    const negotiator = new Negotiator({ headers: { 'accept-language': acceptedLanguage } });
+    const languages = negotiator.languages();
 
     return match(languages, locales, defaultLocale);
 }
 
 export function middleware(request) {
-    // get the pathname from request url
-    const pathname = request.nextUrl.pathname;
+    const pathname = request.nextUrl.pathname || '';
 
     const pathNameIsMissingLocale = locales.every(
         (locale) => !pathname.startsWith(`/${locale}`) && !pathname.startsWith(`/${locale}/`)
@@ -24,7 +30,12 @@ export function middleware(request) {
     if (pathNameIsMissingLocale) {
         const locale = getLocale(request);
 
-        return NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url));
+        const url = new URL(`/${locale}${pathname}`, request.url);
+        const response = NextResponse.redirect(url);
+
+        response.cookies.set(LOCALE_COOKIE_NAME, locale, { path: '/' });
+
+        return response;
     }
 
     return NextResponse.next();

@@ -15,12 +15,9 @@ export async function generateStaticParams() {
     return [{ lang: 'en' }, { lang: 'bn' }];
 }
 
-export default function RootLayout({ children, params }) {
+export default function LangLayout({ children, params }) {
     return (
         <html lang={params.lang}>
-            <head>
-                <link rel='icon' href='/favicon.ico' sizes='any' />
-            </head>
             <body className={inter.className}>
                 <Header lang={params.lang} />
                 <Navbar lang={params.lang} />

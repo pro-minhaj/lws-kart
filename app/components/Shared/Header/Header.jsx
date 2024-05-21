@@ -6,6 +6,7 @@ import { FaHeart, FaUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 import { getDictionary } from '@/app/[lang]/dictionaries/dictionaries';
+import LangSwitch from '../LangSwitch/LangSwitch';
 
 const Header = async ({ lang }) => {
     const { header } = await getDictionary(lang);
@@ -69,7 +70,7 @@ const Header = async ({ lang }) => {
                                 <span className='text-xl'>
                                     {item.icon}
                                 </span>
-                                <span className="hidden text-xs leading-3 sm:block">{item.name}</span>
+                                <span className="hidden text-xs sm:block">{item.name}</span>
                                 {
                                     item.count && <span className="flex items-center justify-center w-5 h-5 text-xs text-white rounded-full bg-primary">
                                         {item.count}
@@ -78,6 +79,7 @@ const Header = async ({ lang }) => {
                             </div>
                         </Link>)
                     }
+                    <LangSwitch />
                 </div>
             </div>
         </header>
