@@ -56,6 +56,64 @@
             "trending_products": "Trending Products"
         }
     },
+    "login_page": {
+        "form_heading": "Login",
+        "form_subheading": "welcome back customer",
+        "form_control": {
+            "email": {
+                "label": "Email address",
+                "placeholder": "Enter your email"
+            },
+            "password": {
+                "label": "Password",
+                "placeholder": "Enter your password"
+            }
+        },
+        "remember": "Remember me",
+        "forgot_password": "Forgot password",
+        "submit_button": "Login",
+        "or_login": "OR LOGIN WITH",
+        "do_not_have_account": "Do not have account?",
+        "register_now": "Register now",
+        "social_login": {
+            "facebook": "Facebook",
+            "google": "Google"
+        }
+    },
+    "register_page": {
+        "form_heading": "Create an account",
+        "form_subheading": "Register for new customer",
+        "form_control": {
+            "name": {
+                "label": "Full Name",
+                "placeholder": "Enter your name"
+            },
+            "email": {
+                "label": "Email address",
+                "placeholder": "Enter your email"
+            },
+            "password": {
+                "label": "Password",
+                "placeholder": "Enter your password"
+            },
+            "confirm_password": {
+                "label": "Confirm Password",
+                "placeholder": "Enter your confirm password"
+            }
+        },
+        "remember": {
+            "read_agree": "I have read and agree to the",
+            "terms_conditions": "terms & conditions"
+        },
+        "submit_button": "Create account",
+        "or_login": "Or sign up with",
+        "already_have_account": "Already have an account?",
+        "login_now": "Login now",
+        "social_login": {
+            "facebook": "Facebook",
+            "google": "Google"
+        }
+    },
     "footer": {
         "heading": {
             "solutions": "Solutions",

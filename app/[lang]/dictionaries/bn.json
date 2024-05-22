@@ -56,6 +56,64 @@
             "trending_products": "প্রবণতা পণ্য"
         }
     },
+    "login_page": {
+        "form_heading": "প্রবেশ করুন",
+        "form_subheading": "স্বাগত ফিরে গ্রাহক",
+        "form_control": {
+            "email": {
+                "label": "ইমেইল ঠিকানা",
+                "placeholder": "তুমার ইমেইল প্রবেশ করাও"
+            },
+            "password": {
+                "label": "পাসওয়ার্ড",
+                "placeholder": "আপনার পাসওয়ার্ড লিখুন"
+            }
+        },
+        "remember": "আমাকে মনে কর",
+        "forgot_password": "পাসওয়ার্ড ভুলে গেছেন",
+        "submit_button": "প্রবেশ করুন",
+        "or_login": "অথবা এর সাথে লগইন করুন",
+        "do_not_have_account": "অ্যাকাউন্ট নেই?",
+        "register_now": "এখন নিবন্ধন করুন",
+        "social_login": {
+            "facebook": "ফেসবুক",
+            "google": "গুগল"
+        }
+    },
+    "register_page": {
+        "form_heading": "একটি অ্যাকাউন্ট তৈরি করুন",
+        "form_subheading": "নতুন গ্রাহকের জন্য নিবন্ধন করুন",
+        "form_control": {
+            "name": {
+                "label": "পুরো নাম",
+                "placeholder": "আপনার নাম প্রবেশ করুন"
+            },
+            "email": {
+                "label": "ইমেইল ঠিকানা",
+                "placeholder": "তুমার ইমেইল প্রবেশ করাও"
+            },
+            "password": {
+                "label": "পাসওয়ার্ড",
+                "placeholder": "আপনার পাসওয়ার্ড লিখুন"
+            },
+            "confirm_password": {
+                "label": "পাসওয়ার্ড নিশ্চিত করুন",
+                "placeholder": "আপনার নিশ্চিত পাসওয়ার্ড লিখুন"
+            }
+        },
+        "remember": {
+            "read_agree": "আমি পড়া এবং সম্মত হন",
+            "terms_conditions": "শর্তাবলী"
+        },
+        "submit_button": "অ্যাকাউন্ট তৈরি কর",
+        "or_login": "অথবা এর সাথে সাইন আপ করুন",
+        "already_have_account": "ইতিমধ্যে একটি সদস্যপদ আছে?",
+        "login_now": "এখন লগ ইন করুন",
+        "social_login": {
+            "facebook": "ফেসবুক",
+            "google": "গুগল"
+        }
+    },
     "footer": {
         "heading": {
             "solutions": "সমাধান",
