@@ -7,9 +7,12 @@ import { FaShoppingCart } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 import { getDictionary } from '@/app/[lang]/dictionaries/dictionaries';
 import LanguageSwitcher from '../LangSwitch/LangSwitch';
+import { cookies } from 'next/headers';
 
 const Header = async ({ lang }) => {
     const { header } = await getDictionary(lang);
+    const cookieStore = cookies();
+    const initialLang = cookieStore.get('lang').value || 'en';
 
     // Header Items
     const headerItems = [
@@ -79,7 +82,7 @@ const Header = async ({ lang }) => {
                             </div>
                         </Link>)
                     }
-                    <LanguageSwitcher />
+                    <LanguageSwitcher currentLang={initialLang} />
                 </div>
             </div>
         </header>

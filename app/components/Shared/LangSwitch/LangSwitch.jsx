@@ -1,31 +1,27 @@
 "use client";
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
 import { MdLanguage } from "react-icons/md";
+import { changeLanguage } from "@/app/server/actions/langchange";
+import { usePathname } from "next/navigation";
 
-export default function LanguageSwitcher() {
-    const router = useRouter();
-    const [currentLang, setCurrentLang] = useState('en');
+export default function LanguageSwitcher({ currentLang }) {
+    const lang = currentLang || 'en';
+    const pathname = usePathname();
 
-    useEffect(() => {
-        const lang = Cookies.get('lang') || 'en';
-        setCurrentLang(lang);
-    }, [currentLang]);
-
-    const changeLanguage = (locale) => {
-        Cookies.set('lang', locale);
-        const currentPathname = window.location.pathname;
-        const newPathname = currentPathname.replace(`/${currentLang}`, `/${locale}`);
-        router.push(newPathname);
-    };
-
+    const langChange = () => {
+        const newLang = lang === 'en' ? 'bn' : 'en';
+        changeLanguage(pathname, newLang);
+    }
 
     return (
-        <div>
-            <button className='flex items-center gap-1 text-sm' onClick={() => changeLanguage(currentLang === 'en' ? 'bn' : 'en')}>
-                <MdLanguage className='text-xl' /> {currentLang === 'en' ? "বাংলা" : "English"}
+        <>
+            <button
+                type="button"
+                className='flex items-center gap-1 text-sm'
+                onClick={langChange}
+                aria-label={lang === 'en' ? "Switch to Bengali" : "Switch to English"}
+            >
+                <MdLanguage className='text-xl' /> {lang === 'en' ? "বাংলা" : "English"}
             </button>
-        </div>
+        </>
     );
 }
