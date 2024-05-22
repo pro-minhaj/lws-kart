@@ -27,7 +27,7 @@ const LoginPage = async ({ params: { lang } }) => {
                         {form_heading}
                     </h2>
                     <p className='mb-6 text-sm text-center text-gray-600'>{form_subheading}</p>
-                    <form action='#' method='post' autoComplete='off'>
+                    <form>
                         <div className='space-y-2'>
                             <FormControl
                                 label={email.label}

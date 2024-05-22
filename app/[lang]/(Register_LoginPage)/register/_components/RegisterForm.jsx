@@ -1,5 +1,6 @@
 "use client";
 import FormControl from "@/app/components/FormControl/FormControl";
+import SubmitButton from "@/app/components/SubmitButton/SubmitButton";
 import { createNewUser } from "@/app/server/actions/createuser";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -10,7 +11,7 @@ const RegisterForm = ({ formControl, remember, submit_button }) => {
 
     // Form Handler
     const handleRegister = async (formData) => {
-
+        setError("")
         try {
             // Call the server function to create a new user
             const user = await createNewUser(formData);
@@ -117,12 +118,9 @@ const RegisterForm = ({ formControl, remember, submit_button }) => {
                 </div>
             </div>
             <div className='mt-4'>
-                <button
-                    type='submit'
-                    className='inline-flex items-center justify-center w-full gap-2 px-4 py-2 text-sm font-medium transition-colors border rounded-md shadow-sm whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 h-10 hover:bg-[#df4343] text-white !bg-[#DF3B3B]'
-                >
+                <SubmitButton>
                     {submit_button}
-                </button>
+                </SubmitButton>
             </div>
         </form>
     );
