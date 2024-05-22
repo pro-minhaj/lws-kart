@@ -2,13 +2,14 @@ import FormControl from '@/app/components/FormControl/FormControl';
 import SocialLogin from '@/app/components/SocialLogin/SocialLogin';
 import Link from 'next/link';
 import { getDictionary } from '../../dictionaries/dictionaries';
+import RegisterForm from './_components/RegisterForm';
 
 const RegisterPage = async ({ params: { lang } }) => {
     const {
         register_page: {
             form_heading,
             form_subheading,
-            form_control: { name, email, password, confirm_password },
+            form_control,
             remember,
             submit_button,
             or_login,
@@ -26,62 +27,12 @@ const RegisterPage = async ({ params: { lang } }) => {
                         {form_heading}
                     </h2>
                     <p className='mb-6 text-sm text-center text-gray-600'>{form_subheading}</p>
-                    <form action='#' method='post' autoComplete='off'>
-                        <div className='space-y-2'>
-                            <FormControl
-                                label={name.label}
-                                id='name'
-                                type='text'
-                                placeholder={name.placeholder}
-                            ></FormControl>
-                            <FormControl
-                                label={email.label}
-                                id='email'
-                                type='email'
-                                placeholder={email.placeholder}
-                            ></FormControl>
-                            <FormControl
-                                label={password.label}
-                                id='password'
-                                type='password'
-                                placeholder={password.placeholder}
-                            ></FormControl>
-                            <FormControl
-                                label={confirm_password.label}
-                                id='confirm'
-                                type='password'
-                                placeholder={confirm_password.placeholder}
-                            ></FormControl>
-                        </div>
-                        <div className='mt-6'>
-                            <div className='flex items-center'>
-                                <input
-                                    type='checkbox'
-                                    name='agreement'
-                                    id='agreement'
-                                    className='rounded-sm cursor-pointer text-primary focus:ring-0'
-                                    required
-                                />
-                                <label
-                                    htmlFor='agreement'
-                                    className='ml-3 text-gray-600 cursor-pointer'
-                                >
-                                    {remember.read_agree}{' '}
-                                    <span className='cursor-pointer text-primary'>
-                                        {remember.terms_conditions}
-                                    </span>
-                                </label>
-                            </div>
-                        </div>
-                        <div className='mt-4'>
-                            <button
-                                type='submit'
-                                className='inline-flex items-center justify-center w-full gap-2 px-4 py-2 text-sm font-medium transition-colors border rounded-md shadow-sm whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 h-10 hover:bg-[#df4343] text-white !bg-[#DF3B3B]'
-                            >
-                                {submit_button}
-                            </button>
-                        </div>
-                    </form>
+
+                    <RegisterForm
+                        formControl={form_control}
+                        remember={remember}
+                        submit_button={submit_button}
+                    />
                     {/* Login with */}
                     <div className='relative flex justify-center mt-6'>
                         <div className='relative z-10 px-3 text-gray-600 uppercase bg-white'>

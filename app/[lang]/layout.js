@@ -3,6 +3,7 @@ import '../globals.css';
 import Header from '../components/Shared/Header/Header';
 import Navbar from '../components/Shared/Navbar/Navbar';
 import Footer from '../components/Shared/Footer/Footer';
+import { Toaster } from 'sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,6 +24,7 @@ export default function LangLayout({ children, params }) {
                 <Navbar lang={params.lang} />
                 {children}
                 <Footer lang={params.lang} />
+                <Toaster />
             </body>
         </html>
     );

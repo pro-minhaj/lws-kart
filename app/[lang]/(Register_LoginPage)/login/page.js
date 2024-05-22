@@ -50,7 +50,10 @@ const LoginPage = async ({ params: { lang } }) => {
                                     id='remember'
                                     className='rounded-sm cursor-pointer text-primary focus:ring-0'
                                 />
-                                <label for='remember' className='ml-3 text-gray-600 cursor-pointer'>
+                                <label
+                                    htmlFor='remember'
+                                    className='ml-3 text-gray-600 cursor-pointer'
+                                >
                                     {remember}
                                 </label>
                             </div>
