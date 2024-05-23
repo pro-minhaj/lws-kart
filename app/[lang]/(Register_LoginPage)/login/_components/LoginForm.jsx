@@ -1,24 +1,98 @@
+"use client";
 import FormControl from "@/app/components/FormControl/FormControl";
+import SubmitButton from "@/app/components/SubmitButton/SubmitButton";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const LoginForm = ({ formControl, remember, forgot_password, submit_button }) => {
     const { email, password } = formControl;
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(null);
+    const router = useRouter();
+
+    // Login Handler
+    const loginHandler = async (e) => {
+        setLoading(true)
+        setError("")
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+
+        // Check Email and Password fields
+        if (!email) {
+            setLoading(false)
+            setError({
+                email: 'Email is required'
+            });
+            return;
+        } else if (!password) {
+            setLoading(false)
+            setError({
+                password: 'Password is required'
+            });
+            return;
+        }
+
+        try {
+            const result = await signIn("credentials", {
+                redirect: false,
+                email,
+                password,
+            });
+
+            if (result.error) {
+                toast.error(result.error)
+            }
+            else {
+                router.push("/")
+                toast.success("Login SuccessFul")
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+        finally {
+            setLoading(false)
+        }
+    }
+
 
     return (
-        <form>
+        <form onSubmit={loginHandler}>
             <div className='space-y-2'>
                 <FormControl
                     label={email.label}
                     id='email'
                     type='email'
                     placeholder={email.placeholder}
-                ></FormControl>
+                    error={error?.email && true}
+                >
+                    {
+                        error?.email && <p className='text-red-500'>
+                            <small>
+                                {error.email}
+                            </small>
+                        </p>
+                    }
+                </FormControl>
                 <FormControl
                     label={password.label}
                     id='password'
                     type='password'
                     placeholder={password.placeholder}
-                ></FormControl>
+                    error={error?.password && true}
+                >
+                    {
+                        error?.password && <p className='text-red-500'>
+                            <small>
+                                {error.password}
+                            </small>
+                        </p>
+                    }
+                </FormControl>
             </div>
             <div className='flex items-center justify-between mt-6'>
                 <div className='flex items-center'>
@@ -40,12 +114,9 @@ const LoginForm = ({ formControl, remember, forgot_password, submit_button }) =>
                 </Link>
             </div>
             <div className='mt-4'>
-                <button
-                    type='submit'
-                    className='inline-flex items-center justify-center w-full gap-2 px-4 py-2 text-sm font-medium transition-colors border rounded-md shadow-sm whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 h-10 hover:bg-[#df4343] text-white !bg-[#DF3B3B]'
-                >
+                <SubmitButton loading={loading}>
                     {submit_button}
-                </button>
+                </SubmitButton>
             </div>
         </form>
     );

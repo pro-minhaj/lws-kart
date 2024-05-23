@@ -1,4 +1,3 @@
-import FormControl from '@/app/components/FormControl/FormControl';
 import SocialLogin from '@/app/components/SocialLogin/SocialLogin';
 import Link from 'next/link';
 import { getDictionary } from '../../dictionaries/dictionaries';

@@ -4,6 +4,7 @@ import Header from '../components/Shared/Header/Header';
 import Navbar from '../components/Shared/Navbar/Navbar';
 import Footer from '../components/Shared/Footer/Footer';
 import { Toaster } from 'sonner';
+import NextAuthSessionProvider from '@/Providers/SessionProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,11 +21,13 @@ export default function LangLayout({ children, params }) {
     return (
         <html lang={params.lang}>
             <body className={inter.className}>
-                <Header lang={params.lang} />
-                <Navbar lang={params.lang} />
-                {children}
-                <Footer lang={params.lang} />
-                <Toaster />
+                <NextAuthSessionProvider>
+                    <Header lang={params.lang} />
+                    <Navbar lang={params.lang} />
+                    {children}
+                    <Footer lang={params.lang} />
+                    <Toaster richColors />
+                </NextAuthSessionProvider>
             </body>
         </html>
     );

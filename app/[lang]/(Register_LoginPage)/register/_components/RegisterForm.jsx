@@ -2,12 +2,14 @@
 import FormControl from "@/app/components/FormControl/FormControl";
 import SubmitButton from "@/app/components/SubmitButton/SubmitButton";
 import { createNewUser } from "@/app/server/actions/createuser";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
 const RegisterForm = ({ formControl, remember, submit_button }) => {
     const { name, email, password, confirm_password } = formControl;
     const [error, setError] = useState(null);
+    const router = useRouter();
 
     // Form Handler
     const handleRegister = async (formData) => {
@@ -24,6 +26,7 @@ const RegisterForm = ({ formControl, remember, submit_button }) => {
                 return
             }
             else {
+                router.push('/login')
                 toast.success('User Created Successfully');
             }
         } catch (error) {
