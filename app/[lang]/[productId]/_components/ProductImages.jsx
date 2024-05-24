@@ -7,7 +7,7 @@ import product5 from '@/assets/images/products/product5.jpg';
 import product6 from '@/assets/images/products/product6.jpg';
 import Image from 'next/image';
 
-const ProductImages = () => {
+const ProductImages = ({ images }) => {
     return (
         <div>
             <Image

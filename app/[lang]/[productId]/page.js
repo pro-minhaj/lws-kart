@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { FaHouse } from 'react-icons/fa6';
-import Image from 'next/image';
 import {
     FaStar,
     FaFacebookF,
@@ -8,12 +7,8 @@ import {
     FaInstagram,
     FaHeart,
     FaShoppingBag,
-    FaChevronRight,
-    FaSearch
+    FaChevronRight
 } from 'react-icons/fa';
-
-// import all Images
-import product1 from '@/assets/images/products/product1.jpg';
 import { getDictionary } from '../dictionaries/dictionaries';
 import ProductImages from './_components/ProductImages';
 import getSingleProduct from '@/app/server/getData/getSingleProduct';
@@ -52,14 +47,13 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
         category,
         details,
         description,
-        sizes,
-        colors,
-        sku,
-        soldCounts
+        sku
     } = product;
 
+    console.log(details);
+
     return (
-        <div>
+        <>
             {/* breadcrumb */}
             <div className='container flex items-center gap-3 py-4'>
                 <Link className='text-base text-primary' href='/'>
@@ -74,7 +68,7 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
 
             {/* product details */}
             <div className='container grid grid-cols-1 gap-6 lg:grid-cols-2'>
-                <ProductImages />
+                <ProductImages images={image} />
                 <div>
                     <h2 className='mb-2 text-2xl font-medium uppercase md:text-3xl'>{name}</h2>
                     <div className='flex items-center mb-4'>
@@ -168,9 +162,12 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
                 </h3>
                 <div className='w-full lg:w-3/5'>
                     <div className='flex flex-col gap-1 mt-4 text-gray-600'>
-                        <p>Material: {details.material}</p>
-                        <p>Dimensions: {details.dimensions}</p>
-                        <p>Weight: {details.weight}</p>
+                        {Object.entries(details).map(([key, value]) => (
+                            <li key={key}>
+                                <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong>{' '}
+                                {value}
+                            </li>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -188,7 +185,7 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
                 </div>
             </div>
             {/* related product */}
-        </div>
+        </>
     );
 };
 

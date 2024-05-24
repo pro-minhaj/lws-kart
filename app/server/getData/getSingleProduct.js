@@ -8,7 +8,10 @@ const getSingleProduct = async (id) => {
         if (!product) {
             return null;
         }
-        const relatedProducts = await Product.find({ category: product?.category })
+        const relatedProducts = await Product.find({
+            category: product?.category,
+            _id: { $ne: id }
+        })
             .select({
                 _id: 1,
                 name: 1,
