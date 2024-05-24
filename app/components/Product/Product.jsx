@@ -15,6 +15,7 @@ const Product = ({ product }) => {
                     className='object-cover w-full h-full min-h-72 max-h-72'
                     width={600}
                     height={600}
+                    quality={100}
                     alt={name}
                 />
                 <div className='absolute inset-0 flex items-center justify-center gap-2 transition bg-black opacity-0 bg-opacity-40 group-hover:opacity-100'>
