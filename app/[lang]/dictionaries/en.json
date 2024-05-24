@@ -114,6 +114,19 @@
             "google": "Google"
         }
     },
+    "product_details_page": {
+        "add_to_cart": "Add to cart",
+        "add_to_wishlist": "Wishlist",
+        "page_title": "Product",
+        "product_reviews": "Reviews",
+        "product_availability": "Availability",
+        "product_brand": "Brand",
+        "product_category": "Category",
+        "product_sku": "SKU",
+        "product_quantity": "Quantity",
+        "product_product_details": "Product details",
+        "product_related_products": "Related products"
+    },
     "footer": {
         "heading": {
             "solutions": "Solutions",

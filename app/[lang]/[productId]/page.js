@@ -19,8 +19,25 @@ import product3 from '@/assets/images/products/product3.jpg';
 import product4 from '@/assets/images/products/product4.jpg';
 import product5 from '@/assets/images/products/product5.jpg';
 import product6 from '@/assets/images/products/product6.jpg';
+import { getDictionary } from '../dictionaries/dictionaries';
 
-const ProductsDetailsPage = ({ params: { lang, productId } }) => {
+const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
+    const {
+        product_details_page: {
+            add_to_cart,
+            add_to_wishlist,
+            page_title,
+            product_reviews,
+            product_availability,
+            product_brand,
+            product_category,
+            product_sku,
+            product_quantity,
+            product_product_details,
+            product_related_products
+        }
+    } = await getDictionary(lang);
+
     return (
         <div>
             {/* breadcrumb */}
@@ -31,7 +48,7 @@ const ProductsDetailsPage = ({ params: { lang, productId } }) => {
                 <span className='text-sm text-gray-400'>
                     <FaChevronRight />
                 </span>
-                <p className='font-medium text-gray-600'>Product</p>
+                <p className='font-medium text-gray-600'>{page_title}</p>
             </div>
             {/* breadcrumb */}
 
@@ -96,23 +113,25 @@ const ProductsDetailsPage = ({ params: { lang, productId } }) => {
                                 <FaStar key={index} />
                             ))}
                         </div>
-                        <div className='ml-3 text-xs text-gray-500'>(150 Reviews)</div>
+                        <div className='ml-3 text-xs text-gray-500'>(150 {product_reviews})</div>
                     </div>
                     <div className='space-y-2'>
                         <p className='space-x-2 font-semibold text-gray-800'>
-                            <span>Availability: </span>
+                            <span>{product_availability}: </span>
                             <span className='text-green-600'>In Stock</span>
                         </p>
                         <p className='space-x-2'>
-                            <span className='font-semibold text-gray-800'>Brand: </span>
+                            <span className='font-semibold text-gray-800'>{product_brand}: </span>
                             <span className='text-gray-600'>Apex</span>
                         </p>
                         <p className='space-x-2'>
-                            <span className='font-semibold text-gray-800'>Category: </span>
+                            <span className='font-semibold text-gray-800'>
+                                {product_category}:{' '}
+                            </span>
                             <span className='text-gray-600'>Sofa</span>
                         </p>
                         <p className='space-x-2'>
-                            <span className='font-semibold text-gray-800'>SKU: </span>
+                            <span className='font-semibold text-gray-800'>{product_sku}: </span>
                             <span className='text-gray-600'>BE45VGRT</span>
                         </p>
                     </div>
@@ -129,26 +148,26 @@ const ProductsDetailsPage = ({ params: { lang, productId } }) => {
                     </p>
 
                     <div className='mt-4'>
-                        <h3 className='mb-1 text-sm text-gray-800 uppercase'>Quantity</h3>
+                        <h3 className='mb-1 text-sm text-gray-800 uppercase'>{product_quantity}</h3>
                         <div className='flex text-gray-600 border border-gray-300 divide-x divide-gray-300 w-max'>
-                            <div className='flex items-center justify-center w-8 h-8 text-xl cursor-pointer select-none'>
+                            <button className='flex items-center justify-center w-8 h-8 text-xl cursor-pointer select-none'>
                                 -
-                            </div>
+                            </button>
                             <div className='flex items-center justify-center w-8 h-8 text-base'>
                                 4
                             </div>
-                            <div className='flex items-center justify-center w-8 h-8 text-xl cursor-pointer select-none'>
+                            <button className='flex items-center justify-center w-8 h-8 text-xl cursor-pointer select-none'>
                                 +
-                            </div>
+                            </button>
                         </div>
                     </div>
 
                     <div className='grid grid-cols-1 gap-3 pt-5 pb-5 mt-3 border-b border-gray-200 md:mt-6 md:max-w-md md:grid-cols-2'>
                         <button className='flex items-center justify-center w-full gap-2 py-2 font-medium text-white uppercase transition-colors border rounded bg-primary border-primary hover:bg-transparent hover:text-primary'>
-                            <FaShoppingBag /> Add to cart
+                            <FaShoppingBag /> {add_to_cart}
                         </button>
                         <button className='flex items-center justify-center w-full gap-2 py-2 font-medium text-gray-600 uppercase transition-colors border border-gray-300 rounded hover:text-primary'>
-                            <FaHeart /> Wishlist
+                            <FaHeart /> {add_to_wishlist}
                         </button>
                     </div>
 
@@ -177,7 +196,7 @@ const ProductsDetailsPage = ({ params: { lang, productId } }) => {
             {/* description */}
             <div className='container pt-5 pb-10 md:pt-8 md:pb-16'>
                 <h3 className='pb-3 text-lg font-medium text-gray-800 border-b border-gray-200'>
-                    Product details
+                    {product_product_details}
                 </h3>
                 <div className='w-full pt-6 lg:w-3/5'>
                     <div className='text-gray-600'>
@@ -207,7 +226,7 @@ const ProductsDetailsPage = ({ params: { lang, productId } }) => {
             {/* related product */}
             <div className='container pb-16'>
                 <h2 className='mb-6 text-2xl font-medium text-gray-800 uppercase'>
-                    Related products
+                    {product_related_products}
                 </h2>
                 <div className='grid grid-cols-4 gap-6'>
                     {/* Product 1 */}

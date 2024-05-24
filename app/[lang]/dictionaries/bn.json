@@ -114,6 +114,19 @@
             "google": "গুগল"
         }
     },
+    "product_details_page": {
+        "add_to_cart": "কার্টে যোগ করুন",
+        "add_to_wishlist": "ইচ্ছেতালিকায় যোগ করুন",
+        "page_title": "পণ্য",
+        "product_reviews": "রিভিউ",
+        "product_availability": "উপস্থিতি",
+        "product_brand": "ব্র্যান্ড",
+        "product_category": "শ্রেণী",
+        "product_sku": "এসকেইউ",
+        "product_quantity": "পরিমাণ",
+        "product_product_details": "পণ্যের বিবরণ",
+        "product_related_products": "সংশ্লিষ্ট পণ্য"
+    },
     "footer": {
         "heading": {
             "solutions": "সমাধান",
