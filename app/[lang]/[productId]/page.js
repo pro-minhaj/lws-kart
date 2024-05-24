@@ -14,12 +14,10 @@ import {
 
 // import all Images
 import product1 from '@/assets/images/products/product1.jpg';
-import product2 from '@/assets/images/products/product2.jpg';
-import product3 from '@/assets/images/products/product3.jpg';
-import product4 from '@/assets/images/products/product4.jpg';
-import product5 from '@/assets/images/products/product5.jpg';
-import product6 from '@/assets/images/products/product6.jpg';
 import { getDictionary } from '../dictionaries/dictionaries';
+import ProductImages from './_components/ProductImages';
+import getSingleProduct from '@/app/server/getData/getSingleProduct';
+import Product from '@/app/components/Product/Product';
 
 const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
     const {
@@ -38,6 +36,28 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
         }
     } = await getDictionary(lang);
 
+    const products = await getSingleProduct(productId);
+    const { product, relatedProducts } = JSON.parse(products);
+
+    const {
+        _id,
+        name,
+        image,
+        price,
+        discount_price,
+        reviewsNumber,
+        ratings,
+        availability,
+        brand,
+        category,
+        details,
+        description,
+        sizes,
+        colors,
+        sku,
+        soldCounts
+    } = product;
+
     return (
         <div>
             {/* breadcrumb */}
@@ -54,98 +74,46 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
 
             {/* product details */}
             <div className='container grid grid-cols-1 gap-6 lg:grid-cols-2'>
+                <ProductImages />
                 <div>
-                    <Image
-                        src={product1}
-                        alt='product'
-                        className='w-full object-cover max-h-[31.25rem]'
-                        width={600}
-                        height={500}
-                        quality={100}
-                        priority
-                    />
-                    <div className='grid grid-cols-5 gap-4 mt-4'>
-                        <Image
-                            src={product2}
-                            alt='product2'
-                            width={100}
-                            height={100}
-                            className='w-full border cursor-pointer border-primary'
-                        />
-                        <Image
-                            src={product3}
-                            alt='product2'
-                            width={100}
-                            height={100}
-                            className='w-full border cursor-pointer'
-                        />
-                        <Image
-                            src={product4}
-                            alt='product2'
-                            width={100}
-                            height={100}
-                            className='w-full border cursor-pointer'
-                        />
-                        <Image
-                            src={product5}
-                            alt='product2'
-                            width={100}
-                            height={100}
-                            className='w-full border cursor-pointer'
-                        />
-                        <Image
-                            src={product6}
-                            alt='product2'
-                            width={100}
-                            height={100}
-                            className='w-full border cursor-pointer'
-                        />
-                    </div>
-                </div>
-
-                <div>
-                    <h2 className='mb-2 text-2xl font-medium uppercase md:text-3xl'>
-                        Italian L Shape Sofa
-                    </h2>
+                    <h2 className='mb-2 text-2xl font-medium uppercase md:text-3xl'>{name}</h2>
                     <div className='flex items-center mb-4'>
                         <div className='flex gap-1 text-sm text-yellow-400'>
-                            {[...Array(5)].map((_, index) => (
+                            {[...Array(Math.floor(ratings))].map((_, index) => (
                                 <FaStar key={index} />
                             ))}
                         </div>
-                        <div className='ml-3 text-xs text-gray-500'>(150 {product_reviews})</div>
+                        <div className='ml-3 text-xs text-gray-500'>
+                            ({reviewsNumber} {product_reviews})
+                        </div>
                     </div>
                     <div className='space-y-2'>
                         <p className='space-x-2 font-semibold text-gray-800'>
                             <span>{product_availability}: </span>
-                            <span className='text-green-600'>In Stock</span>
+                            <span className='text-green-600'>
+                                {availability ? 'In Stock' : 'Out of Stock'}
+                            </span>
                         </p>
                         <p className='space-x-2'>
                             <span className='font-semibold text-gray-800'>{product_brand}: </span>
-                            <span className='text-gray-600'>Apex</span>
+                            <span className='text-gray-600'>{brand}</span>
                         </p>
                         <p className='space-x-2'>
                             <span className='font-semibold text-gray-800'>
                                 {product_category}:{' '}
                             </span>
-                            <span className='text-gray-600'>Sofa</span>
+                            <span className='text-gray-600'>{category}</span>
                         </p>
                         <p className='space-x-2'>
                             <span className='font-semibold text-gray-800'>{product_sku}: </span>
-                            <span className='text-gray-600'>BE45VGRT</span>
+                            <span className='text-gray-600'>{sku}</span>
                         </p>
                     </div>
                     <div className='flex items-baseline mt-4 mb-1 space-x-2 font-roboto'>
-                        <p className='text-xl font-semibold text-primary'>$45.00</p>
-                        <p className='text-base text-gray-400 line-through'>$55.00</p>
+                        <p className='text-xl font-semibold text-primary'>${price}</p>
+                        <p className='text-base text-gray-400 line-through'>${discount_price}</p>
                     </div>
-
-                    <p className='mt-4 text-gray-600'>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos eius eum
-                        reprehenderit dolore vel mollitia optio consequatur hic asperiores inventore
-                        suscipit, velit consequuntur, voluptate doloremque iure necessitatibus
-                        adipisci magnam porro.
-                    </p>
+                    <p className='mt-4 text-gray-600'>{description}</p>
 
                     <div className='mt-4'>
                         <h3 className='mb-1 text-sm text-gray-800 uppercase'>{product_quantity}</h3>
@@ -198,26 +166,11 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
                 <h3 className='pb-3 text-lg font-medium text-gray-800 border-b border-gray-200'>
                     {product_product_details}
                 </h3>
-                <div className='w-full pt-6 lg:w-3/5'>
-                    <div className='text-gray-600'>
-                        <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur
-                            necessitatibus deleniti natus dolore cum maiores suscipit optio itaque
-                            voluptatibus veritatis tempora iste facilis non aut sapiente dolor
-                            quisquam, ex ab.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, quae
-                            accusantium voluptatem blanditiis sapiente voluptatum. Autem ab, dolorum
-                            assumenda earum veniam eius illo fugiat possimus illum dolor totam,
-                            ducimus excepturi.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Error quia modi
-                            ut expedita! Iure molestiae labore cumque nobis quasi fuga, quibusdam
-                            rem? Temporibus consectetur corrupti rerum veritatis numquam labore
-                            amet.
-                        </p>
+                <div className='w-full lg:w-3/5'>
+                    <div className='flex flex-col gap-1 mt-4 text-gray-600'>
+                        <p>Material: {details.material}</p>
+                        <p>Dimensions: {details.dimensions}</p>
+                        <p>Weight: {details.weight}</p>
                     </div>
                 </div>
             </div>
@@ -229,54 +182,9 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
                     {product_related_products}
                 </h2>
                 <div className='grid grid-cols-4 gap-6'>
-                    {/* Product 1 */}
-                    <div className='overflow-hidden bg-white rounded shadow group'>
-                        <div className='relative'>
-                            <Image
-                                src={product1}
-                                alt='product 1'
-                                className='w-full'
-                                width={300}
-                                height={200}
-                            />
-                            <div className='absolute inset-0 flex items-center justify-center gap-2 transition bg-black opacity-0 bg-opacity-40 group-hover:opacity-100'>
-                                <button
-                                    className='flex items-center justify-center h-8 text-lg text-white transition rounded-full w-9 bg-primary hover:bg-gray-800'
-                                    title='view product'
-                                >
-                                    <FaSearch />
-                                </button>
-                                <button
-                                    className='flex items-center justify-center h-8 text-lg text-white transition rounded-full w-9 bg-primary hover:bg-gray-800'
-                                    title='add to wishlist'
-                                >
-                                    <FaHeart />
-                                </button>
-                            </div>
-                        </div>
-                        <div className='px-4 pt-4 pb-3'>
-                            <a href='#'>
-                                <h4 className='mb-2 text-xl font-medium text-gray-800 uppercase transition hover:text-primary'>
-                                    Guyer Chair
-                                </h4>
-                            </a>
-                            <div className='flex items-baseline mb-1 space-x-2'>
-                                <p className='text-xl font-semibold text-primary'>$45.00</p>
-                                <p className='text-sm text-gray-400 line-through'>$55.90</p>
-                            </div>
-                            <div className='flex items-center'>
-                                <div className='flex gap-1 text-sm text-yellow-400'>
-                                    {[...Array(5)].map((_, index) => (
-                                        <FaStar key={index} />
-                                    ))}
-                                </div>
-                                <div className='ml-3 text-xs text-gray-500'>(150)</div>
-                            </div>
-                        </div>
-                        <button className='block w-full py-1 text-center text-white transition border rounded-b bg-primary border-primary hover:bg-transparent hover:text-primary'>
-                            Add to cart
-                        </button>
-                    </div>
+                    {relatedProducts.map((product) => (
+                        <Product key={product._id} product={product} />
+                    ))}
                 </div>
             </div>
             {/* related product */}
