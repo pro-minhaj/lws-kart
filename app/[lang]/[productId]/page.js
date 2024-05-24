@@ -13,6 +13,7 @@ import { getDictionary } from '../dictionaries/dictionaries';
 import ProductImages from './_components/ProductImages';
 import getSingleProduct from '@/app/server/getData/getSingleProduct';
 import Product from '@/app/components/Product/Product';
+import { notFound } from 'next/navigation';
 
 const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
     const {
@@ -32,6 +33,9 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
     } = await getDictionary(lang);
 
     const products = await getSingleProduct(productId);
+    if (products.error) {
+        return notFound();
+    }
     const { product, relatedProducts } = JSON.parse(products);
 
     const {
@@ -49,8 +53,6 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
         description,
         sku
     } = product;
-
-    console.log(details);
 
     return (
         <>

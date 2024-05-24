@@ -4,9 +4,9 @@ import Product from '@/models/Product';
 const getSingleProduct = async (id) => {
     await connectDB();
     try {
-        const product = await Product.findById(id).lean();
+        const product = await Product.findOne({ _id: id }).lean();
         if (!product) {
-            return null;
+            return { error: 'Product not found' };
         }
         const relatedProducts = await Product.find({
             category: product?.category,

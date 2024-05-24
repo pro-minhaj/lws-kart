@@ -8,6 +8,7 @@ import product6 from '@/assets/images/products/product6.jpg';
 import Image from 'next/image';
 
 const ProductImages = ({ images }) => {
+    console.log(images);
     return (
         <div>
             <Image
@@ -15,7 +16,7 @@ const ProductImages = ({ images }) => {
                 alt='product'
                 className='w-full object-cover max-h-[31.25rem]'
                 width={600}
-                height={500}
+                height={400}
                 quality={100}
                 priority
             />
