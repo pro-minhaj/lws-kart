@@ -12,7 +12,7 @@ import { cookies } from 'next/headers';
 const Header = async ({ lang }) => {
     const { header } = await getDictionary(lang);
     const cookieStore = cookies();
-    const initialLang = cookieStore.get('lang').value || 'en';
+    const initialLang = cookieStore.get('lang')?.value || 'en';
 
     // Header Items
     const headerItems = [

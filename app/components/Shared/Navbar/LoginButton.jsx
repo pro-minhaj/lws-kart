@@ -33,7 +33,7 @@ const LoginButton = ({ dict }) => {
                             <small>{data?.user?.name}</small>
                         </p>
                         <button onClick={handleLogout} className="text-sm">
-                            logout
+                            Logout
                         </button>
                     </div>
                     :

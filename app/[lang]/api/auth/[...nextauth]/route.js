@@ -1,7 +1,6 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
-import GitHubProvider from 'next-auth/providers/github';
 import bcrypt from 'bcrypt';
 import User from '@/models/User';
 import connectDB from '@/lib/connectDB';
@@ -35,19 +34,12 @@ const options = NextAuth({
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET
-        }),
-        GitHubProvider({
-            clientId: process.env.GITHUB_ID,
-            clientSecret: process.env.GITHUB_SECRET
         })
     ],
-    pages: {
-        signIn: '/login'
-    },
     callbacks: {
         async signIn({ account, profile }) {
-            if (account.provider === 'google' || account.provider === 'github') {
-                // Establish database connection
+            console.log('Signing in...');
+            if (account.provider === 'google') {
                 await connectDB();
                 try {
                     const user = await User.findOne({ email: profile.email });
@@ -55,25 +47,36 @@ const options = NextAuth({
                     if (!user) {
                         const newUser = {
                             name: profile.name,
-                            email: profile.email,
-                            image: {
-                                profileURL: profile.picture
-                            }
+                            email: profile.email
                         };
 
                         await User.create(newUser);
                     }
                 } catch (error) {
-                    console.error('Error signing in:', error);
+                    console.error('Error during Google sign-in:', error.message);
                     return false;
                 }
-                return true;
             }
             return true;
+        },
+        async jwt({ token, user }) {
+            if (user) {
+                token.id = user.id;
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            if (token) {
+                session.user.id = token.id;
+            }
+            return session;
         }
     },
 
-    secret: process.env.NEXTAUTH_SECRET
+    secret: process.env.NEXTAUTH_SECRET,
+    pages: {
+        signIn: '/login'
+    }
 });
 
 export { options as GET, options as POST };
