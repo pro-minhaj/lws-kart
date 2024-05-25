@@ -1,7 +1,10 @@
 import { match } from '@formatjs/intl-localematcher';
 import Negotiator from 'negotiator';
+import { getToken } from 'next-auth/jwt';
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
+// Language
 const defaultLocale = 'en';
 const locales = ['en', 'bn'];
 const LOCALE_COOKIE_NAME = 'lang';
@@ -20,17 +23,43 @@ function getLocale(request) {
     return match(languages, locales, defaultLocale);
 }
 
-export function middleware(request) {
-    const pathname = request.nextUrl.pathname || '';
+export async function middleware(req) {
+    const lang = cookies().get(LOCALE_COOKIE_NAME)?.value;
+
+    //Specify protected and public routes
+    const protectedRotes = [
+        '/wishlist',
+        '/checkout',
+        '/account',
+        `/${lang}/wishlist`,
+        `/${lang}/checkout`,
+        `/${lang}/account`
+    ];
+    const publicRoutes = ['/login', '/register', `/${lang}/register`, `/${lang}/login`];
+
+    const token = await getToken({ req });
+    const pathname = req.nextUrl.pathname || '';
+
+    // Check Protected Routes
+    const isProtectedRoute = protectedRotes.includes(pathname);
+    const isPublicRoute = publicRoutes.includes(pathname);
+
+    if (isProtectedRoute && !token) {
+        return NextResponse.redirect(new URL('/login', req.nextUrl));
+    }
+
+    if (isPublicRoute && token) {
+        return NextResponse.redirect(new URL('/', req.nextUrl));
+    }
 
     const pathNameIsMissingLocale = locales.every(
         (locale) => !pathname.startsWith(`/${locale}`) && !pathname.startsWith(`/${locale}/`)
     );
 
     if (pathNameIsMissingLocale) {
-        const locale = getLocale(request);
+        const locale = getLocale(req);
 
-        const url = new URL(`/${locale}/${pathname}`, request.url);
+        const url = new URL(`/${locale}/${pathname}`, req.url);
         const response = NextResponse.redirect(url);
 
         response.cookies.set(LOCALE_COOKIE_NAME, locale, { path: '/' });
