@@ -1,9 +1,14 @@
 import connectDB from '@/lib/connectDB';
 import Product from '@/models/Product';
+import mongoose from 'mongoose';
 
 const getSingleProduct = async (id) => {
     await connectDB();
     try {
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return JSON.stringify({ error: 'Invalid Product Id' });
+        }
+
         const product = await Product.findById(id).lean();
         if (!product) {
             return { error: 'Product not found' };

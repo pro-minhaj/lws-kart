@@ -32,6 +32,10 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
         }
     } = await getDictionary(lang);
 
+    if (productId === 'favicon.ico') {
+        return null;
+    }
+
     const products = await getSingleProduct(productId);
     const { product, relatedProducts } = JSON.parse(products);
 

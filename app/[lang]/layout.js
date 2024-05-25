@@ -20,6 +20,9 @@ export async function generateStaticParams() {
 export default function LangLayout({ children, params }) {
     return (
         <html lang={params.lang}>
+            <head>
+                <link rel='icon' href='/favicon.ico' />
+            </head>
             <body className={inter.className}>
                 <NextAuthSessionProvider>
                     <Header lang={params.lang} />

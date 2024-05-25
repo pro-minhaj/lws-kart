@@ -68,7 +68,7 @@ const Header = async ({ lang }) => {
                 <div className="flex items-center gap-3 md:gap-5">
                     {/* Header Items */}
                     {
-                        headerItems.map((item, index) => <Link key={index} href={`/${item.link}`} className="block">
+                        headerItems.map((item, index) => <Link key={index} href={item.link} className="block">
                             <div className='flex items-center gap-1 text-center text-gray-700 transition hover:text-primary'>
                                 <span className='text-xl'>
                                     {item.icon}
