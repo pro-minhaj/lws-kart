@@ -1,19 +1,11 @@
 import Link from 'next/link';
-import { FaHouse } from 'react-icons/fa6';
-import {
-    FaStar,
-    FaFacebookF,
-    FaTwitter,
-    FaInstagram,
-    FaHeart,
-    FaShoppingBag,
-    FaChevronRight
-} from 'react-icons/fa';
+import { FaStar, FaFacebookF, FaTwitter, FaInstagram } from 'react-icons/fa';
 import { getDictionary } from '../dictionaries/dictionaries';
 import ProductImages from './_components/ProductImages';
 import getSingleProduct from '@/app/server/getData/getSingleProduct';
 import Product from '@/app/components/Product/Product';
 import ProductActions from './_components/ProductActions';
+import PageLeftHanding from '@/app/components/Shared/PageLeftHading/PageLeftHanding';
 
 const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
     const {
@@ -57,17 +49,9 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
 
     return (
         <>
-            {/* breadcrumb */}
-            <div className='container flex items-center gap-3 py-4'>
-                <Link className='text-base text-primary' href='/'>
-                    <FaHouse />
-                </Link>
-                <span className='text-sm text-gray-400'>
-                    <FaChevronRight />
-                </span>
-                <p className='font-medium text-gray-600'>{page_title}</p>
-            </div>
-            {/* breadcrumb */}
+            {/* Page Hading */}
+            <PageLeftHanding>{page_title}</PageLeftHanding>
+            {/* Page Hading */}
 
             {/* product details */}
             <div className='container grid grid-cols-1 gap-6 lg:grid-cols-2'>
