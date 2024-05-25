@@ -127,6 +127,10 @@
         "product_product_details": "পণ্যের বিবরণ",
         "product_related_products": "সংশ্লিষ্ট পণ্য"
     },
+    "wishlist_page": {
+        "page_title": "ইচ্ছেতালিকা",
+        "add_to_cart": "কার্টে যোগ করুন"
+    },
     "footer": {
         "heading": {
             "solutions": "সমাধান",

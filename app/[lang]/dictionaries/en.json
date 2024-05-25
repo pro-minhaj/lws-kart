@@ -127,6 +127,10 @@
         "product_product_details": "Product details",
         "product_related_products": "Related products"
     },
+    "wishlist_page": {
+        "page_title": "Wishlist",
+        "add_to_cart": "Add to cart"
+    },
     "footer": {
         "heading": {
             "solutions": "Solutions",

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { FaTrash } from 'react-icons/fa';
 import productImg1 from '@/assets/images/products/product1.jpg';
 
-const WishlistCard = () => {
+const WishlistCard = ({ add_to_cart }) => {
     return (
         <>
             <div className='flex items-center justify-between gap-6 p-4 border border-gray-200 rounded'>
@@ -25,7 +25,7 @@ const WishlistCard = () => {
                 </div>
                 <div className='text-lg font-semibold text-primary'>$320.00</div>
                 <button className='px-6 py-2 text-sm font-medium text-center text-white uppercase transition border rounded bg-primary border-primary hover:bg-transparent hover:text-primary font-roboto'>
-                    add to cart
+                    {add_to_cart}
                 </button>
                 <div className='text-gray-600 cursor-pointer hover:text-primary'>
                     <FaTrash />
