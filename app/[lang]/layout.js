@@ -1,4 +1,4 @@
-import { Inter } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 import '../globals.css';
 import Header from '../components/Shared/Header/Header';
 import Navbar from '../components/Shared/Navbar/Navbar';
@@ -6,7 +6,12 @@ import Footer from '../components/Shared/Footer/Footer';
 import { Toaster } from 'sonner';
 import NextAuthSessionProvider from '@/Providers/SessionProvider';
 
-const inter = Inter({ subsets: ['latin'] });
+const roboto = Roboto({
+    weight: ['100', '300', '400', '500', '700', '900'],
+    style: ['normal', 'italic'],
+    subsets: ['latin'],
+    display: 'swap'
+});
 
 export const metadata = {
     title: 'LWSKart',
@@ -23,7 +28,7 @@ export default function LangLayout({ children, params }) {
             <head>
                 <link rel='icon' href='/favicon.ico' />
             </head>
-            <body className={inter.className}>
+            <body className={roboto.className}>
                 <NextAuthSessionProvider>
                     <Header lang={params.lang} />
                     <Navbar lang={params.lang} />
