@@ -13,7 +13,7 @@ import { getDictionary } from '../dictionaries/dictionaries';
 import ProductImages from './_components/ProductImages';
 import getSingleProduct from '@/app/server/getData/getSingleProduct';
 import Product from '@/app/components/Product/Product';
-import { notFound } from 'next/navigation';
+import ProductActions from './_components/ProductActions';
 
 const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
     const {
@@ -33,9 +33,6 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
     } = await getDictionary(lang);
 
     const products = await getSingleProduct(productId);
-    if (products.error) {
-        return notFound();
-    }
     const { product, relatedProducts } = JSON.parse(products);
 
     const {
@@ -110,30 +107,13 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
                         <p className='text-base text-gray-400 line-through'>${discount_price}</p>
                     </div>
                     <p className='mt-4 text-gray-600'>{description}</p>
-
-                    <div className='mt-4'>
-                        <h3 className='mb-1 text-sm text-gray-800 uppercase'>{product_quantity}</h3>
-                        <div className='flex text-gray-600 border border-gray-300 divide-x divide-gray-300 w-max'>
-                            <button className='flex items-center justify-center w-8 h-8 text-xl cursor-pointer select-none'>
-                                -
-                            </button>
-                            <div className='flex items-center justify-center w-8 h-8 text-base'>
-                                4
-                            </div>
-                            <button className='flex items-center justify-center w-8 h-8 text-xl cursor-pointer select-none'>
-                                +
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className='grid grid-cols-1 gap-3 pt-5 pb-5 mt-3 border-b border-gray-200 md:mt-6 md:max-w-md md:grid-cols-2'>
-                        <button className='flex items-center justify-center w-full gap-2 py-2 font-medium text-white uppercase transition-colors border rounded bg-primary border-primary hover:bg-transparent hover:text-primary'>
-                            <FaShoppingBag /> {add_to_cart}
-                        </button>
-                        <button className='flex items-center justify-center w-full gap-2 py-2 font-medium text-gray-600 uppercase transition-colors border border-gray-300 rounded hover:text-primary'>
-                            <FaHeart /> {add_to_wishlist}
-                        </button>
-                    </div>
+                    {/* Product Actions */}
+                    <ProductActions
+                        product_quantity={product_quantity}
+                        add_to_cart={add_to_cart}
+                        add_to_wishlist={add_to_wishlist}
+                    />
+                    {/* Product Actions */}
 
                     <div className='flex gap-3 mt-4'>
                         <Link

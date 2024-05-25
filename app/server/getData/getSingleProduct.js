@@ -4,7 +4,7 @@ import Product from '@/models/Product';
 const getSingleProduct = async (id) => {
     await connectDB();
     try {
-        const product = await Product.findOne({ _id: id }).lean();
+        const product = await Product.findById(id).lean();
         if (!product) {
             return { error: 'Product not found' };
         }
@@ -23,6 +23,7 @@ const getSingleProduct = async (id) => {
             })
             .limit(4)
             .lean();
+
         return JSON.stringify({ product, relatedProducts });
     } catch (error) {
         throw new Error(error);

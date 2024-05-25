@@ -1,61 +1,46 @@
-// import all Images
-import product1 from '@/assets/images/products/product1.jpg';
-import product2 from '@/assets/images/products/product2.jpg';
-import product3 from '@/assets/images/products/product3.jpg';
-import product4 from '@/assets/images/products/product4.jpg';
-import product5 from '@/assets/images/products/product5.jpg';
-import product6 from '@/assets/images/products/product6.jpg';
+"use client";
 import Image from 'next/image';
+import { useState } from 'react';
 
 const ProductImages = ({ images }) => {
-    console.log(images);
+    const [image, setImage] = useState(images[0]);
+
+    const handleMainImage = (index) => {
+        if (index >= 0 && index < images.length) {
+            setImage(images[index]);
+        } else {
+            console.error('Image index out of bounds');
+        }
+    }
+
     return (
         <div>
             <Image
-                src={product1}
+                src={image}
                 alt='product'
-                className='w-full object-cover max-h-[31.25rem]'
-                width={600}
-                height={400}
+                className='w-full object-cover h-[31.25rem] md:h-[31.25rem]'
+                width={800}
+                height={450}
                 quality={100}
                 priority
             />
-            <div className='grid grid-cols-5 gap-4 mt-4'>
-                <Image
-                    src={product2}
-                    alt='product2'
-                    width={100}
-                    height={100}
-                    className='w-full border cursor-pointer border-primary'
-                />
-                <Image
-                    src={product3}
-                    alt='product2'
-                    width={100}
-                    height={100}
-                    className='w-full border cursor-pointer'
-                />
-                <Image
-                    src={product4}
-                    alt='product2'
-                    width={100}
-                    height={100}
-                    className='w-full border cursor-pointer'
-                />
-                <Image
-                    src={product5}
-                    alt='product2'
-                    width={100}
-                    height={100}
-                    className='w-full border cursor-pointer'
-                />
-                <Image
-                    src={product6}
-                    alt='product2'
-                    width={100}
-                    height={100}
-                    className='w-full border cursor-pointer'
-                />
+
+            <div className='grid items-center justify-center grid-cols-3 gap-4 mt-4 md:grid-cols-4'>
+                {images.map((img, index) => (
+                    <button
+                        onClick={() => handleMainImage(index)}
+                        className={`w-full h-20 border md:h-28 ${img === image ? "border-primary" : ""}`}
+                        key={index}
+                    >
+                        <Image
+                            src={img}
+                            alt={`Product-${index + 1}`}
+                            width={200}
+                            height={100}
+                            className='object-cover w-full h-full overflow-hidden'
+                        />
+                    </button>
+                ))}
             </div>
         </div>
     );

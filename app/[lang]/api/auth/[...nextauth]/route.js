@@ -32,6 +32,9 @@ const options = NextAuth({
             }
         }),
         GoogleProvider({
+            profile: async (profile) => {
+                console.log(profile);
+            },
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET
         })
@@ -56,19 +59,12 @@ const options = NextAuth({
                     console.error('Error during Google sign-in:', error.message);
                     return false;
                 }
+                return true;
             }
             return true;
         },
-        async jwt({ token, user }) {
-            if (user) {
-                token.id = user.id;
-            }
-            return token;
-        },
-        async session({ session, token }) {
-            if (token) {
-                session.user.id = token.id;
-            }
+        async session({ session, token, user }) {
+            session.accessToken = token.accessToken;
             return session;
         }
     },
