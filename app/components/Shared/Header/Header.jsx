@@ -24,7 +24,7 @@ const Header = async ({ lang }) => {
         },
         {
             name: header.cart,
-            link: "/cart",
+            link: "/checkout",
             icon: <FaShoppingCart />,
             count: 2
         },
