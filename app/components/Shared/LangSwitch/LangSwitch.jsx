@@ -20,7 +20,7 @@ export default function LanguageSwitcher({ currentLang }) {
                 onClick={langChange}
                 aria-label={lang === 'en' ? "Switch to Bengali" : "Switch to English"}
             >
-                <MdLanguage className='text-xl' /> {lang === 'en' ? "বাংলা" : "English"}
+                <MdLanguage className='text-xl' /> <span className="hidden sm:block">{lang === 'en' ? "বাংলা" : "English"}</span>
             </button>
         </>
     );
