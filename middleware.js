@@ -4,11 +4,12 @@ import { getToken } from 'next-auth/jwt';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
-// Language
+// Constants
 const defaultLocale = 'en';
 const locales = ['en', 'bn'];
 const LOCALE_COOKIE_NAME = 'lang';
 
+// Helper function to determine the locale
 function getLocale(request) {
     const localeCookie = request.cookies.get(LOCALE_COOKIE_NAME)?.value;
 
@@ -16,60 +17,54 @@ function getLocale(request) {
         return localeCookie;
     }
 
-    const acceptedLanguage = request.headers.get('accept-language') ?? '';
-    const negotiator = new Negotiator({ headers: { 'accept-language': acceptedLanguage } });
+    const negotiator = new Negotiator({
+        headers: { 'accept-language': request.headers.get('accept-language') ?? '' }
+    });
     const languages = negotiator.languages();
 
     return match(languages, locales, defaultLocale);
 }
 
+// Middleware function
 export async function middleware(req) {
-    const lang = cookies().get(LOCALE_COOKIE_NAME)?.value;
-
-    //Specify protected and public routes
-    const protectedRotes = [
-        '/wishlist',
-        '/checkout',
-        '/account',
-        `/${lang}/wishlist`,
-        `/${lang}/checkout`,
-        `/${lang}/account`
-    ];
-    const publicRoutes = ['/login', '/register', `/${lang}/register`, `/${lang}/login`];
+    const locale = cookies().get(LOCALE_COOKIE_NAME)?.value || getLocale(req);
 
     const token = await getToken({ req });
     const pathname = req.nextUrl.pathname || '';
 
+    // Define routes
+    const protectedRoutes = ['/wishlist', '/checkout', '/account'];
+    const publicRoutes = ['/login', '/register'];
+
+    // Normalize pathname
+    const normalizedPathname = pathname.replace(`/${locale}`, '') || '/';
+
     // Check Protected Routes
-    const isProtectedRoute = protectedRotes.includes(pathname);
-    const isPublicRoute = publicRoutes.includes(pathname);
-
-    if (isProtectedRoute && !token) {
-        return NextResponse.redirect(new URL('/login', req.nextUrl));
+    if (protectedRoutes.some((route) => normalizedPathname.startsWith(route))) {
+        if (!token) {
+            return NextResponse.redirect(new URL('/login', req.nextUrl));
+        }
     }
 
-    if (isPublicRoute && token) {
-        return NextResponse.redirect(new URL('/', req.nextUrl));
+    // Check Public Routes
+    if (publicRoutes.some((route) => normalizedPathname.startsWith(route))) {
+        if (token) {
+            return NextResponse.redirect(new URL('/', req.nextUrl));
+        }
     }
 
-    const pathNameIsMissingLocale = locales.every(
-        (locale) => !pathname.startsWith(`/${locale}`) && !pathname.startsWith(`/${locale}/`)
-    );
-
-    if (pathNameIsMissingLocale) {
-        const locale = getLocale(req);
-
-        const url = new URL(`/${locale}/${pathname}`, req.url);
+    // Redirect to locale-specific URL if needed
+    if (!locales.some((locale) => pathname.startsWith(`/${locale}`))) {
+        const url = new URL(`/${locale}${pathname}`, req.url);
         const response = NextResponse.redirect(url);
-
         response.cookies.set(LOCALE_COOKIE_NAME, locale, { path: '/' });
-
         return response;
     }
 
     return NextResponse.next();
 }
 
+// Matcher configuration
 export const config = {
     matcher: ['/((?!_next).*)']
 };
