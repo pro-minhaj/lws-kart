@@ -11,7 +11,7 @@ export async function changeLanguage(currentPath, locale, searchParams) {
         cookieStore.set('lang', locale);
 
         // Parse currentPath to handle query parameters
-        const url = new URL(currentPath, 'http://localhost'); // Base URL is required for URL parsing
+        const url = new URL(currentPath, process.env.BASE_URL);
         const pathSegments = url.pathname.split('/');
         const newPathSegments = pathSegments.map((segment) =>
             segment === currentLang ? locale : segment
@@ -22,6 +22,6 @@ export async function changeLanguage(currentPath, locale, searchParams) {
         const newSearchParams = new URLSearchParams(searchParams);
         url.search = newSearchParams.toString();
 
-        redirect(url.pathname + url.search); // Keep query parameters intact
+        redirect(url.pathname + url.search);
     }
 }
