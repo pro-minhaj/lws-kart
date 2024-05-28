@@ -1,12 +1,27 @@
 'use server';
+
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-export async function changeLanguage(currentPath, locale) {
+export async function changeLanguage(currentPath, locale, searchParams) {
     const cookieStore = cookies();
-    const currentLang = cookieStore.get('lang').value || 'en';
-    cookieStore.set('lang', locale);
+    const currentLang = cookieStore.get('lang')?.value || 'en';
 
-    const newPathname = currentPath.replace(`/${currentLang}`, `/${locale}`);
-    redirect(newPathname);
+    if (currentLang !== locale) {
+        cookieStore.set('lang', locale);
+
+        // Parse currentPath to handle query parameters
+        const url = new URL(currentPath, 'http://localhost'); // Base URL is required for URL parsing
+        const pathSegments = url.pathname.split('/');
+        const newPathSegments = pathSegments.map((segment) =>
+            segment === currentLang ? locale : segment
+        );
+        url.pathname = newPathSegments.join('/');
+
+        // Preserve search parameters
+        const newSearchParams = new URLSearchParams(searchParams);
+        url.search = newSearchParams.toString();
+
+        redirect(url.pathname + url.search); // Keep query parameters intact
+    }
 }

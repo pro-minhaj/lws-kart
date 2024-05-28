@@ -18,7 +18,7 @@ function getLocale(request) {
     }
 
     const negotiator = new Negotiator({
-        headers: { 'accept-language': request.headers.get('accept-language') ?? '' }
+        headers: { 'accept-language': request.headers.get('accept-language') || '' }
     });
     const languages = negotiator.languages();
 
@@ -27,35 +27,31 @@ function getLocale(request) {
 
 // Middleware function
 export async function middleware(req) {
+    const { pathname, search, origin } = req.nextUrl;
     const locale = cookies().get(LOCALE_COOKIE_NAME)?.value || getLocale(req);
 
     const token = await getToken({ req });
-    const pathname = req.nextUrl.pathname || '';
 
     // Define routes
     const protectedRoutes = ['/wishlist', '/checkout', '/account'];
     const publicRoutes = ['/login', '/register'];
 
     // Normalize pathname
-    const normalizedPathname = pathname.replace(`/${locale}`, '') || '/';
+    const normalizedPathname = pathname.replace(new RegExp(`^/(${locales.join('|')})`), '') || '/';
 
     // Check Protected Routes
-    if (protectedRoutes.some((route) => normalizedPathname.startsWith(route))) {
-        if (!token) {
-            return NextResponse.redirect(new URL('/login', req.nextUrl));
-        }
+    if (protectedRoutes.some((route) => normalizedPathname.startsWith(route)) && !token) {
+        return NextResponse.redirect(`${origin}/login${search}`);
     }
 
     // Check Public Routes
-    if (publicRoutes.some((route) => normalizedPathname.startsWith(route))) {
-        if (token) {
-            return NextResponse.redirect(new URL('/', req.nextUrl));
-        }
+    if (publicRoutes.some((route) => normalizedPathname.startsWith(route)) && token) {
+        return NextResponse.redirect(`${origin}/${locale}${search}`);
     }
 
     // Redirect to locale-specific URL if needed
-    if (!locales.some((locale) => pathname.startsWith(`/${locale}`))) {
-        const url = new URL(`/${locale}${pathname}`, req.url);
+    if (!locales.some((loc) => pathname.startsWith(`/${loc}`))) {
+        const url = `${origin}/${locale}${pathname}${search}`;
         const response = NextResponse.redirect(url);
         response.cookies.set(LOCALE_COOKIE_NAME, locale, { path: '/' });
         return response;
