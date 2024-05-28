@@ -19,10 +19,13 @@ const addWishlist = async (productId) => {
 
         const userData = await User.findOne({ email: data?.user?.email });
         if (!userData) {
-            return { success: false, message: 'User not found' };
+            return { error: true, message: 'User not found' };
         }
+        // Convert ProductId to ObjectId
         const productObjectId = toObjectId(productId);
+        // User Data add Product Id
         userData.wishlists.push(productObjectId);
+        // Save User Data
         userData.save();
     } catch (error) {
         throw new Error(error);
