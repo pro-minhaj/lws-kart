@@ -6,6 +6,7 @@ import getSingleProduct from '@/app/server/getData/getSingleProduct';
 import Product from '@/app/components/Product/Product';
 import ProductActions from './_components/ProductActions';
 import PageLeftHanding from '@/app/components/Shared/PageLeftHading/PageLeftHanding';
+import isWishlist from '@/app/server/getData/isWishlist';
 
 const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
     const {
@@ -46,6 +47,9 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
         description,
         sku
     } = product;
+
+    // Check if the product is already wishlist
+    const alreadyWishlist = await isWishlist(_id);
 
     return (
         <>
@@ -97,6 +101,8 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
                     <p className='mt-4 text-gray-600'>{description}</p>
                     {/* Product Actions */}
                     <ProductActions
+                        alreadyWishlist={alreadyWishlist}
+                        productId={_id}
                         product_quantity={product_quantity}
                         add_to_cart={add_to_cart}
                         add_to_wishlist={add_to_wishlist}

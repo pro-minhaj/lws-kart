@@ -1,13 +1,14 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ButtonLoading from "../../Loading/ButtonLoading/ButtonLoading";
 import { toast } from "sonner";
+import useAuth from "@/hooks/useAuth";
 
 const LoginButton = ({ dict }) => {
     const pathname = usePathname();
-    const { data, status } = useSession();
+    const { data, status } = useAuth();
 
     const isLoginPage = pathname === "/login" || pathname === '/register';
 
@@ -30,7 +31,7 @@ const LoginButton = ({ dict }) => {
                 status === "authenticated" ?
                     <div className="flex items-center gap-2 text-white">
                         <p>
-                            <small>{data?.user?.name}</small>
+                            <small>{data?.name}</small>
                         </p>
                         <button onClick={handleLogout} className="text-sm">
                             Logout

@@ -1,10 +1,12 @@
 "use client";
+import addWishlist from "@/app/server/actions/wishlist";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import { FaShoppingBag } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
+import { toast } from "sonner";
 
-const ProductActions = ({ product_quantity, add_to_cart, add_to_wishlist }) => {
+const ProductActions = ({ product_quantity, add_to_cart, add_to_wishlist, productId, alreadyWishlist }) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -21,6 +23,21 @@ const ProductActions = ({ product_quantity, add_to_cart, add_to_wishlist }) => {
         },
         [searchParams]
     )
+
+    // Handle Wishlist
+    const handleWishlist = async () => {
+        try {
+            const wishlist = await addWishlist(productId);
+            if (wishlist?.success) {
+                toast.success(wishlist?.message)
+            }
+            else {
+                toast.error(wishlist?.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
 
     return (
         <>
@@ -43,8 +60,11 @@ const ProductActions = ({ product_quantity, add_to_cart, add_to_wishlist }) => {
                 <button className='flex items-center justify-center w-full gap-2 py-2 font-medium text-white uppercase transition-colors border rounded bg-primary border-primary hover:bg-transparent hover:text-primary'>
                     <FaShoppingBag /> {add_to_cart}
                 </button>
-                <button className='flex items-center justify-center w-full gap-2 py-2 font-medium text-gray-600 uppercase transition-colors border border-gray-300 rounded hover:text-primary'>
-                    <FaHeart /> {add_to_wishlist}
+                <button
+                    disabled={alreadyWishlist}
+                    onClick={handleWishlist}
+                    className='flex items-center justify-center w-full gap-2 py-2 font-medium text-gray-600 uppercase transition-colors border border-gray-300 rounded hover:text-primary disabled:cursor-not-allowed disabled:bg-opacity-50 disabled:text-opacity-50 disabled:hover:text-gray-600/50'>
+                    <FaHeart />  {alreadyWishlist ? "Already Wishlist" : add_to_wishlist}
                 </button>
             </div>
         </>

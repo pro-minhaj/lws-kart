@@ -43,7 +43,7 @@ const ProductImages = ({ images }) => {
             <Image
                 src={image}
                 alt='product'
-                className='w-full object-cover h-[31.25rem] md:h-[31.25rem]'
+                className='w-full object-cover h-[25rem] md:h-[31.25rem]'
                 width={800}
                 height={450}
                 quality={100}

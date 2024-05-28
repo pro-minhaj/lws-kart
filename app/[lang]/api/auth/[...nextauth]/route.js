@@ -63,8 +63,7 @@ const options = NextAuth({
             }
             return true;
         },
-        async session({ session, token, user }) {
-            session.accessToken = token.accessToken;
+        async session({ session, token }) {
             return session;
         }
     },

@@ -8,11 +8,14 @@ import { IoSearch } from "react-icons/io5";
 import { getDictionary } from '@/app/[lang]/dictionaries/dictionaries';
 import LanguageSwitcher from '../LangSwitch/LangSwitch';
 import { cookies } from 'next/headers';
+import getUserData from '@/app/server/getData/getUserData';
 
 const Header = async ({ lang }) => {
     const { header } = await getDictionary(lang);
     const cookieStore = cookies();
     const initialLang = cookieStore.get('lang')?.value || 'en';
+    const userReq = await getUserData();
+    const userData = JSON.parse(userReq);
 
     // Header Items
     const headerItems = [
@@ -20,13 +23,13 @@ const Header = async ({ lang }) => {
             name: header.wishlist,
             link: "/wishlist",
             icon: <FaHeart />,
-            count: 8
+            count: userData?.wishlists?.length || "0"
         },
         {
             name: header.cart,
             link: "/checkout",
             icon: <FaShoppingCart />,
-            count: 2
+            count: userData?.carts?.length || "0"
         },
         {
             name: header.account,
