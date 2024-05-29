@@ -6,7 +6,7 @@ const userSchema = new Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: false },
     carts: { type: Array, required: false },
-    wishlists: { type: Array, required: false },
+    wishlists: [{ type: mongoose.Types.ObjectId }],
     orders: { type: Array, required: false }
 });
 

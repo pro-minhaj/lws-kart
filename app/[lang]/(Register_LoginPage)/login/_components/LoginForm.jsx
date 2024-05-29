@@ -1,39 +1,42 @@
-"use client";
+'use client';
+
 import FormControl from "@/app/components/FormControl/FormControl";
 import SubmitButton from "@/app/components/SubmitButton/SubmitButton";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useCallback } from "react";
 import { toast } from "sonner";
 
 const LoginForm = ({ formControl, remember, forgot_password, submit_button }) => {
-    const { email, password } = formControl;
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(null);
+    const { email: emailField, password: passwordField } = formControl;
+    const [error, setError] = useState({ email: null, password: null });
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const searchParams = useSearchParams();
 
-    // Login Handler
-    const loginHandler = async (e) => {
-        setLoading(true)
-        setError("")
-        e.preventDefault();
-        const form = e.target;
-        const email = form.email.value;
-        const password = form.password.value;
+    const addToWishlist = useCallback(async (productId, email) => {
+        const response = await fetch('/api/wishlist', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ productId, email }),
+        });
+        return response.json();
+    }, []);
 
-        // Check Email and Password fields
-        if (!email) {
-            setLoading(false)
+    const loginHandler = useCallback(async (formData) => {
+        setError({ email: null, password: null });
+        setLoading(true);
+
+        const email = formData.get("email");
+        const password = formData.get("password");
+
+        if (!email || !password) {
             setError({
-                email: 'Email is required'
+                email: !email ? 'Email is required' : null,
+                password: !password ? 'Password is required' : null
             });
-            return;
-        } else if (!password) {
-            setLoading(false)
-            setError({
-                password: 'Password is required'
-            });
+            setLoading(false);
             return;
         }
 
@@ -45,53 +48,54 @@ const LoginForm = ({ formControl, remember, forgot_password, submit_button }) =>
             });
 
             if (result.error) {
-                toast.error(result.error)
+                toast.error(result.error);
+                setLoading(false);
+                return;
             }
-            else {
-                router.push("/")
-                toast.success("Login SuccessFul")
+
+            // All Search Params
+            const wishlist = searchParams.get("wishlist");
+            const productId = searchParams.get("productId");
+
+            if (wishlist && productId) {
+                const wishlistResult = await addToWishlist(productId, email);
+                if (wishlistResult.success) {
+                    toast.success("Wishlist added successfully");
+                    router.push("/wishlist");
+                } else {
+                    toast.error(wishlistResult.message || "Error adding to wishlist");
+                }
+            } else {
+                toast.success("Login Successful");
+                router.push("/");
             }
         } catch (error) {
-            toast.error(error.message)
+            toast.error(error.message);
+        } finally {
+            setLoading(false);
         }
-        finally {
-            setLoading(false)
-        }
-    }
-
+    }, [addToWishlist, router, searchParams]);
 
     return (
-        <form onSubmit={loginHandler}>
+        <form onSubmit={(e) => { e.preventDefault(); loginHandler(new FormData(e.target)); }}>
             <div className='space-y-2'>
                 <FormControl
-                    label={email.label}
+                    label={emailField.label}
                     id='email'
                     type='email'
-                    placeholder={email.placeholder}
-                    error={error?.email && true}
+                    placeholder={emailField.placeholder}
+                    error={error.email}
                 >
-                    {
-                        error?.email && <p className='text-red-500'>
-                            <small>
-                                {error.email}
-                            </small>
-                        </p>
-                    }
+                    {error.email && <p className='text-red-500'><small>{error.email}</small></p>}
                 </FormControl>
                 <FormControl
-                    label={password.label}
+                    label={passwordField.label}
                     id='password'
                     type='password'
-                    placeholder={password.placeholder}
-                    error={error?.password && true}
+                    placeholder={passwordField.placeholder}
+                    error={error.password}
                 >
-                    {
-                        error?.password && <p className='text-red-500'>
-                            <small>
-                                {error.password}
-                            </small>
-                        </p>
-                    }
+                    {error.password && <p className='text-red-500'><small>{error.password}</small></p>}
                 </FormControl>
             </div>
             <div className='flex items-center justify-between mt-6'>
@@ -102,10 +106,7 @@ const LoginForm = ({ formControl, remember, forgot_password, submit_button }) =>
                         id='remember'
                         className='rounded-sm cursor-pointer text-primary focus:ring-0'
                     />
-                    <label
-                        htmlFor='remember'
-                        className='ml-3 text-gray-600 cursor-pointer'
-                    >
+                    <label htmlFor='remember' className='ml-3 text-gray-600 cursor-pointer'>
                         {remember}
                     </label>
                 </div>

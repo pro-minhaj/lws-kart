@@ -41,7 +41,6 @@ const options = NextAuth({
     ],
     callbacks: {
         async signIn({ account, profile }) {
-            console.log('Signing in...');
             if (account.provider === 'google') {
                 await connectDB();
                 try {

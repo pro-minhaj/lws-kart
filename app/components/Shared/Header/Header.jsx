@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import Image from 'next/image';
-// import Image 
 import logo from '@/assets/images/logo.svg';
 import { FaHeart, FaUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
@@ -9,11 +8,15 @@ import { getDictionary } from '@/app/[lang]/dictionaries/dictionaries';
 import LanguageSwitcher from '../LangSwitch/LangSwitch';
 import { cookies } from 'next/headers';
 import getUserData from '@/app/server/getData/getUserData';
+import { getServerSession } from 'next-auth';
 
 const Header = async ({ lang }) => {
+    // Language
     const { header } = await getDictionary(lang);
     const cookieStore = cookies();
     const initialLang = cookieStore.get('lang')?.value || 'en';
+    // Get user data
+    const session = await getServerSession();
     const userReq = await getUserData();
     const userData = JSON.parse(userReq);
 
@@ -23,13 +26,13 @@ const Header = async ({ lang }) => {
             name: header.wishlist,
             link: "/wishlist",
             icon: <FaHeart />,
-            count: userData?.wishlists?.length || "0"
+            count: session?.user ? userData?.wishlists?.length || "0" : null
         },
         {
             name: header.cart,
             link: "/checkout",
             icon: <FaShoppingCart />,
-            count: userData?.carts?.length || "0"
+            count: session?.user ? userData?.carts?.length || "0" : null
         },
         {
             name: header.account,
