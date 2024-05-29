@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { FaTrash } from 'react-icons/fa';
+import WishlistDelete from './WishlistDelete';
+import Link from 'next/link';
 
 const WishlistCard = ({ product, add_to_cart }) => {
     const { _id, name, image, price, availability } = product;
@@ -7,7 +8,7 @@ const WishlistCard = ({ product, add_to_cart }) => {
     return (
         <>
             <div className='flex items-center justify-between gap-6 p-4 border border-gray-200 rounded'>
-                <div className='h-24 w-28'>
+                <Link href={_id} className='block h-24 w-28'>
                     <Image
                         src={image[0]}
                         alt={name}
@@ -15,7 +16,7 @@ const WishlistCard = ({ product, add_to_cart }) => {
                         height={110}
                         className='w-full h-full rounded'
                     />
-                </div>
+                </Link>
                 <div className='w-1/3'>
                     <h2 className='text-xl font-medium text-gray-800 uppercase'>
                         {name}
@@ -28,9 +29,7 @@ const WishlistCard = ({ product, add_to_cart }) => {
                 <button className='px-6 py-2 text-sm font-medium text-center text-white uppercase transition-colors border rounded bg-primary border-primary hover:bg-transparent hover:text-primary font-roboto'>
                     {add_to_cart}
                 </button>
-                <div className='text-gray-600 cursor-pointer hover:text-primary'>
-                    <FaTrash />
-                </div>
+                <WishlistDelete id={_id} />
             </div>
         </>
     );
