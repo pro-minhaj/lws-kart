@@ -43,7 +43,6 @@ const options = NextAuth({
     ],
     callbacks: {
         async signIn({ account, profile }) {
-            console.log(account, profile);
             if (account.provider === 'google' || account.provider === 'facebook') {
                 await connectDB();
                 try {
@@ -58,7 +57,6 @@ const options = NextAuth({
                         await User.create(newUser);
                     }
                 } catch (error) {
-                    console.error('Error during Google sign-in:', error.message);
                     return false;
                 }
                 return true;

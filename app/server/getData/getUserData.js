@@ -1,4 +1,5 @@
 'use server';
+import connectDB from '@/lib/connectDB';
 import User from '@/models/User';
 import { getServerSession } from 'next-auth';
 
@@ -6,6 +7,9 @@ const getUserData = async () => {
     try {
         const data = await getServerSession();
         if (!data?.user) null;
+
+        // Connect DB
+        await connectDB();
 
         const userData = await User.findOne({ email: data?.user?.email })
             .select({ carts: 1, wishlists: 1 })
