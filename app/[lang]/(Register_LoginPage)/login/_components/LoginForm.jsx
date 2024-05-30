@@ -10,22 +10,22 @@ import { toast } from "sonner";
 
 const LoginForm = ({ formControl, remember, forgot_password, submit_button }) => {
     const { email: emailField, password: passwordField } = formControl;
-    const [error, setError] = useState({ email: null, password: null });
+    const [error, setError] = useState({});
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    const addToWishlist = useCallback(async (productId, email) => {
-        const response = await fetch('/api/wishlist', {
+    const fetchHandler = useCallback(async (url, data) => {
+        const response = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ productId, email }),
+            body: JSON.stringify(data),
         });
         return response.json();
     }, []);
 
-    const loginHandler = useCallback(async (formData) => {
-        setError({ email: null, password: null });
+    const loginHandler = async (formData) => {
+        setError({});
         setLoading(true);
 
         const email = formData.get("email");
@@ -53,12 +53,21 @@ const LoginForm = ({ formControl, remember, forgot_password, submit_button }) =>
                 return;
             }
 
-            // All Search Params
             const wishlist = searchParams.get("wishlist");
             const productId = searchParams.get("productId");
+            const cart = searchParams.get("cart");
+            const quantity = searchParams.get("quantity") || 1;
 
-            if (wishlist && productId) {
-                const wishlistResult = await addToWishlist(productId, email);
+            if (cart && productId) {
+                const cartResult = await fetchHandler('/api/cart', { productId, quantity, email });
+                if (cartResult.success) {
+                    toast.success("Cart added successfully");
+                    router.push("/checkout");
+                } else {
+                    toast.error(cartResult.message || "Error adding to Cart");
+                }
+            } else if (wishlist && productId) {
+                const wishlistResult = await fetchHandler('/api/wishlist', { productId, email });
                 if (wishlistResult.success) {
                     toast.success("Wishlist added successfully");
                     router.push("/wishlist");
@@ -70,11 +79,11 @@ const LoginForm = ({ formControl, remember, forgot_password, submit_button }) =>
                 router.push("/");
             }
         } catch (error) {
-            toast.error(error.message);
+            toast.error("An unexpected error occurred");
         } finally {
             setLoading(false);
         }
-    }, [addToWishlist, router, searchParams]);
+    };
 
     return (
         <form onSubmit={(e) => { e.preventDefault(); loginHandler(new FormData(e.target)); }}>

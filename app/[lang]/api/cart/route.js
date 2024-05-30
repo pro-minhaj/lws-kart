@@ -1,11 +1,11 @@
-import addWishlist from '@/app/server/actions/wishlist';
+import addToCart from '@/app/server/actions/addtocart';
 import { NextResponse } from 'next/server';
 
 export const POST = async (req) => {
     const data = await req.json();
-    const { productId, email } = data;
+    const { productId, quantity, email } = data;
     try {
-        const result = await addWishlist(productId, email);
+        const result = await addToCart(productId, quantity, email);
         return NextResponse.json(result);
     } catch (error) {
         return NextResponse.error(error);

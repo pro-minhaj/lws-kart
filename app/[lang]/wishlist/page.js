@@ -2,7 +2,6 @@ import PageLeftHanding from '@/app/components/Shared/PageLeftHading/PageLeftHand
 import WishlistCard from '@/app/components/WishlistCard/WishlistCard';
 import { getDictionary } from '../dictionaries/dictionaries';
 import getAllWishlistProduct from '@/app/server/getData/getAllWishlistProduct';
-import TrendingProducts from '../(HomePage)/@trendingProducts/page';
 
 const WishlistPage = async ({ params: { lang } }) => {
     const {

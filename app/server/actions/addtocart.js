@@ -5,17 +5,17 @@ import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-const addToCart = async (productId, quantity) => {
+const addToCart = async (productId, quantity, userEmail) => {
     const session = await getServerSession();
 
     if (!session?.user) {
-        redirect(`/login?cart=true&productId=${productId}`);
+        redirect(`/login?cart=true&productId=${productId}&quantity=${quantity}`);
     }
 
     try {
         await connectDB();
 
-        const email = session.user.email;
+        const email = userEmail || session.user.email;
         const parsedQuantity = parseInt(quantity);
 
         //if the product exists, otherwise add a new item

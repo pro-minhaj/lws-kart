@@ -8,7 +8,6 @@ import { getDictionary } from '@/app/[lang]/dictionaries/dictionaries';
 import LanguageSwitcher from '../LangSwitch/LangSwitch';
 import { cookies } from 'next/headers';
 import getUserData from '@/app/server/getData/getUserData';
-import { getServerSession } from 'next-auth';
 
 const Header = async ({ lang }) => {
     // Language
@@ -16,9 +15,8 @@ const Header = async ({ lang }) => {
     const cookieStore = cookies();
     const initialLang = cookieStore.get('lang')?.value || 'en';
     // Get user data
-    const session = await getServerSession();
     const userReq = await getUserData();
-    const userData = JSON.parse(userReq);
+    const { wishlistCount, cartCount } = JSON.parse(userReq);
 
     // Header Items
     const headerItems = [
@@ -26,13 +24,13 @@ const Header = async ({ lang }) => {
             name: header.wishlist,
             link: "/wishlist",
             icon: <FaHeart />,
-            count: session?.user ? userData?.wishlists?.length || "0" : null
+            count: wishlistCount
         },
         {
             name: header.cart,
             link: "/checkout",
             icon: <FaShoppingCart />,
-            count: session?.user ? userData?.carts?.length || "0" : null
+            count: cartCount
         },
         {
             name: header.account,

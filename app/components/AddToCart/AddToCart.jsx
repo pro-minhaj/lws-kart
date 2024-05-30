@@ -10,9 +10,9 @@ const AddToCart = ({ productId, alreadyCart, children }) => {
     const handleAddToCart = useCallback(async () => {
         const searchParamsQuantity = searchParams.get('quantity') || 1;
         try {
-            const { success, message } = await addToCart(productId, searchParamsQuantity);
-            if (success) {
-                toast.success(message);
+            const addCart = await addToCart(productId, searchParamsQuantity);
+            if (addCart?.success) {
+                toast.success(addCart.message);
             }
         } catch (error) {
             toast.error(error?.message || "An error occurred while adding to cart.");
