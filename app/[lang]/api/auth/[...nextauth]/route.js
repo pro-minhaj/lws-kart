@@ -32,15 +32,13 @@ const options = NextAuth({
             }
         }),
         GoogleProvider({
-            profile: async (profile) => {
-                console.log(profile);
-            },
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET
         })
     ],
     callbacks: {
         async signIn({ account, profile }) {
+            console.log(account, profile);
             if (account.provider === 'google') {
                 await connectDB();
                 try {
@@ -62,7 +60,7 @@ const options = NextAuth({
             }
             return true;
         },
-        async session({ session, token }) {
+        async session({ session }) {
             return session;
         }
     },

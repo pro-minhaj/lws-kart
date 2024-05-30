@@ -23,7 +23,7 @@ const WishlistPage = async ({ params: { lang } }) => {
                 {wishListProducts?.length === 0 ? (
                     <div className='flex items-center justify-center h-full'>
                         <p className='text-lg text-gray-500'>
-                            You dont have any product in your wishlist.
+                            You do not have any product in your wishlist.
                         </p>
                     </div>
                 ) : (
