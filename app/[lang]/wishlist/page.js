@@ -21,15 +21,23 @@ const WishlistPage = async ({ params: { lang } }) => {
             {/* All WishList */}
             <div className='container gap-6 pt-4 pb-16'>
                 {/* wishlist */}
-                <div className='max-w-6xl mx-auto space-y-4'>
-                    {wishListProducts?.map(({ product }) => (
-                        <WishlistCard
-                            key={product._id}
-                            product={product}
-                            add_to_cart={add_to_cart}
-                        />
-                    ))}
-                </div>
+                {wishListProducts?.length === 0 ? (
+                    <div className='flex items-center justify-center h-full'>
+                        <p className='text-lg text-gray-500'>
+                            You dont have any product in your wishlist.
+                        </p>
+                    </div>
+                ) : (
+                    <div className='max-w-6xl mx-auto space-y-4'>
+                        {wishListProducts?.map(({ product }) => (
+                            <WishlistCard
+                                key={product._id}
+                                product={product}
+                                add_to_cart={add_to_cart}
+                            />
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

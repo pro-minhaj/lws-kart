@@ -1,4 +1,5 @@
 "use client";
+import AddToCart from "@/app/components/AddToCart/AddToCart";
 import addWishlist from "@/app/server/actions/wishlist";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo } from "react";
@@ -6,7 +7,7 @@ import { FaShoppingBag } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import { toast } from "sonner";
 
-const ProductActions = ({ product_quantity, add_to_cart, add_to_wishlist, productId, alreadyWishlist }) => {
+const ProductActions = ({ product_quantity, add_to_cart, add_to_wishlist, productId, alreadyWishlist, alreadyCart }) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -71,9 +72,9 @@ const ProductActions = ({ product_quantity, add_to_cart, add_to_wishlist, produc
             </div>
 
             <div className="grid grid-cols-1 gap-3 pt-5 pb-5 mt-3 border-b border-gray-200 md:mt-6 md:max-w-md md:grid-cols-2">
-                <button className="flex items-center justify-center w-full gap-2 py-2 font-medium text-white uppercase transition-colors border rounded bg-primary border-primary hover:bg-transparent hover:text-primary">
+                <AddToCart productId={productId} alreadyCart={alreadyCart}>
                     <FaShoppingBag /> {add_to_cart}
-                </button>
+                </AddToCart>
                 <button
                     disabled={alreadyWishlist}
                     onClick={handleWishlist}

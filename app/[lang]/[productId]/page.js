@@ -7,6 +7,7 @@ import Product from '@/app/components/Product/Product';
 import ProductActions from './_components/ProductActions';
 import PageLeftHanding from '@/app/components/Shared/PageLeftHading/PageLeftHanding';
 import isWishlist from '@/app/server/getData/isWishlist';
+import isCarts from '@/app/server/getData/isCarts';
 
 const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
     const {
@@ -50,6 +51,7 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
 
     // Check if the product is already wishlist
     const alreadyWishlist = await isWishlist(_id);
+    const alreadyCart = await isCarts(_id);
 
     return (
         <>
@@ -103,6 +105,7 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
                     <ProductActions
                         alreadyWishlist={alreadyWishlist}
                         productId={_id}
+                        alreadyCart={alreadyCart}
                         product_quantity={product_quantity}
                         add_to_cart={add_to_cart}
                         add_to_wishlist={add_to_wishlist}

@@ -3,7 +3,6 @@
 import connectDB from '@/lib/connectDB';
 import User from '@/models/User';
 import { getServerSession } from 'next-auth';
-import toObjectId from '../utils/toObjectId';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
@@ -22,10 +21,9 @@ const addWishlist = async (productId, email) => {
         if (!userData) {
             throw new Error('User not found');
         }
-        const productObjectId = toObjectId(productId);
         // Check if the wishlist item already exists
-        if (!userData.wishlists.includes(productObjectId)) {
-            userData.wishlists.push(productObjectId);
+        if (!userData.wishlists.includes(productId)) {
+            userData.wishlists.push(productId);
             await userData.save();
         }
     } catch (error) {
