@@ -2,10 +2,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaHeart, FaStar } from 'react-icons/fa';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
+import AddToCart from '../AddToCart/AddToCart';
+import isCarts from '@/app/server/getData/isCarts';
 
-const Product = ({ product }) => {
+const Product = async ({ product }) => {
     const { _id, name, image, price, discount_price, reviewsNumber, ratings } = product;
     const rating = new Array(Math.floor(ratings)).fill(0);
+    // Check Already Cart
+    const alreadyCart = await isCarts(_id);
 
     return (
         <div className='overflow-hidden bg-white rounded shadow group'>
@@ -52,9 +56,9 @@ const Product = ({ product }) => {
                     <div className='ml-3 text-xs text-gray-500'>({reviewsNumber})</div>
                 </div>
             </div>
-            <button className='block w-full py-1 text-center text-white transition border rounded-b bg-primary border-primary hover:bg-transparent hover:text-primary'>
+            <AddToCart productId={_id} alreadyCart={alreadyCart} className="!py-1">
                 Add to cart
-            </button>
+            </AddToCart>
         </div>
     );
 };
