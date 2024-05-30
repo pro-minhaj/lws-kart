@@ -7,13 +7,17 @@ import { signIn } from "next-auth/react"
 const SocialLogin = ({ lang }) => {
     const { facebook, google } = lang;
 
+    const handleFacebookLogin = async () => {
+        await signIn("facebook")
+    }
+
     const handleGoogleLogin = async () => {
-        await signIn("google", { callbackUrl: 'http://localhost:3000' })
+        await signIn("google")
     }
 
     return (
         <div className='grid grid-cols-1 gap-4 mt-4 md:grid-cols-2'>
-            <SocialLoginButton imageSrc={facebookImg} name={facebook} />
+            <SocialLoginButton onClick={handleFacebookLogin} imageSrc={facebookImg} name={facebook} />
             <SocialLoginButton onClick={handleGoogleLogin} imageSrc={googleImg} name={google} />
         </div>
     );
