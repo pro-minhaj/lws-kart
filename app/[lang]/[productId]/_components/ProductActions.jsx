@@ -115,7 +115,7 @@ const ProductActions = ({
                     <FaShoppingBag /> {add_to_cart}
                 </AddToCart>
                 <button
-                    disabled={alreadyWishlist}
+                    disabled={alreadyWishlist || alreadyCart}
                     onClick={handleWishlist}
                     className="flex items-center justify-center w-full gap-2 py-2 font-medium text-gray-600 uppercase transition-colors border border-gray-300 rounded hover:text-primary disabled:cursor-not-allowed disabled:bg-opacity-50 disabled:text-opacity-50 disabled:hover:text-gray-600/50"
                 >

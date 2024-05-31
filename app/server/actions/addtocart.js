@@ -12,20 +12,22 @@ const addToCart = async (productId, quantity, productSize, userEmail) => {
         redirect(
             `/login?cart=true&productId=${productId}&quantity=${quantity}&size=${productSize}`
         );
+        return;
     }
 
     try {
         await connectDB();
 
         const email = userEmail || session.user.email;
-        const parsedQuantity = parseInt(quantity);
+        const parsedQuantity = parseInt(quantity, 10);
 
-        //if the product exists, otherwise add a new item
-        const userData = await User.findOne({ email }).lean();
+        const userData = await User.findOne({ email });
+
         if (!userData) {
             throw new Error('User not found');
         }
-        const productExists = userData.carts.find(
+
+        const productExists = userData.carts.some(
             (cart) => cart.productId.toString() === productId
         );
 
@@ -33,20 +35,21 @@ const addToCart = async (productId, quantity, productSize, userEmail) => {
             throw new Error('Product already exists in the cart');
         }
 
-        // Update the ProductId quantity
-        await User.updateOne(
-            { email },
-            {
-                $push: {
-                    carts: { productId: productId, size: productSize, quantity: parsedQuantity }
-                }
-            }
+        // Add product to cart
+        userData.carts.push({ productId, size: productSize, quantity: parsedQuantity });
+
+        // Remove product from wishlists
+        userData.wishlists = userData.wishlists.filter(
+            (wishlistId) => wishlistId.toString() !== productId
         );
 
+        await userData.save();
+
         revalidatePath('/');
+
         return { success: true, message: 'Cart updated successfully' };
     } catch (error) {
-        throw new Error(error);
+        throw new Error(error.message);
     }
 };
 
