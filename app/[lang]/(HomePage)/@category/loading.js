@@ -1,23 +1,21 @@
-const CategoryLoading = () => {
+import CategoryLoading from './_components/CategoryLoading';
+
+const CategorySectionLoading = () => {
     return (
-        <div>
-            <div className='w-full max-w-sm p-4 mx-auto border border-blue-300 rounded-md shadow'>
-                <div className='flex space-x-4 animate-pulse'>
-                    <div className='w-10 h-10 rounded-full bg-slate-700'></div>
-                    <div className='flex-1 py-1 space-y-6'>
-                        <div className='h-2 rounded bg-slate-700'></div>
-                        <div className='space-y-3'>
-                            <div className='grid grid-cols-3 gap-4'>
-                                <div className='h-2 col-span-2 rounded bg-slate-700'></div>
-                                <div className='h-2 col-span-1 rounded bg-slate-700'></div>
-                            </div>
-                            <div className='h-2 rounded bg-slate-700'></div>
-                        </div>
-                    </div>
-                </div>
+        <div className='container py-10 md:py-16'>
+            <h2 class='mb-6 text-2xl font-medium text-gray-800 uppercase animate-pulse'>
+                <div class='h-6 bg-gray-200 rounded w-1/3'></div>
+            </h2>
+            <div className='grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3'>
+                <CategoryLoading />
+                <CategoryLoading />
+                <CategoryLoading />
+                <CategoryLoading />
+                <CategoryLoading />
+                <CategoryLoading />
             </div>
         </div>
     );
 };
 
-export default CategoryLoading;
+export default CategorySectionLoading;
