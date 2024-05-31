@@ -1,27 +1,28 @@
-import Link from "next/link";
-import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+"use client";
+import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, TwitterIcon, TwitterShareButton } from "next-share";
 
-const ShareSocialMedia = () => {
+const ShareSocialMedia = ({ id, lang, description, name }) => {
+
     return (
         <div className='flex gap-3 mt-4'>
-            <Link
-                href='#'
-                className='flex items-center justify-center w-8 h-8 text-gray-400 border border-gray-300 rounded-full hover:text-gray-500'
+            <FacebookShareButton
+                url={`${process.env.NEXT_PUBLIC_DOMAIN_URL}/${lang}/${id}`}
+                quote={description}
+                hashtag={'#LWS-Kart'}
             >
-                <FaFacebookF />
-            </Link>
-            <Link
-                href='#'
-                className='flex items-center justify-center w-8 h-8 text-gray-400 border border-gray-300 rounded-full hover:text-gray-500'
+                <FacebookIcon size={32} round />
+            </FacebookShareButton>
+
+            <TwitterShareButton
+                url={`${process.env.NEXT_PUBLIC_DOMAIN_URL}/${lang}/${id}`}
+                title={name}
             >
-                <FaTwitter />
-            </Link>
-            <Link
-                href='#'
-                className='flex items-center justify-center w-8 h-8 text-gray-400 border border-gray-300 rounded-full hover:text-gray-500'
-            >
-                <FaInstagram />
-            </Link>
+                <TwitterIcon size={32} round />
+            </TwitterShareButton>
+
+            <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_DOMAIN_URL}/${lang}/${id}`}>
+                <LinkedinIcon size={32} round />
+            </LinkedinShareButton>
         </div>
     );
 };

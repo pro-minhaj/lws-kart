@@ -17,7 +17,7 @@ export async function generateMetadata({ params: { productId } }) {
         title: `${product?.name} - LWS-Kart`,
         description: product?.description,
         openGraph: {
-            images: [product?.image[0], product?.image[1], product?.image[2]]
+            images: [...product?.image]
         }
     };
 }
@@ -127,7 +127,7 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
                     />
                     {/* Product Actions */}
 
-                    <ShareSocialMedia />
+                    <ShareSocialMedia id={_id} lang={lang} description={description} name={name} />
                 </div>
             </div>
             {/* description */}
