@@ -19,7 +19,7 @@ const LeftMenu = () => {
             </button>
             <div
                 id="drawer-example"
-                className={`fixed lg:static top-0 left-0 z-40 h-screen lg:h-auto p-4 overflow-y-auto transition-transform ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-black/90 w-80 lg:w-full lg:bg-transparent `}
+                className={`fixed shadow-md lg:static top-0 left-0 z-40 h-screen lg:h-auto p-4 overflow-y-auto transition-transform ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-black/90 w-80 lg:w-full lg:bg-transparent `}
                 tabIndex="-1"
                 aria-labelledby="drawer-label"
             >
@@ -68,69 +68,71 @@ const LeftMenu = () => {
 
                 <div className="space-y-5 divide-y divide-gray-200">
                     <div>
-                        <h3 className={`mb-4 text-xl font-medium uppercase ${isOpen ? "text-gray-200" : "text-gray-800"}`}>Categories</h3>
+                        <h3 className="mb-4 text-xl font-medium text-gray-200 uppercase lg:text-gray-800">Categories</h3>
                         <div className="space-y-2">
-                            <SingleCategory isOpen={isOpen} name="Bedroom" count={15} />
-                            <SingleCategory isOpen={isOpen} name="Sofa" count={9} />
-                            <SingleCategory isOpen={isOpen} name="Office" count={21} />
-                            <SingleCategory isOpen={isOpen} name="Outdoor" count={10} />
-                            <SingleCategory isOpen={isOpen} name="Outdoor" count={10} />
-                            <SingleCategory isOpen={isOpen} name="Outdoor" count={10} />
+                            <SingleCategory name="Bedroom" count={15} />
+                            <SingleCategory name="Sofa" count={9} />
+                            <SingleCategory name="Office" count={21} />
+                            <SingleCategory name="Outdoor" count={10} />
+                            <SingleCategory name="Outdoor" count={10} />
+                            <SingleCategory name="Outdoor" count={10} />
                         </div>
                     </div>
 
                     <div className="pt-4">
-                        <h3 className={`mb-4 text-xl font-medium uppercase ${isOpen ? "text-gray-200" : "text-gray-800"}`}>Price</h3>
+                        <h3 className="mb-4 text-xl font-medium text-gray-200 uppercase lg:text-gray-800">
+                            Price
+                        </h3>
                         <div className="flex items-center mt-4">
                             <input
-                                type="text"
+                                type="number"
                                 name="min"
                                 id="min"
-                                className="w-full px-3 py-1 text-gray-600 border-gray-300 rounded shadow-sm focus:border-primary focus:ring-0"
+                                className="w-full px-3 py-1 text-gray-300 bg-transparent rounded shadow-sm lg:text-gray-600 lg:border-gray-300 focus:border-primary focus:ring-0"
                                 placeholder="min"
                             />
                             <span className="mx-3 text-gray-500">-</span>
                             <input
-                                type="text"
+                                type="number"
                                 name="max"
                                 id="max"
-                                className="w-full px-3 py-1 text-gray-600 border-gray-300 rounded shadow-sm focus:border-primary focus:ring-0"
+                                className="w-full px-3 py-1 text-gray-300 bg-transparent rounded shadow-sm lg:text-gray-600 lg:border-gray-300 focus:border-primary focus:ring-0"
                                 placeholder="max"
                             />
                         </div>
                     </div>
 
+                    {/* Select Size */}
                     <div className="pt-4">
-                        <h3 className="mb-3 text-xl font-medium text-gray-800 uppercase">Size</h3>
+                        <h3 className="mb-4 text-xl font-medium text-gray-200 uppercase lg:text-gray-800">Size</h3>
                         <div className="flex items-center gap-2">
                             <div className="size-selector">
                                 <input type="radio" name="size" id="size-xs" className="hidden" />
                                 <label
                                     htmlFor="size-xs"
-                                    className="flex items-center justify-center w-6 h-6 text-xs text-gray-600 border border-gray-200 rounded-sm shadow-sm cursor-pointer"
+                                    className="flex items-center justify-center w-6 h-6 text-xs text-gray-300 border border-gray-200 rounded-sm shadow-sm cursor-pointer lg:text-gray-600"
                                 >
                                     XS
                                 </label>
                             </div>
                             <div className="size-selector">
-                                <input type="radio" name="size" id="size-sm" className="hidden" />
+                                <input type="radio" name="size" id="size-xs" className="hidden" />
                                 <label
-                                    htmlFor="size-sm"
-                                    className="flex items-center justify-center w-6 h-6 text-xs text-gray-600 border border-gray-200 rounded-sm shadow-sm cursor-pointer"
+                                    htmlFor="size-xs"
+                                    className="flex items-center justify-center w-6 h-6 text-xs text-gray-300 border border-gray-200 rounded-sm shadow-sm cursor-pointer lg:text-gray-600"
                                 >
-                                    S
+                                    X
                                 </label>
                             </div>
                             <div className="size-selector">
-                                <input type="radio" name="size" id="size-m" className="hidden" />
+                                <input type="radio" name="size" id="size-xs" className="hidden" />
                                 <label
-                                    htmlFor="size-m"
-                                    className="flex items-center justify-center w-6 h-6 text-xs text-gray-600 border border-gray-200 rounded-sm shadow-sm cursor-pointer"
+                                    htmlFor="size-xs"
+                                    className="flex items-center justify-center w-6 h-6 text-xs text-gray-300 border border-gray-200 rounded-sm shadow-sm cursor-pointer lg:text-gray-600"
                                 >
                                     M
                                 </label>
                             </div>
-                            {/* Add more size selectors as needed */}
                         </div>
                     </div>
                 </div>

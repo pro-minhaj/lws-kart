@@ -1,5 +1,5 @@
 
-const SingleCategory = ({ name, count, isOpen }) => {
+const SingleCategory = ({ name, count }) => {
     return (
         <div className="flex items-center">
             <input
@@ -8,10 +8,10 @@ const SingleCategory = ({ name, count, isOpen }) => {
                 id={name}
                 className="rounded-sm cursor-pointer text-primary focus:ring-0"
             />
-            <label htmlFor={name} className={`ml-3 cursor-pointer ${isOpen ? "text-gray-200" : "text-gray-600"}`}>
+            <label htmlFor={name} className="ml-3 text-gray-200 cursor-pointer lg:text-gray-600">
                 {name}
             </label>
-            <div className={`ml-auto text-sm ${isOpen ? "text-gray-200" : "text-gray-600"}`}>({count})</div>
+            <div className="ml-auto text-sm text-gray-200 lg:text-gray-600">({count})</div>
         </div>
     );
 };

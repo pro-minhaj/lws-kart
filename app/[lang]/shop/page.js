@@ -14,7 +14,7 @@ const ShopPage = () => {
         <div>
             <PageLeftHanding>Shop</PageLeftHanding>
 
-            <div className='container grid items-start grid-cols-1 gap-6 pt-4 pb-16 lg:grid-cols-4'>
+            <div className='container grid items-start grid-cols-1 gap-6 pb-8 lg:pt-4 md:pb-16 lg:grid-cols-4'>
                 <LeftMenu />
                 <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 lg:col-span-3'>
                     {/* Product cards */}
