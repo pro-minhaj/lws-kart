@@ -8,6 +8,7 @@ import { getDictionary } from '@/app/[lang]/dictionaries/dictionaries';
 import LanguageSwitcher from '../LangSwitch/LangSwitch';
 import { cookies } from 'next/headers';
 import getUserData from '@/app/server/getData/getUserData';
+import SearchBox from './SearchBox';
 
 const Header = async ({ lang }) => {
     // Language
@@ -48,25 +49,7 @@ const Header = async ({ lang }) => {
                 </Link>
 
                 <div className="hidden w-full max-w-xl lg:block">
-                    <div className='flex'>
-                        <div className='flex items-center w-full px-3 py-0.5 border border-r-0 border-primary rounded-l-md'>
-                            <span className="text-lg text-gray-400">
-                                <IoSearch />
-                            </span>
-                            <input
-                                type="search"
-                                name="search"
-                                id="search"
-                                className="w-full border-transparent !ring-transparent !border-none outline-none !focus:border-none focus:outline-none"
-                                placeholder={`${header.search}...`}
-                            />
-                        </div>
-                        <button
-                            className="px-5 text-white transition-colors border bg-primary border-primary rounded-r-md hover:bg-transparent hover:text-primary"
-                        >
-                            {header.search}
-                        </button>
-                    </div>
+                    <SearchBox header={header} />
                 </div>
 
                 <div className="flex items-center gap-3 md:gap-5">

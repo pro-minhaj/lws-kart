@@ -11,7 +11,7 @@ const LeftMenu = () => {
     };
 
     return (
-        <div>
+        <>
             <button className="block lg:hidden ms-auto" onClick={toggleDrawer}>
                 <div className="flex items-center gap-1">
                     <BsFilterRight className="text-2xl" /> <span>Filter</span>
@@ -137,7 +137,7 @@ const LeftMenu = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
