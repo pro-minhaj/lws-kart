@@ -3,10 +3,10 @@ import ProductLoading from '@/app/components/Product/ProductLoading';
 const ShopPageLoading = () => {
     return (
         <>
-            <div class='container flex items-center gap-3 py-4 animate-pulse'>
-                <div class='h-6 w-6 bg-gray-200 rounded-full'></div>
-                <div class='h-4 w-4 bg-gray-200 rounded-full'></div>
-                <div class='h-4 bg-gray-200 rounded w-40'></div>
+            <div className='container flex items-center gap-3 py-4 animate-pulse'>
+                <div className='h-6 w-6 bg-gray-200 rounded-full'></div>
+                <div className='h-4 w-4 bg-gray-200 rounded-full'></div>
+                <div className='h-4 bg-gray-200 rounded w-40'></div>
             </div>
 
             <div className='container grid items-start grid-cols-1 gap-6 pb-8 lg:pt-4 md:pb-16 lg:grid-cols-4'>
