@@ -10,16 +10,31 @@ import isCarts from '@/app/server/getData/isCarts';
 import ShareSocialMedia from './_components/ShareSocialMedia';
 
 export async function generateMetadata({ params: { productId } }) {
-    const products = await getSingleProduct(productId);
-    const { product } = JSON.parse(products);
+    try {
+        const productsResponse = await getSingleProduct(productId);
+        const products = JSON.parse(productsResponse);
+        const { product } = products;
 
-    return {
-        title: `${product?.name} - LWS-Kart`,
-        description: product?.description,
-        openGraph: {
-            images: [...product?.image]
+        if (!product) {
+            throw new Error('Product not found');
         }
-    };
+
+        return {
+            title: `${product?.name} - LWS-Kart`,
+            description: product?.description,
+            openGraph: {
+                images: product?.image ? [...product?.image] : []
+            }
+        };
+    } catch (error) {
+        return {
+            title: 'Product - LWS-Kart',
+            description: 'Product details and information',
+            openGraph: {
+                images: []
+            }
+        };
+    }
 }
 
 const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
@@ -43,8 +58,9 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
         return null;
     }
 
-    const products = await getSingleProduct(productId);
-    const { product, relatedProducts } = JSON.parse(products);
+    const productsResponse = await getSingleProduct(productId);
+    const products = JSON.parse(productsResponse);
+    const { product, relatedProducts } = products;
 
     const {
         _id,
