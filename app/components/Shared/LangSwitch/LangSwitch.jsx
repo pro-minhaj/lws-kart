@@ -3,6 +3,7 @@ import { MdLanguage } from "react-icons/md";
 import { useMemo, useCallback } from "react";
 import { changeLanguage } from "@/app/server/actions/langchange";
 import { usePathname, useSearchParams } from "next/navigation";
+import { toast } from "sonner";
 
 export default function LanguageSwitcher({ currentLang }) {
     const lang = useMemo(() => currentLang || 'en', [currentLang]);
@@ -10,8 +11,15 @@ export default function LanguageSwitcher({ currentLang }) {
     const searchParams = useSearchParams();
 
     const langChange = useCallback(async () => {
-        const newLang = lang === 'en' ? 'bn' : 'en';
-        await changeLanguage(pathname, newLang, searchParams);
+        try {
+            const newLang = lang === 'en' ? 'bn' : 'en';
+            if (!pathname || !searchParams) {
+                throw new Error('Missing required parameters: pathname or searchParams');
+            }
+            await changeLanguage(pathname, newLang, searchParams);
+        } catch (error) {
+            toast.error(error.message)
+        }
     }, [lang, pathname, searchParams]);
 
     return (
