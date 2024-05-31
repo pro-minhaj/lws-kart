@@ -57,9 +57,10 @@ const LoginForm = ({ formControl, remember, forgot_password, submit_button }) =>
             const productId = searchParams.get("productId");
             const cart = searchParams.get("cart");
             const quantity = searchParams.get("quantity") || 1;
+            const size = searchParams.get("size");
 
             if (cart && productId) {
-                const cartResult = await fetchHandler('/api/cart', { productId, quantity, email });
+                const cartResult = await fetchHandler('/api/cart', { productId, quantity, size, email });
                 if (cartResult.success) {
                     toast.success("Cart added successfully");
                     router.push("/checkout");

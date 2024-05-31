@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const cartItemSchema = new Schema(
     {
         productId: { type: mongoose.Types.ObjectId },
+        size: { type: String },
         quantity: { type: Number }
     },
     { _id: false }

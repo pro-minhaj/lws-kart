@@ -5,11 +5,13 @@ import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-const addToCart = async (productId, quantity, userEmail) => {
+const addToCart = async (productId, quantity, productSize, userEmail) => {
     const session = await getServerSession();
 
     if (!session?.user) {
-        redirect(`/login?cart=true&productId=${productId}&quantity=${quantity}`);
+        redirect(
+            `/login?cart=true&productId=${productId}&quantity=${quantity}&size=${productSize}`
+        );
     }
 
     try {
@@ -35,7 +37,9 @@ const addToCart = async (productId, quantity, userEmail) => {
         await User.updateOne(
             { email },
             {
-                $push: { carts: { productId: productId, quantity: parsedQuantity } }
+                $push: {
+                    carts: { productId: productId, size: productSize, quantity: parsedQuantity }
+                }
             }
         );
 

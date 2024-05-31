@@ -7,7 +7,7 @@ const ProductDetailsPageLoading = () => {
                     <div className='w-4 h-4 bg-gray-200 rounded-full'></div>
                     <div className='w-20 h-4 bg-gray-200 rounded'></div>
                 </div>
-                <div className='grid grid-cols-2 gap-4 md:gap-6'>
+                <div className='grid grid-cols-1 gap-4 lg:grid-cols-2 md:gap-6'>
                     <div className='animate-pulse'>
                         <div className='w-full h-[25rem] md:h-[31.25rem] bg-gray-200 rounded'></div>
                         <div className='grid items-center justify-center grid-cols-3 gap-4 mt-4 md:grid-cols-4'>

@@ -1,9 +1,8 @@
 import PageLeftHanding from '@/app/components/Shared/PageLeftHading/PageLeftHanding';
 import Link from 'next/link';
-import Image from 'next/image';
-import { FaTrash } from 'react-icons/fa';
 import SubmitButton from '@/app/components/SubmitButton/SubmitButton';
 import FormControl from './_component/FormControl';
+import OrderCard from './_component/OrderCard';
 
 const CheckOutPage = () => {
     return (
@@ -35,38 +34,10 @@ const CheckOutPage = () => {
                         Order Summary
                     </h4>
                     <div className='space-y-2'>
-                        <div className='flex justify-between'>
-                            <div>
-                                <h5 className='font-medium text-gray-800'>Italian shape sofa</h5>
-                                <p className='text-sm text-gray-600'>Size: M</p>
-                            </div>
-                            <p className='text-gray-600'>x3</p>
-                            <p className='font-medium text-gray-800'>$320</p>
-                        </div>
-                        <div className='flex justify-between'>
-                            <div>
-                                <h5 className='font-medium text-gray-800'>Italian shape sofa</h5>
-                                <p className='text-sm text-gray-600'>Size: M</p>
-                            </div>
-                            <p className='text-gray-600'>x3</p>
-                            <p className='font-medium text-gray-800'>$320</p>
-                        </div>
-                        <div className='flex justify-between'>
-                            <div>
-                                <h5 className='font-medium text-gray-800'>Italian shape sofa</h5>
-                                <p className='text-sm text-gray-600'>Size: M</p>
-                            </div>
-                            <p className='text-gray-600'>x3</p>
-                            <p className='font-medium text-gray-800'>$320</p>
-                        </div>
-                        <div className='flex justify-between'>
-                            <div>
-                                <h5 className='font-medium text-gray-800'>Italian shape sofa</h5>
-                                <p className='text-sm text-gray-600'>Size: M</p>
-                            </div>
-                            <p className='text-gray-600'>x3</p>
-                            <p className='font-medium text-gray-800'>$320</p>
-                        </div>
+                        <OrderCard />
+                        <OrderCard />
+                        <OrderCard />
+                        <OrderCard />
                     </div>
 
                     <div className='flex justify-between py-3 mt-1 font-medium text-gray-800 uppercase border-b border-gray-200'>

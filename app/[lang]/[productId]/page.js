@@ -46,7 +46,8 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
         category,
         details,
         description,
-        sku
+        sku,
+        sizes
     } = product;
 
     // Check if the product is already wishlist
@@ -106,6 +107,7 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
                         alreadyWishlist={alreadyWishlist}
                         productId={_id}
                         alreadyCart={alreadyCart}
+                        sizes={sizes}
                         product_quantity={product_quantity}
                         add_to_cart={add_to_cart}
                         add_to_wishlist={add_to_wishlist}

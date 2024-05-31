@@ -12,7 +12,8 @@ const getAllProducts = async () => {
                 price: 1,
                 discount_price: 1,
                 reviewsNumber: 1,
-                ratings: 1
+                ratings: 1,
+                sizes: 1
             })
             .lean();
         return JSON.stringify(products);

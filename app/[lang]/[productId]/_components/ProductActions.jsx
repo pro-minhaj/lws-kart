@@ -7,13 +7,23 @@ import { FaShoppingBag } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import { toast } from "sonner";
 
-const ProductActions = ({ product_quantity, add_to_cart, add_to_wishlist, productId, alreadyWishlist, alreadyCart }) => {
+const ProductActions = ({
+    product_quantity,
+    add_to_cart,
+    add_to_wishlist,
+    productId,
+    alreadyWishlist,
+    alreadyCart,
+    sizes
+}) => {
+
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const searchParamsQuantity = searchParams.get('quantity');
     const quantity = searchParamsQuantity ? parseInt(searchParamsQuantity) : 1;
     const isDisabled = useMemo(() => quantity <= 1, [quantity]);
+    const productSize = searchParams.get("size") || sizes[0];
 
     const createQueryString = useCallback(
         (name, value) => {
@@ -47,6 +57,11 @@ const ProductActions = ({ product_quantity, add_to_cart, add_to_wishlist, produc
         router.push(`${pathname}?${createQueryString('quantity', quantity - 1)}`);
     }, [router, pathname, createQueryString, quantity]);
 
+    // Product Size Change
+    const handleChangeSize = useCallback((size) => {
+        router.push(`${pathname}?${createQueryString("size", size)}`);
+    }, [router, pathname, createQueryString])
+
     return (
         <>
             <div className="mt-4">
@@ -71,8 +86,30 @@ const ProductActions = ({ product_quantity, add_to_cart, add_to_wishlist, produc
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-3 pt-5 pb-5 mt-3 border-b border-gray-200 md:mt-6 md:max-w-md md:grid-cols-2">
-                <AddToCart productId={productId} alreadyCart={alreadyCart}>
+            {/* sizes */}
+            <div className="flex items-center gap-3 mt-4">
+                <p className='space-x-2'>
+                    <span className='font-semibold text-gray-800'>
+                        Sizes:
+                    </span>
+                </p>
+                <div className="flex items-center gap-1.5 text-gray-600 w-max">
+                    {
+                        sizes.map((size, index) => (
+                            <button
+                                onClick={() => handleChangeSize(size)}
+                                key={index}
+                                className={`py-0.5 px-1.5 border border-gray-300 ${productSize === size && " !border-red-500"}`}
+                            >
+                                {size}
+                            </button>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-3 pb-5 mt-3 border-b border-gray-200 md:mt-6 md:max-w-md md:grid-cols-2">
+                <AddToCart productSize={productSize} productId={productId} alreadyCart={alreadyCart}>
                     <FaShoppingBag /> {add_to_cart}
                 </AddToCart>
                 <button

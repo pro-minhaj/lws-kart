@@ -6,10 +6,11 @@ import AddToCart from '../AddToCart/AddToCart';
 import isCarts from '@/app/server/getData/isCarts';
 
 const Product = async ({ product }) => {
-    const { _id, name, image, price, discount_price, reviewsNumber, ratings } = product;
+    const { _id, name, image, price, discount_price, reviewsNumber, ratings, sizes } = product;
     const rating = new Array(Math.floor(ratings)).fill(0);
     // Check Already Cart
     const alreadyCart = await isCarts(_id);
+    const productSize = sizes?.find(s => s);
 
     return (
         <div className='overflow-hidden bg-white rounded shadow group'>
@@ -56,7 +57,7 @@ const Product = async ({ product }) => {
                     <div className='ml-3 text-xs text-gray-500'>({reviewsNumber})</div>
                 </div>
             </div>
-            <AddToCart productId={_id} alreadyCart={alreadyCart} className="!py-1">
+            <AddToCart productSize={productSize} productId={_id} alreadyCart={alreadyCart} className="!py-1">
                 Add to cart
             </AddToCart>
         </div>

@@ -13,7 +13,8 @@ const getTrendingProducts = async () => {
                 price: 1,
                 discount_price: 1,
                 reviewsNumber: 1,
-                ratings: 1
+                ratings: 1,
+                sizes: 1
             })
             .limit(8)
             .lean();
