@@ -18,7 +18,8 @@ export default function LanguageSwitcher({ currentLang }) {
             }
             await changeLanguage(pathname, newLang, searchParams);
         } catch (error) {
-            toast.error(error.message)
+            console.error('Language change error:', error);
+            toast.error(error.message);
         }
     }, [lang, pathname, searchParams]);
 

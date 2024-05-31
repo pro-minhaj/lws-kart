@@ -3,24 +3,28 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export async function changeLanguage(currentPath, locale, searchParams) {
-    const cookieStore = cookies();
-    const currentLang = cookieStore.get('lang')?.value || 'en';
+    try {
+        const cookieStore = cookies();
+        const currentLang = cookieStore.get('lang')?.value || 'en';
 
-    if (currentLang !== locale) {
-        cookieStore.set('lang', locale);
+        if (currentLang !== locale) {
+            cookieStore.set('lang', locale);
 
-        // Parse currentPath to handle query parameters
-        const url = new URL(currentPath, process.env.BASE_URL);
-        const pathSegments = url.pathname.split('/');
-        const newPathSegments = pathSegments.map((segment) =>
-            segment === currentLang ? locale : segment
-        );
-        url.pathname = newPathSegments.join('/');
+            // Parse currentPath to handle query parameters
+            const url = new URL(currentPath, process.env.BASE_URL || 'http://localhost');
+            const pathSegments = url.pathname.split('/');
+            const newPathSegments = pathSegments.map((segment) =>
+                segment === currentLang ? locale : segment
+            );
+            url.pathname = newPathSegments.join('/');
 
-        // Preserve search parameters
-        const newSearchParams = new URLSearchParams(searchParams);
-        url.search = newSearchParams.toString();
+            // Preserve search parameters
+            const newSearchParams = new URLSearchParams(searchParams);
+            url.search = newSearchParams.toString();
 
-        redirect(url.pathname + url.search);
+            redirect(url.pathname + url.search);
+        }
+    } catch (error) {
+        throw new Error('Failed to change language', error);
     }
 }
