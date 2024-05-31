@@ -1,5 +1,4 @@
 "use client";
-
 import { MdLanguage } from "react-icons/md";
 import { useMemo, useCallback } from "react";
 import { changeLanguage } from "@/app/server/actions/langchange";
@@ -10,9 +9,9 @@ export default function LanguageSwitcher({ currentLang }) {
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    const langChange = useCallback(() => {
+    const langChange = useCallback(async () => {
         const newLang = lang === 'en' ? 'bn' : 'en';
-        changeLanguage(pathname, newLang, searchParams);
+        await changeLanguage(pathname, newLang, searchParams);
     }, [lang, pathname, searchParams]);
 
     return (
