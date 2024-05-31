@@ -13,7 +13,6 @@ const addToCart = async (productId, quantity, productSize, userEmail) => {
         redirect(
             `/login?cart=true&productId=${productId}&quantity=${quantity}&size=${productSize}`
         );
-        return;
     }
 
     try {
@@ -22,13 +21,15 @@ const addToCart = async (productId, quantity, productSize, userEmail) => {
         const email = userEmail || session.user.email;
         const parsedQuantity = parseInt(quantity, 10);
 
-        const userData = await User.findOne({ email });
+        const [userData, product] = await Promise.all([
+            User.findOne({ email }),
+            Product.findById(productId)
+        ]);
 
         if (!userData) {
             throw new Error('User not found');
         }
 
-        const product = await Product.findById(productId);
         if (!product) {
             throw new Error('Product not found');
         }
@@ -77,13 +78,13 @@ const addToCart = async (productId, quantity, productSize, userEmail) => {
                     }
                 }
             }
-        }, 1 * 60 * 1000); // 1 minutes
+        }, 5 * 60 * 1000); // 5 minutes
 
         revalidatePath('/');
 
         return { success: true, message: 'Cart updated successfully' };
     } catch (error) {
-        throw new Error(error.message);
+        return { success: false, message: error.message };
     }
 };
 
