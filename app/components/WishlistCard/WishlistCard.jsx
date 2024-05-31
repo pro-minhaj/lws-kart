@@ -1,9 +1,12 @@
 import Image from 'next/image';
 import WishlistDelete from './WishlistDelete';
 import Link from 'next/link';
+import AddToCart from '../AddToCart/AddToCart';
+import isCarts from '@/app/server/getData/isCarts';
 
-const WishlistCard = ({ product, add_to_cart }) => {
+const WishlistCard = async ({ product, add_to_cart }) => {
     const { _id, name, image, price, availability } = product;
+    const alreadyCart = await isCarts(_id);
 
     return (
         <>
@@ -26,9 +29,13 @@ const WishlistCard = ({ product, add_to_cart }) => {
                     </p>
                 </div>
                 <div className='text-lg font-semibold text-primary'>${price}</div>
-                <button className='px-6 py-2 text-sm font-medium text-center text-white uppercase transition-colors border rounded bg-primary border-primary hover:bg-transparent hover:text-primary font-roboto'>
+                <AddToCart
+                    availability={availability}
+                    alreadyCart={alreadyCart}
+                    productId={_id}
+                    className="!text-sm !w-auto !px-6 !py-2">
                     {add_to_cart}
-                </button>
+                </AddToCart>
                 <WishlistDelete id={_id} />
             </div>
         </>

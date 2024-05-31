@@ -6,7 +6,7 @@ import AddToCart from '../AddToCart/AddToCart';
 import isCarts from '@/app/server/getData/isCarts';
 
 const Product = async ({ product }) => {
-    const { _id, name, image, price, discount_price, reviewsNumber, ratings, sizes } = product;
+    const { _id, name, image, price, discount_price, reviewsNumber, ratings, sizes, availability } = product;
     const rating = new Array(Math.floor(ratings)).fill(0);
     // Check Already Cart
     const alreadyCart = await isCarts(_id);
@@ -58,7 +58,7 @@ const Product = async ({ product }) => {
                         <div className='ml-3 text-xs text-gray-500'>({reviewsNumber})</div>
                     </div>
                 </div>
-                <AddToCart productSize={productSize} productId={_id} alreadyCart={alreadyCart} className="!py-1">
+                <AddToCart availability={availability} productSize={productSize} productId={_id} alreadyCart={alreadyCart} className="!py-1">
                     Add to cart
                 </AddToCart>
             </div>

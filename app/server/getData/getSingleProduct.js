@@ -25,7 +25,8 @@ const getSingleProduct = async (id) => {
                 discount_price: 1,
                 reviewsNumber: 1,
                 ratings: 1,
-                sizes: 1
+                sizes: 1,
+                availability: 1
             })
             .limit(4)
             .lean();

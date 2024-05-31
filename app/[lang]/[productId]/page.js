@@ -118,6 +118,7 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
                     {/* Product Actions */}
                     <ProductActions
                         alreadyWishlist={alreadyWishlist}
+                        availability={availability}
                         productId={_id}
                         alreadyCart={alreadyCart}
                         sizes={sizes}

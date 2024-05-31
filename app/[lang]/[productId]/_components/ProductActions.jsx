@@ -14,6 +14,7 @@ const ProductActions = ({
     productId,
     alreadyWishlist,
     alreadyCart,
+    availability,
     sizes
 }) => {
 
@@ -111,7 +112,7 @@ const ProductActions = ({
             }
 
             <div className="grid grid-cols-1 gap-3 pb-5 mt-3 border-b border-gray-200 md:mt-6 md:max-w-md md:grid-cols-2">
-                <AddToCart productSize={productSize} productId={productId} alreadyCart={alreadyCart}>
+                <AddToCart availability={availability} productSize={productSize} productId={productId} alreadyCart={alreadyCart}>
                     <FaShoppingBag /> {add_to_cart}
                 </AddToCart>
                 <button

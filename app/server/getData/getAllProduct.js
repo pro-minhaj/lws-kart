@@ -13,6 +13,7 @@ const getAllProducts = async () => {
                 discount_price: 1,
                 reviewsNumber: 1,
                 ratings: 1,
+                availability: 1,
                 sizes: 1
             })
             .lean();
