@@ -9,6 +9,19 @@ import PageLeftHanding from '@/app/components/Shared/PageLeftHading/PageLeftHand
 import isWishlist from '@/app/server/getData/isWishlist';
 import isCarts from '@/app/server/getData/isCarts';
 
+export async function generateMetadata({ params: { productId } }) {
+    const products = await getSingleProduct(productId);
+    const { product } = JSON.parse(products);
+
+    return {
+        title: `${product?.name} - LWS-Kart`,
+        description: product?.description,
+        openGraph: {
+            images: [product?.image[0], product?.image[1], product?.image[2]]
+        }
+    };
+}
+
 const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
     const {
         product_details_page: {

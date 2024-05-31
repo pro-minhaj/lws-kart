@@ -23,7 +23,7 @@ const ProductActions = ({
     const searchParamsQuantity = searchParams.get('quantity');
     const quantity = searchParamsQuantity ? parseInt(searchParamsQuantity) : 1;
     const isDisabled = useMemo(() => quantity <= 1, [quantity]);
-    const productSize = searchParams.get("size") || sizes[0];
+    const productSize = searchParams.get("size") || sizes?.find(s => s);
 
     const createQueryString = useCallback(
         (name, value) => {
@@ -87,26 +87,28 @@ const ProductActions = ({
             </div>
 
             {/* sizes */}
-            <div className="flex items-center gap-3 mt-4">
-                <p className='space-x-2'>
-                    <span className='font-semibold text-gray-800'>
-                        Sizes:
-                    </span>
-                </p>
-                <div className="flex items-center gap-1.5 text-gray-600 w-max">
-                    {
-                        sizes.map((size, index) => (
-                            <button
-                                onClick={() => handleChangeSize(size)}
-                                key={index}
-                                className={`py-0.5 px-1.5 border border-gray-300 ${productSize === size && " !border-red-500"}`}
-                            >
-                                {size}
-                            </button>
-                        ))
-                    }
+            {
+                sizes && <div className="flex items-center gap-3 mt-4">
+                    <p className='space-x-2'>
+                        <span className='font-semibold text-gray-800'>
+                            Sizes:
+                        </span>
+                    </p>
+                    <div className="flex items-center gap-1.5 text-gray-600 w-max">
+                        {
+                            sizes?.map((size, index) => (
+                                <button
+                                    onClick={() => handleChangeSize(size)}
+                                    key={index}
+                                    className={`py-0.5 px-1.5 border border-gray-300 ${productSize === size && " !border-red-500"}`}
+                                >
+                                    {size}
+                                </button>
+                            ))
+                        }
+                    </div>
                 </div>
-            </div>
+            }
 
             <div className="grid grid-cols-1 gap-3 pb-5 mt-3 border-b border-gray-200 md:mt-6 md:max-w-md md:grid-cols-2">
                 <AddToCart productSize={productSize} productId={productId} alreadyCart={alreadyCart}>
