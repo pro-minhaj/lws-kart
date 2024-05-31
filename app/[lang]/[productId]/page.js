@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import { FaStar, FaFacebookF, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { FaStar } from 'react-icons/fa';
 import { getDictionary } from '../dictionaries/dictionaries';
 import ProductImages from './_components/ProductImages';
 import getSingleProduct from '@/app/server/getData/getSingleProduct';
@@ -8,6 +7,7 @@ import ProductActions from './_components/ProductActions';
 import PageLeftHanding from '@/app/components/Shared/PageLeftHading/PageLeftHanding';
 import isWishlist from '@/app/server/getData/isWishlist';
 import isCarts from '@/app/server/getData/isCarts';
+import ShareSocialMedia from './_components/ShareSocialMedia';
 
 export async function generateMetadata({ params: { productId } }) {
     const products = await getSingleProduct(productId);
@@ -127,26 +127,7 @@ const ProductsDetailsPage = async ({ params: { lang, productId } }) => {
                     />
                     {/* Product Actions */}
 
-                    <div className='flex gap-3 mt-4'>
-                        <Link
-                            href='#'
-                            className='flex items-center justify-center w-8 h-8 text-gray-400 border border-gray-300 rounded-full hover:text-gray-500'
-                        >
-                            <FaFacebookF />
-                        </Link>
-                        <Link
-                            href='#'
-                            className='flex items-center justify-center w-8 h-8 text-gray-400 border border-gray-300 rounded-full hover:text-gray-500'
-                        >
-                            <FaTwitter />
-                        </Link>
-                        <Link
-                            href='#'
-                            className='flex items-center justify-center w-8 h-8 text-gray-400 border border-gray-300 rounded-full hover:text-gray-500'
-                        >
-                            <FaInstagram />
-                        </Link>
-                    </div>
+                    <ShareSocialMedia />
                 </div>
             </div>
             {/* description */}
