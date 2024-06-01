@@ -16,7 +16,7 @@ const selectProduct = {
 };
 
 const getAllProducts = async (searchParams) => {
-    const { search, category } = searchParams;
+    const { search, category, min, max, size } = searchParams;
     try {
         // Connect DB
         await connectDB();
@@ -45,6 +45,22 @@ const getAllProducts = async (searchParams) => {
                     return result;
                 });
             }
+        }
+
+        // Price Min And Max
+        if (min && max) {
+            products = products.filter((product) => {
+                const result = product.price >= parseFloat(min) && product.price <= parseFloat(max);
+                return result;
+            });
+        }
+
+        // Size
+        if (size) {
+            products = products.filter((product) => {
+                const result = product?.sizes?.includes(size);
+                return result;
+            });
         }
 
         return JSON.stringify(products);
