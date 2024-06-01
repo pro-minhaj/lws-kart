@@ -1,7 +1,8 @@
+// Import necessary modules
 import connectDB from '@/lib/connectDB';
 import Product from '@/models/Product';
 
-// Select Product
+// Define fields to select from Product document
 const selectProduct = {
     _id: 1,
     name: 1,
@@ -15,58 +16,50 @@ const selectProduct = {
     availability: 1
 };
 
+// Function to fetch all products based on search parameters
 const getAllProducts = async (searchParams) => {
     const { search, category, min, max, size } = searchParams;
     try {
-        // Connect DB
+        // Connect to the database
         await connectDB();
 
-        // Find all products
-        const allProducts = await Product.find().select(selectProduct).sort({ name: 1 }).lean();
-        // Product Returns
-        let products = allProducts;
+        // Build query criteria
+        const query = {};
 
-        // Search
+        // Search by product name
         if (search) {
-            products = products.filter((product) =>
-                product.name.toLowerCase().includes(search.toLowerCase())
-            );
+            query.name = { $regex: new RegExp(search, 'i') };
         }
 
-        // Category
+        // Filter by category
         if (category) {
             const categories = category
                 .split(',')
                 .map((cat) => cat.trim())
                 .filter((cat) => cat !== '');
-            if (categories.length > 0) {
-                products = products.filter((product) => {
-                    const result = categories.includes(product.category);
-                    return result;
-                });
-            }
+            query.category = { $in: decodeURI(categories) };
         }
 
-        // Price Min And Max
+        // Filter by price range
         if (min && max) {
-            products = products.filter((product) => {
-                const result = product.price >= parseFloat(min) && product.price <= parseFloat(max);
-                return result;
-            });
+            query.price = { $gte: parseFloat(min), $lte: parseFloat(max) };
         }
 
-        // Size
+        // Filter by size
         if (size) {
-            products = products.filter((product) => {
-                const result = product?.sizes?.includes(size);
-                return result;
-            });
+            query.sizes = size;
         }
 
+        // Fetch products based on query
+        const products = await Product.find(query).select(selectProduct).sort({ name: 1 }).lean();
+
+        // Return products as JSON
         return JSON.stringify(products);
     } catch (error) {
+        // Handle errors
         throw new Error(error);
     }
 };
 
+// Export the function
 export default getAllProducts;
