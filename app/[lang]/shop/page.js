@@ -2,6 +2,7 @@ import PageLeftHanding from '@/app/components/Shared/PageLeftHading/PageLeftHand
 import LeftMenu from './_components/LeftMenu';
 import getAllProducts from '@/app/server/getData/shopPage/getAllProducts';
 import Product from '@/app/components/Product/Product';
+import NoResult from './_components/NoResult';
 
 export const metadata = {
     title: 'Shop | LWSKart',
@@ -9,21 +10,28 @@ export const metadata = {
 };
 
 const ShopPage = async ({ searchParams }) => {
-    const getAllProductsReq = await getAllProducts();
+    const getAllProductsReq = await getAllProducts(searchParams);
     const products = JSON.parse(getAllProductsReq);
+
     return (
         <>
             <PageLeftHanding>Shop</PageLeftHanding>
 
             <div className='container grid items-start grid-cols-1 gap-6 pb-8 lg:pt-4 md:pb-16 lg:grid-cols-4'>
                 <LeftMenu />
-                <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 lg:col-span-3'>
-                    {/* Product cards */}
-                    {products.map((product) => (
-                        <Product key={product._id} product={product} />
-                    ))}
-                    {/* End of product card */}
-                </div>
+                {products.length > 0 ? (
+                    <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 lg:col-span-3'>
+                        {/* Product cards */}
+                        {products.map((product) => (
+                            <Product key={product._id} product={product} />
+                        ))}
+                        {/* End of product card */}
+                    </div>
+                ) : (
+                    <div className='lg:col-span-3'>
+                        <NoResult />
+                    </div>
+                )}
             </div>
         </>
     );

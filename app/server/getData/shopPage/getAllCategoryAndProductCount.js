@@ -24,7 +24,7 @@ const getAllCategory = async () => {
                     count: { $sum: 1 }
                 }
             },
-            { $sort: { count: -1 } }
+            { $sort: { name: 1 } }
         ]);
 
         return JSON.stringify(categoryAndProductCount);

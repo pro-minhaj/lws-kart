@@ -3,7 +3,12 @@ import { redirect } from 'next/navigation';
 
 const searchAction = async (formData) => {
     const search = formData.get('search');
-    redirect(`/shop?search=${search}`);
+    const lang = formData.get('lang');
+    if (search) {
+        redirect(`/${lang}/shop?search=${search}`);
+    } else {
+        redirect(`/${lang}/shop`);
+    }
 };
 
 export default searchAction;

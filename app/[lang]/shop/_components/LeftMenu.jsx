@@ -1,6 +1,7 @@
 import getAllCategory from "@/app/server/getData/shopPage/getAllCategoryAndProductCount";
 import SingleCategory from "./Filters/SingleCategory";
 import ToggleDrawer from "./ToggleDrawer";
+import MinAndMaxPrice from "./Filters/MinAndMaxPrice";
 
 const LeftMenu = async () => {
     const getAllCategoriesReq = await getAllCategory();
@@ -35,23 +36,7 @@ const LeftMenu = async () => {
                         <h3 className="mb-4 text-xl font-medium text-gray-200 uppercase lg:text-gray-800">
                             Price
                         </h3>
-                        <div className="flex items-center mt-4">
-                            <input
-                                type="number"
-                                name="min"
-                                id="min"
-                                className="w-full px-3 py-1 text-gray-300 bg-transparent rounded shadow-sm lg:text-gray-600 lg:border-gray-300 focus:border-primary focus:ring-0"
-                                placeholder="min"
-                            />
-                            <span className="mx-3 text-gray-500">-</span>
-                            <input
-                                type="number"
-                                name="max"
-                                id="max"
-                                className="w-full px-3 py-1 text-gray-300 bg-transparent rounded shadow-sm lg:text-gray-600 lg:border-gray-300 focus:border-primary focus:ring-0"
-                                placeholder="max"
-                            />
-                        </div>
+                        <MinAndMaxPrice />
                     </div>
 
                     {/* Select Size */}

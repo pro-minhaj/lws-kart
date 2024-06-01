@@ -6,15 +6,24 @@ const SingleCategory = ({ name, count }) => {
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
-    const searchParamsCategory = searchParams.get('category') || '';
-    console.log(searchParamsCategory);
+    const searchParamsCategory = decodeURI(searchParams.get('category') || '');
 
     const handleChangeCategory = (e) => {
         const checked = e.target.checked;
+        const params = new URLSearchParams(searchParams);
         if (checked) {
-            const params = new URLSearchParams(searchParams);
-            params.set('category', [searchParamsCategory, name]);
-            router.push(pathname + '?' + params.toString());
+            params.set('category', [searchParamsCategory, encodeURI(name)]);
+            router.replace(pathname + '?' + params.toString());
+        }
+        else {
+            const categories = searchParamsCategory.split(",")
+            const filterCategory = categories.filter(c => c !== name);
+            params.set('category', [filterCategory]);
+            if (filterCategory.length === 1) {
+                params.delete('category');
+                router.replace(pathname);
+            }
+            router.replace(pathname + '?' + params.toString());
         }
     }
 

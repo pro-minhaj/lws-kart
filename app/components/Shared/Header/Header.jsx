@@ -49,7 +49,7 @@ const Header = async ({ lang }) => {
                 </Link>
 
                 <div className="hidden w-full max-w-xl lg:block">
-                    <SearchBox header={header} />
+                    <SearchBox header={header} lang={lang} />
                 </div>
 
                 <div className="flex items-center gap-3 md:gap-5">
