@@ -1,5 +1,4 @@
 "use client";
-
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
@@ -8,8 +7,8 @@ const MinAndMaxPrice = () => {
     const { replace } = useRouter();
     const pathname = usePathname();
     const [error, setError] = useState({});
-    const minPrice = searchParams.get("min") || 0;
-    const maxPrice = searchParams.get("max") || 0;
+    const minPrice = searchParams.get("min") || "";
+    const maxPrice = searchParams.get("max") || "";
 
     const handleChangePrice = (e) => {
         e.preventDefault();

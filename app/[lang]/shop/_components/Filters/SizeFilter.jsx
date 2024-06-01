@@ -15,10 +15,14 @@ const SizeFilter = () => {
     const searchParamsSize = searchParams.get('size') || '';
 
     const handleChangeSize = (size) => {
-        if (size) {
-            const params = new URLSearchParams(searchParams);
+        const params = new URLSearchParams(searchParams);
+        if (size !== searchParamsSize) {
             params.set('size', size);
             replace(pathname + '?' + params.toString());
+        }
+        else if (size === searchParamsSize) {
+            params.delete('size');
+            replace(pathname);
         }
     }
 
