@@ -57,7 +57,7 @@ const addToCart = async (productId, quantity, productSize, userEmail) => {
 
         // Set a timestamp for when the product should be automatically removed from the cart
         const expiry = new Date();
-        expiry.setMinutes(expiry.getMinutes() + 5); // Set expiry to 5 minutes from now
+        expiry.setMinutes(expiry.getMinutes() + 1); // Set expiry to 1 minutes from now
 
         // Update user document with cart item and expiry
         await User.findOneAndUpdate(
