@@ -55,30 +55,26 @@ const addToCart = async (productId, quantity, productSize, userEmail) => {
 
         await userData.save();
 
-        // Set a timeout to release the product if not purchased within 5 minutes
-        setTimeout(async () => {
-            const updatedUser = await User.findOne({ email });
+        // Set a timestamp for when the product should be automatically removed from the cart
+        const expiry = new Date();
+        expiry.setMinutes(expiry.getMinutes() + 5); // Set expiry to 5 minutes from now
 
-            if (updatedUser) {
-                const cartItem = updatedUser.carts.find(
-                    (cart) => cart.productId.toString() === productId
-                );
-
-                if (cartItem) {
-                    // Remove from cart and update product inventory
-                    updatedUser.carts = updatedUser.carts.filter(
-                        (cart) => cart.productId.toString() !== productId
-                    );
-                    await updatedUser.save();
-
-                    const productToUpdate = await Product.findById(productId);
-                    if (productToUpdate) {
-                        productToUpdate.availability = true;
-                        await productToUpdate.save();
+        // Update user document with cart item and expiry
+        await User.findOneAndUpdate(
+            { email },
+            {
+                $push: {
+                    carts: {
+                        productId,
+                        size: productSize,
+                        quantity: parsedQuantity,
+                        expiry // Add expiry field to the cart item
                     }
-                }
-            }
-        }, 5 * 60 * 1000); // 5 minutes
+                },
+                $pull: { wishlists: productId }
+            },
+            { new: true }
+        );
 
         revalidatePath('/');
 
