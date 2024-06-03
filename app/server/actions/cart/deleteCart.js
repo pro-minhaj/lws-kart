@@ -1,5 +1,6 @@
 'use server';
 import connectDB from '@/lib/connectDB';
+import Product from '@/models/Product';
 import User from '@/models/User';
 import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
@@ -20,6 +21,12 @@ const deleteCart = async (productId) => {
 
         // Save the updated user data
         await userData.save();
+
+        const productToUpdate = await Product.findById(productId);
+        if (productToUpdate) {
+            productToUpdate.availability = true;
+            await productToUpdate.save();
+        }
 
         revalidatePath('/');
 

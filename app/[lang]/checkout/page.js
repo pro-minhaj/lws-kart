@@ -40,12 +40,12 @@ const CheckOutPage = async () => {
                                 required={true}
                             />
                         </div>
-                        <FormControl id='email' label='Email address' />
-                        <FormControl id='phone' label='Phone number' />
-                        <FormControl id='company' label='Company' />
-                        <FormControl id='region' label='Country/Region' />
-                        <FormControl id='address' label='Street address' />
-                        <FormControl id='city' label='City' />
+                        <FormControl disabled={disabled} id='email' label='Email address' />
+                        <FormControl disabled={disabled} id='phone' label='Phone number' />
+                        <FormControl disabled={disabled} id='company' label='Company' />
+                        <FormControl disabled={disabled} id='region' label='Country/Region' />
+                        <FormControl disabled={disabled} id='address' label='Street address' />
+                        <FormControl disabled={disabled} id='city' label='City' />
                     </div>
                 </div>
 
