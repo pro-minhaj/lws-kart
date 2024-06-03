@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import FormControl from "../FormControl";
 import addressAction from "@/app/server/actions/account/address";
 
-const AddressAddButton = () => {
+const AddressAddButton = ({ name, address }) => {
     const [open, setOpen] = useState(false);
 
     const handleAddress = async (formData) => {
@@ -22,16 +22,17 @@ const AddressAddButton = () => {
         }
     }
 
+    console.log(address);
     return (
         <>
-            <Modal open={open} setOpen={setOpen} name="Add Shipping Address" hading="Shipping address">
+            <Modal open={open} setOpen={setOpen} name={name} hading="Shipping address">
                 <form action={handleAddress}>
                     <Flex direction="column" gap="3">
-                        <FormControl label="Address" type="text" name="address" />
-                        <FormControl label="City" type="text" name="city" />
-                        <FormControl label="State" type="text" name="state" />
-                        <FormControl label="Country" type="text" name="country" />
-                        <FormControl label="Zip Code" type="number" name="zipCode" />
+                        <FormControl defaultValue={address?.address || ""} label="Address" type="text" name="address" />
+                        <FormControl defaultValue={address?.city || ""} label="City" type="text" name="city" />
+                        <FormControl defaultValue={address?.state || ""} label="State" type="text" name="state" />
+                        <FormControl defaultValue={address?.country || ""} label="Country" type="text" name="country" />
+                        <FormControl defaultValue={address?.zipCode || ""} label="Zip Code" type="number" name="zipCode" />
                     </Flex>
                     <div className="mt-4">
                         <SubmitButton>

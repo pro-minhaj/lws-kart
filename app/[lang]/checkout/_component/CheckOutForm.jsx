@@ -1,9 +1,10 @@
 import FormControl from "./FormControl";
 import OrderSummary from "./OrderSummary";
 
-const CheckOutForm = ({ cartsData }) => {
+const CheckOutForm = ({ cartsData, accountInformation }) => {
     // Form control disabled
     const disabled = cartsData.length > 0 ? false : true;
+    const { userProfile, address, cardInformation } = accountInformation;
 
     const handleOrder = async (formData) => {
         "use server"
@@ -15,26 +16,61 @@ const CheckOutForm = ({ cartsData }) => {
             <div className='p-4 border border-gray-200 rounded md:col-span-2 lg:col-span-8'>
                 <h3 className='mb-4 text-lg font-medium capitalize'>Checkout</h3>
                 <div className='space-y-4'>
-                    <div className='grid grid-cols-1 gap-4 lg:grid-cols-2'>
+                    <FormControl
+                        defaultValue={userProfile?.name || ""}
+                        readOnly={userProfile?.name || ""}
+                        disabled={disabled}
+                        id='name'
+                        label='Full Name'
+                        required={true}
+                    />
+                    <FormControl
+                        defaultValue={userProfile?.email || ""}
+                        readOnly={userProfile?.email || ""}
+                        disabled={disabled}
+                        id='email'
+                        label='Email address' />
+                    <FormControl
+                        defaultValue={userProfile?.phone || ""}
+                        readOnly={userProfile?.phone || ""}
+                        disabled={disabled}
+                        id='phone'
+                        label='Phone Number'
+                    />
+                    <FormControl
+                        defaultValue={address?.address || ""}
+                        disabled={disabled}
+                        id='address'
+                        label='Address'
+                    />
+                    <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                         <FormControl
+                            defaultValue={address?.city || ""}
                             disabled={disabled}
-                            id='first-name'
-                            label='First Name'
-                            required={true}
+                            id='city'
+                            label='City'
                         />
                         <FormControl
+                            defaultValue={address?.zipCode || ""}
                             disabled={disabled}
-                            id='last-name'
-                            label='Last Name'
-                            required={true}
+                            id='city'
+                            label='City'
                         />
                     </div>
-                    <FormControl disabled={disabled} id='email' label='Email address' />
-                    <FormControl disabled={disabled} id='phone' label='Phone number' />
-                    <FormControl disabled={disabled} id='company' label='Company' />
-                    <FormControl disabled={disabled} id='region' label='Country/Region' />
-                    <FormControl disabled={disabled} id='address' label='Street address' />
-                    <FormControl disabled={disabled} id='city' label='City' />
+                    <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                        <FormControl
+                            defaultValue={address?.state || ""}
+                            disabled={disabled}
+                            id='state'
+                            label='State'
+                        />
+                        <FormControl
+                            defaultValue={address?.country || ""}
+                            disabled={disabled}
+                            id='country'
+                            label='Country/Region'
+                        />
+                    </div>
                 </div>
             </div>
 

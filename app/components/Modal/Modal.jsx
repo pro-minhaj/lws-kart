@@ -7,7 +7,7 @@ const Modal = ({ name, hading, open, setOpen, children }) => {
         <>
             <Dialog.Root open={open} onOpenChange={setOpen}>
                 <Dialog.Trigger>
-                    <Button className="!cursor-pointer !w-full !py-2">{name}</Button>
+                    <Button className="!cursor-pointer !py-2">{name}</Button>
                 </Dialog.Trigger>
 
                 <Dialog.Content className="relative" maxWidth="450px">

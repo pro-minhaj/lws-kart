@@ -1,4 +1,5 @@
 import { FaEdit } from "react-icons/fa";
+import ProfileAddButton from "./buttons/ProfileAddButton";
 
 const Profile = ({ profile }) => {
     const { name, phone, email } = profile;
@@ -11,9 +12,7 @@ const Profile = ({ profile }) => {
         <>
             <div className='flex items-center justify-between mb-4'>
                 <h3 className='text-lg font-medium text-gray-800'>Personal Profile</h3>
-                <button className='text-primary'>
-                    <FaEdit />
-                </button>
+                <ProfileAddButton profile={profile} name={<FaEdit />} />
             </div>
             <div className='space-y-1'>
                 {Object.entries(modifiedProfile).map(([key, value]) => (

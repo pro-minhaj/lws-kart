@@ -1,6 +1,6 @@
 import { Text, TextField } from "@radix-ui/themes";
 
-const FormControl = ({ label, type, name, children }) => {
+const FormControl = ({ label, type, name, defaultValue, children }) => {
     return (
         <>
             <label>
@@ -8,6 +8,7 @@ const FormControl = ({ label, type, name, children }) => {
                     {label}
                 </Text>
                 <TextField.Root
+                    defaultValue={defaultValue}
                     required={true}
                     name={name}
                     type={type}

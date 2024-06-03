@@ -21,18 +21,26 @@ const AccountPage = async () => {
                 {/* info */}
                 <div className='grid max-w-5xl grid-cols-1 gap-4 mx-auto md:grid-cols-3'>
                     <div className='p-5 bg-white rounded shadow'>
-                        {userProfile ? <Profile profile={userProfile} /> : <ProfileAddButton />}
+                        {userProfile ? (
+                            <Profile profile={userProfile} />
+                        ) : (
+                            <ProfileAddButton name='Add Profile Information' />
+                        )}
                     </div>
 
                     <div className='px-4 pt-6 pb-8 bg-white rounded shadow'>
-                        {address ? <Address address={address} /> : <AddressAddButton />}
+                        {address ? (
+                            <Address address={address} />
+                        ) : (
+                            <AddressAddButton address={address} name='Add Shipping Address' />
+                        )}
                     </div>
 
                     <div className='px-4 pt-6 pb-8 bg-white rounded shadow'>
                         {cardInformation ? (
                             <CardInformation cardInformation={cardInformation} />
                         ) : (
-                            <CardInformationAddButton />
+                            <CardInformationAddButton name='Add Card Information' />
                         )}
                     </div>
                 </div>

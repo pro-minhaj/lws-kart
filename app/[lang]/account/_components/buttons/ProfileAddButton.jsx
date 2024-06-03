@@ -7,7 +7,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import FormControl from "../FormControl";
 
-const ProfileAddButton = () => {
+const ProfileAddButton = ({ name, profile }) => {
     const [open, setOpen] = useState(false);
 
     const handleProfile = async (formData) => {
@@ -24,11 +24,11 @@ const ProfileAddButton = () => {
 
     return (
         <>
-            <Modal open={open} setOpen={setOpen} name="Add Profile Information" hading="Personal Profile">
+            <Modal open={open} setOpen={setOpen} name={name} hading="Personal Profile">
                 <form action={handleProfile}>
                     <Flex direction="column" gap="3">
-                        <FormControl label="Name" type="text" name="name" />
-                        <FormControl label="Phone" type="number" name="phone" />
+                        <FormControl defaultValue={profile?.name || ""} label="Name" type="text" name="name" />
+                        <FormControl defaultValue={profile?.phone || ""} label="Phone" type="number" name="phone" />
                     </Flex>
                     <div className="mt-4">
                         <SubmitButton>

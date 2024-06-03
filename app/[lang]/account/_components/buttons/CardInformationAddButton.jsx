@@ -7,7 +7,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import cardInformationAction from "@/app/server/actions/account/cardInformation";
 
-const CardInformationAddButton = () => {
+const CardInformationAddButton = ({ name, cardInformation }) => {
     const [open, setOpen] = useState(false);
     const [error, setError] = useState(null);
 
@@ -31,10 +31,10 @@ const CardInformationAddButton = () => {
     return (
         <>
 
-            <Modal open={open} setOpen={setOpen} name="Add Card Information" hading="Card Information">
+            <Modal open={open} setOpen={setOpen} name={name} hading="Card Information">
                 <form action={handleCardInformation}>
                     <Flex direction="column" gap="3">
-                        <FormControl label="Holder Name" type="text" name="name" >
+                        <FormControl defaultValue={cardInformation?.holderName || ""} label="Holder Name" type="text" name="name">
                             {
                                 error && error?.holderName?.map((n, i) => <p className='text-red-500' key={i}>
                                     <small>
@@ -43,7 +43,7 @@ const CardInformationAddButton = () => {
                                 </p>)
                             }
                         </FormControl>
-                        <FormControl label="Card Number" type="number" name="no" >
+                        <FormControl defaultValue={cardInformation?.cardNumber || ""} label="Card Number" type="number" name="no">
                             {
                                 error && error?.cardNumber?.map((n, i) => <p className='text-red-500' key={i}>
                                     <small>
@@ -52,7 +52,7 @@ const CardInformationAddButton = () => {
                                 </p>)
                             }
                         </FormControl>
-                        <FormControl label="Card CVC" type="number" name="cvc" >
+                        <FormControl defaultValue={cardInformation?.cvc || ""} label="Card CVC" type="number" name="cvc">
                             {
                                 error && error?.cvc?.map((n, i) => <p className='text-red-500' key={i}>
                                     <small>

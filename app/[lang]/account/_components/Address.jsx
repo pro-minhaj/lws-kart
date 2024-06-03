@@ -1,7 +1,7 @@
 import { FaEdit } from "react-icons/fa";
+import AddressAddButton from "./buttons/AddressAddButton";
 
 const Address = ({ address }) => {
-    console.log(address);
     const modifiedAddress = {
         email: address.email,
         address: address.address,
@@ -14,9 +14,7 @@ const Address = ({ address }) => {
         <>
             <div className='flex items-center justify-between mb-4'>
                 <h3 className='text-lg font-medium text-gray-800'>Shipping address</h3>
-                <button className='text-primary'>
-                    <FaEdit />
-                </button>
+                <AddressAddButton address={address} name={<FaEdit />} />
             </div>
             <div className='space-y-1'>
                 {Object.entries(modifiedAddress).map(([key, value]) => (
