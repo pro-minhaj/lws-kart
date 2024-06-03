@@ -1,7 +1,12 @@
 import { FaEdit } from "react-icons/fa";
 
-const Profile = () => {
-
+const Profile = ({ profile }) => {
+    const { name, phone, email } = profile;
+    const modifiedProfile = {
+        name: name,
+        phone: phone,
+        email: email
+    }
     return (
         <>
             <div className='flex items-center justify-between mb-4'>
@@ -11,9 +16,12 @@ const Profile = () => {
                 </button>
             </div>
             <div className='space-y-1'>
-                <h4 className='font-medium text-gray-700'>John Doe</h4>
-                <p className='text-gray-800'>example@mail.com</p>
-                <p className='text-gray-800'>0811 8877 988</p>
+                {Object.entries(modifiedProfile).map(([key, value]) => (
+                    <li key={key}>
+                        <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong>{' '}
+                        {value}
+                    </li>
+                ))}
             </div>
         </>
     );
