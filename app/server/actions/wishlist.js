@@ -1,5 +1,4 @@
 'use server';
-
 import connectDB from '@/lib/connectDB';
 import User from '@/models/User';
 import { getServerSession } from 'next-auth';
@@ -16,7 +15,7 @@ const addWishlist = async (productId, email) => {
     try {
         await connectDB();
 
-        const userEmail = email || session.user.email;
+        const userEmail = email || session?.user?.email;
         const userData = await User.findOne({ email: userEmail });
         if (!userData) {
             throw new Error('User not found');

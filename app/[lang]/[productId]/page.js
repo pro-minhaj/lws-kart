@@ -23,7 +23,7 @@ export async function generateMetadata({ params: { productId } }) {
             title: `${product?.name} - LWS-Kart`,
             description: product?.description,
             openGraph: {
-                images: product?.image ? [...product?.image] : []
+                images: product?.image && [product?.image[0]]
             }
         };
     } catch (error) {

@@ -1,20 +1,27 @@
-import { FaTrash } from 'react-icons/fa';
+import CartDelete from "./CartDelete";
+import OrderQuantity from "./OrderQuantity";
 
-const OrderCard = () => {
+const OrderCard = ({ cart }) => {
+    const { _id, name, size, price, quantity } = cart;
+    // Total Price and Quantity
+    const totalPrice = price * quantity;
+
     return (
-        <>
-            <div className='flex items-center justify-between'>
-                <div>
-                    <h5 className='font-medium text-gray-800'>Italian shape sofa</h5>
-                    <p className='text-sm text-gray-600'>Size: M</p>
-                </div>
-                <p className='text-gray-600'>x3</p>
-                <p className='font-medium text-gray-800'>$320</p>
-                <button className='hover:text-red-500' type='button'>
-                    <FaTrash />
-                </button>
+        <div
+            className='grid items-center justify-between grid-cols-2'
+        >
+            <div className=''>
+                <h5 className='font-medium text-gray-800'>{name}</h5>
+                <p className='text-sm text-gray-600'>Size: {size}</p>
             </div>
-        </>
+            <div className='flex items-center justify-between'>
+                <div className='flex items-center gap-1.5'>
+                    <OrderQuantity id={_id} quantity={quantity} />
+                </div>
+                <p className='font-medium text-gray-800'>${totalPrice.toFixed(2)}</p>
+                <CartDelete />
+            </div>
+        </div>
     );
 };
 
