@@ -5,6 +5,7 @@ import Navbar from '../components/Shared/Navbar/Navbar';
 import Footer from '../components/Shared/Footer/Footer';
 import { Toaster } from 'sonner';
 import NextAuthSessionProvider from '@/Providers/SessionProvider';
+import RadixProvider from '@/Providers/RadixProvider';
 
 const roboto = Roboto({
     weight: ['100', '300', '400', '500', '700', '900'],
@@ -30,11 +31,13 @@ export default function LangLayout({ children, params }) {
             </head>
             <body className={roboto.className}>
                 <NextAuthSessionProvider>
-                    <Header lang={params.lang} />
-                    <Navbar lang={params.lang} />
-                    {children}
-                    <Footer lang={params.lang} />
-                    <Toaster richColors />
+                    <RadixProvider>
+                        <Header lang={params.lang} />
+                        <Navbar lang={params.lang} />
+                        {children}
+                        <Footer lang={params.lang} />
+                        <Toaster richColors />
+                    </RadixProvider>
                 </NextAuthSessionProvider>
             </body>
         </html>
