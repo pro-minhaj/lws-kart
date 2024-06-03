@@ -5,16 +5,16 @@ import CardInformation from '@/models/CardInformation';
 import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 
-const cardInformationAction = async (formData) => {
+const cardInformationAction = async (cardInfo, formData) => {
     const session = await getServerSession();
     const user = session?.user;
 
     // All Data
     const cardInformationData = {
         email: user?.email,
-        holderName: formData.get('name'),
-        cardNumber: formData.get('no'),
-        cvc: formData.get('cvc')
+        holderName: cardInfo?.holderName || formData.get('name'),
+        cardNumber: cardInfo?.cardNumber || formData.get('no'),
+        cvc: cardInfo?.cvc || formData.get('cvc')
     };
 
     // Card Information Validation

@@ -78,7 +78,7 @@ const addToCart = async (productId, quantity, productSize, userEmail) => {
                     }
                 }
             }
-        }, 5 * 60 * 1000); // 5 minutes
+        }, 20 * 60 * 1000); // 20 minutes
 
         revalidatePath('/');
 

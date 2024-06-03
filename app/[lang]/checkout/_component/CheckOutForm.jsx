@@ -11,13 +11,38 @@ const CheckOutForm = ({ cartsData, accountInformation, user }) => {
     const disabled = cartsData.length > 0 ? false : true;
     const { userProfile, address, cardInformation } = accountInformation;
 
+    // Total Price 
+    const subTotal = cartsData.reduce(
+        (acc, { carts }) => acc + carts.price * carts.quantity,
+        0
+    );
+    // Shipping Cost
+    const shippingCost = subTotal > 1000 ? 100 : 0;
+    // Tax
+    const tax = (subTotal + shippingCost) * 0.1;
+    // Total Amount
+    const totalAmount = subTotal + shippingCost + tax;
+    // Total Price Object
+    const totalPriceObj = {
+        subTotal,
+        shippingCost,
+        tax,
+        totalAmount
+    }
+
     const handleOrder = async (formData) => {
         setError(null);
+        // Calculate All Order Price
+        const allOrderPrice = { ...totalPriceObj, formData, cartsData };
+
         try {
-            const order = await orderFormAction(formData);
+            const order = await orderFormAction(allOrderPrice);
             if (order?.errors) {
                 setError(order.errors)
                 return;
+            }
+            else if (order?.success) {
+                toast.success(order.message)
             }
         } catch (error) {
             toast.error(error.message)
@@ -160,7 +185,7 @@ const CheckOutForm = ({ cartsData, accountInformation, user }) => {
             </div>
 
             {/* Order Summary */}
-            <OrderSummary cartsData={cartsData} />
+            <OrderSummary error={error} cardInformation={cardInformation} totalPrice={totalPriceObj} cartsData={cartsData} />
         </form>
     );
 };

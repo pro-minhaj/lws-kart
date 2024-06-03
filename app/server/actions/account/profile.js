@@ -4,7 +4,7 @@ import UserProfile from '@/models/UserProfile';
 import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 
-const profileAction = async (formData) => {
+const profileAction = async (infoData, formData) => {
     const session = await getServerSession();
     const user = session?.user;
     try {
@@ -13,8 +13,8 @@ const profileAction = async (formData) => {
         // All Data
         const profileData = {
             email: user?.email,
-            name: formData.get('name'),
-            phone: formData.get('phone')
+            name: infoData?.name || formData.get('name'),
+            phone: infoData?.phone || formData.get('phone')
         };
 
         // connect DB

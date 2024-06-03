@@ -1,5 +1,5 @@
 
-const FormControl = ({ id, label, required, type, defaultValue, error, readOnly, disabled, children }) => {
+const FormControl = ({ id, label, required, type, defaultValue, error, readOnly, className, disabled, children }) => {
     return (
         <div>
             <label htmlFor={id} className='text-gray-600'>
@@ -12,7 +12,7 @@ const FormControl = ({ id, label, required, type, defaultValue, error, readOnly,
                 type={type || 'text'}
                 name={id}
                 id={id}
-                className='input-box disabled:bg-gray-400/10 read-only:bg-gray-400/10'
+                className={`input-box disabled:bg-gray-400/10 read-only:bg-gray-400/10 ${className && className}`}
                 style={{ borderColor: error && "red" }}
             />
             <>

@@ -1,18 +1,10 @@
 import OrderCard from "./OrderCard";
 import CheckBox from "./CheckBox";
+import { Flex } from "@radix-ui/themes";
+import FormControl from "./FormControl";
 
-const OrderSummary = ({ cartsData }) => {
-    // Total Price 
-    const subTotal = cartsData.reduce(
-        (acc, { carts }) => acc + carts.price * carts.quantity,
-        0
-    );
-    // Shipping Cost
-    const shippingCost = subTotal > 1000 ? 100 : 0;
-    // Tax
-    const tax = (subTotal + shippingCost) * 0.1;
-    // Total Amount
-    const totalAmount = subTotal + shippingCost + tax;
+const OrderSummary = ({ cartsData, totalPrice, cardInformation, error }) => {
+    const { subTotal, shippingCost, tax, totalAmount } = totalPrice;
 
     return (
         <div className='p-4 border border-gray-200 rounded lg:col-span-4'>
@@ -47,6 +39,59 @@ const OrderSummary = ({ cartsData }) => {
                             <p>${totalAmount.toFixed(2)}</p>
                         </div>
 
+                        <div className="mt-2 border-t border-gray-200">
+                            <h2 className="my-2 text-lg font-semibold ">
+                                Card Information
+                            </h2>
+                            <Flex direction="column" gap="3">
+                                <FormControl
+                                    className="!py-1.5"
+                                    defaultValue={cardInformation?.holderName || ""}
+                                    readOnly={cardInformation?.holderName || ""}
+                                    error={error?.holderName}
+                                    id='holderName'
+                                    label='Holder Name'
+                                >
+                                    {
+                                        error && error?.holderName?.map((n, i) => <p className='text-red-500' key={i}>
+                                            <small>
+                                                {n}
+                                            </small>
+                                        </p>)
+                                    }
+                                </FormControl>
+                                <FormControl
+                                    className="!py-1.5"
+                                    defaultValue={cardInformation?.cardNumber || ""}
+                                    readOnly={cardInformation?.cardNumber || ""}
+                                    label="Card Number"
+                                    type="number"
+                                    id="cardNumber">
+                                    {
+                                        error && error?.cardNumber?.map((n, i) => <p className='text-red-500' key={i}>
+                                            <small>
+                                                {n}
+                                            </small>
+                                        </p>)
+                                    }
+                                </FormControl>
+                                <FormControl
+                                    className="!py-1.5"
+                                    defaultValue={cardInformation?.cvc || ""}
+                                    readOnly={cardInformation?.cvc || ""}
+                                    label="Card CVC"
+                                    type="number"
+                                    id="cvc">
+                                    {
+                                        error && error?.cvc?.map((n, i) => <p className='text-red-500' key={i}>
+                                            <small>
+                                                {n}
+                                            </small>
+                                        </p>)
+                                    }
+                                </FormControl>
+                            </Flex>
+                        </div>
                         <>
                             <CheckBox />
                         </>

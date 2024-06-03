@@ -4,7 +4,7 @@ import Address from '@/models/Address';
 import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 
-const addressAction = async (formData) => {
+const addressAction = async (addressInfo, formData) => {
     const session = await getServerSession();
     const user = session?.user;
     try {
@@ -13,11 +13,11 @@ const addressAction = async (formData) => {
         // All Data
         const addressData = {
             email: user?.email,
-            address: formData.get('address'),
-            city: formData.get('city'),
-            state: formData.get('state'),
-            country: formData.get('country'),
-            zipCode: formData.get('zipCode')
+            address: addressInfo?.address || formData.get('address'),
+            city: addressInfo?.city || formData.get('city'),
+            state: addressInfo?.state || formData.get('state'),
+            country: addressInfo?.country || formData.get('country'),
+            zipCode: addressInfo?.zipCode || formData.get('zipCode')
         };
 
         // connect DB
