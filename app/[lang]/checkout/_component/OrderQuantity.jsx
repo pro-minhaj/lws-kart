@@ -9,7 +9,7 @@ const OrderQuantity = ({ quantity, id }) => {
     const handleQuantity = async (action) => {
         //handle quantity change here
         try {
-            const changeQuantity = await actionQuantity(action, id)
+            await actionQuantity(action, id);
         } catch (error) {
             toast.error(error.message)
         }

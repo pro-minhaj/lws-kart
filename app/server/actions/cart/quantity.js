@@ -41,13 +41,8 @@ const actionQuantity = async (action, productId) => {
         await userData.save();
 
         revalidatePath('/checkout');
-
-        return {
-            success: true,
-            message: 'Quantity updated successfully'
-        };
     } catch (error) {
-        throw new Error(error.message);
+        throw new Error(error);
     }
 };
 

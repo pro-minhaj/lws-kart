@@ -19,7 +19,7 @@ const OrderCard = ({ cart }) => {
                     <OrderQuantity id={_id} quantity={quantity} />
                 </div>
                 <p className='font-medium text-gray-800'>${totalPrice.toFixed(2)}</p>
-                <CartDelete />
+                <CartDelete id={_id} />
             </div>
         </div>
     );

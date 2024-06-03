@@ -1,11 +1,8 @@
 import SubmitButton from "@/app/components/SubmitButton/SubmitButton";
 import Link from "next/link";
-import OrderQuantity from "./OrderQuantity";
-import CartDelete from "./CartDelete";
 import OrderCard from "./OrderCard";
 
 const OrderSummary = ({ cartsData }) => {
-    console.log(cartsData);
     // Total Price 
     const subTotal = cartsData.reduce(
         (acc, { carts }) => acc + carts.price * carts.quantity,
