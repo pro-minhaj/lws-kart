@@ -2,6 +2,7 @@ import PageLeftHanding from '@/app/components/Shared/PageLeftHading/PageLeftHand
 import getUserCarts from '@/app/server/getData/cart/getUserCarts';
 import CheckOutForm from './_component/CheckOutForm';
 import getAccountInformation from '@/app/server/getData/getAccountInformation';
+import { getServerSession } from 'next-auth';
 
 export const metadata = {
     title: 'Checkout | LWSKart',
@@ -9,6 +10,7 @@ export const metadata = {
 };
 
 const CheckOutPage = async () => {
+    const { user } = await getServerSession();
     const carts = await getUserCarts();
     const getAccountInformationRequest = await getAccountInformation();
     const cartsData = JSON.parse(carts);
@@ -28,7 +30,11 @@ const CheckOutPage = async () => {
             {/* CheckOut Page Hading */}
 
             {/* CheckOut Form */}
-            <CheckOutForm cartsData={cartsData} accountInformation={accountInformation} />
+            <CheckOutForm
+                user={user}
+                cartsData={cartsData}
+                accountInformation={accountInformation}
+            />
         </>
     );
 };

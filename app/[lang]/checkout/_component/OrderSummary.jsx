@@ -1,6 +1,5 @@
-import SubmitButton from "@/app/components/SubmitButton/SubmitButton";
-import Link from "next/link";
 import OrderCard from "./OrderCard";
+import CheckBox from "./CheckBox";
 
 const OrderSummary = ({ cartsData }) => {
     // Total Price 
@@ -48,24 +47,9 @@ const OrderSummary = ({ cartsData }) => {
                             <p>${totalAmount.toFixed(2)}</p>
                         </div>
 
-                        <div className='flex items-center mt-2 mb-4'>
-                            <input
-                                type='checkbox'
-                                name='agreement'
-                                id='agreement'
-                                className='w-3 h-3 rounded-sm cursor-pointer text-primary focus:ring-0'
-                            />
-                            <label
-                                htmlFor='agreement'
-                                className='ml-3 text-sm text-gray-600 cursor-pointer'
-                            >
-                                I agree to the{' '}
-                                <Link className='text-primary' href='#'>
-                                    terms & conditions
-                                </Link>
-                            </label>
-                        </div>
-                        <SubmitButton>Place order</SubmitButton>
+                        <>
+                            <CheckBox />
+                        </>
                     </>
                 ) : (
                     <div className="my-5">

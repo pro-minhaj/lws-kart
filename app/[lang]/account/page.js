@@ -24,7 +24,12 @@ const AccountPage = async () => {
                         {userProfile ? (
                             <Profile profile={userProfile} />
                         ) : (
-                            <ProfileAddButton name='Add Profile Information' />
+                            <div>
+                                <h3 className='mb-4 text-lg font-medium text-gray-800'>
+                                    Personal Profile
+                                </h3>
+                                <ProfileAddButton name='Add Profile Information' />
+                            </div>
                         )}
                     </div>
 
@@ -32,7 +37,12 @@ const AccountPage = async () => {
                         {address ? (
                             <Address address={address} />
                         ) : (
-                            <AddressAddButton address={address} name='Add Shipping Address' />
+                            <div>
+                                <h3 className='mb-4 text-lg font-medium text-gray-800'>
+                                    Shipping address
+                                </h3>
+                                <AddressAddButton address={address} name='Add Shipping Address' />
+                            </div>
                         )}
                     </div>
 
@@ -40,7 +50,12 @@ const AccountPage = async () => {
                         {cardInformation ? (
                             <CardInformation cardInformation={cardInformation} />
                         ) : (
-                            <CardInformationAddButton name='Add Card Information' />
+                            <div>
+                                <h3 className='mb-4 text-lg font-medium text-gray-800'>
+                                    Card Information
+                                </h3>
+                                <CardInformationAddButton name='Add Card Information' />
+                            </div>
                         )}
                     </div>
                 </div>
