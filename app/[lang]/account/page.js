@@ -4,6 +4,7 @@ import Address from './_components/Address';
 import CardInformation from './_components/CardInformation';
 import ProfileAddButton from './_components/buttons/ProfileAddButton';
 import AddressAddButton from './_components/buttons/AddressAddButton';
+import CardInformationAddButton from './_components/buttons/CardInformationAddButton';
 
 const AccountPage = () => {
     return (
@@ -26,6 +27,7 @@ const AccountPage = () => {
                     </div>
 
                     <div className='px-4 pt-6 pb-8 bg-white rounded shadow'>
+                        <CardInformationAddButton />
                         <CardInformation />
                     </div>
                 </div>

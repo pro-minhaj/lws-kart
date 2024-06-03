@@ -1,6 +1,6 @@
 import { Text, TextField } from "@radix-ui/themes";
 
-const FormControl = ({ label, type, name }) => {
+const FormControl = ({ label, type, name, children }) => {
     return (
         <>
             <label>
@@ -13,6 +13,7 @@ const FormControl = ({ label, type, name }) => {
                     type={type}
                     placeholder={`Enter your ${name}`}
                 />
+                {children}
             </label>
         </>
     );
