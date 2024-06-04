@@ -1,4 +1,3 @@
-// Import necessary modules
 import connectDB from '@/lib/connectDB';
 import Product from '@/models/Product';
 
@@ -16,10 +15,20 @@ const selectProduct = {
     availability: 1
 };
 
-// Function to fetch all products based on search parameters
+/**
+ * Fetches all products based on search parameters.
+ * @param {Object} searchParams - The search parameters.
+ * @returns {Promise<string>} - JSON string representing the products.
+ */
 const getAllProducts = async (searchParams) => {
-    const { search, category, min, max, size } = searchParams;
     try {
+        // Validate input parameters
+        if (!searchParams || typeof searchParams !== 'object') {
+            throw new Error('Invalid search parameters');
+        }
+
+        const { search, category, min, max, size } = searchParams;
+
         // Connect to the database
         await connectDB();
 
@@ -37,7 +46,8 @@ const getAllProducts = async (searchParams) => {
                 .split(',')
                 .map((cat) => cat.trim())
                 .filter((cat) => cat !== '');
-            query.category = { $in: decodeURI(categories) };
+
+            query.category = { $in: categories };
         }
 
         // Filter by price range
@@ -56,8 +66,9 @@ const getAllProducts = async (searchParams) => {
         // Return products as JSON
         return JSON.stringify(products);
     } catch (error) {
-        // Handle errors
-        throw new Error(error);
+        // Log error for debugging
+        console.error('Error in getAllProducts:', error);
+        throw new Error('An error occurred while fetching products');
     }
 };
 
