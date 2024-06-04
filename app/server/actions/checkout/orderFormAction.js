@@ -7,6 +7,12 @@ import addressAction from '../account/address';
 import cardInformationAction from '../account/cardInformation';
 import Order from '@/models/Order';
 import User from '@/models/User';
+import generatePDF from '@/lib/GeneratePDF/generatePDF';
+import Product from '@/models/Product';
+import fs from 'fs';
+import { promisify } from 'util';
+
+const writeFileAsync = promisify(fs.writeFile);
 
 const orderFormAction = async (form) => {
     const session = await getServerSession();
@@ -59,7 +65,9 @@ const orderFormAction = async (form) => {
         cardNumber: validatedFields.data.cardNumber,
         cvc: validatedFields.data.cvc
     };
+
     console.log(cartsData);
+
     try {
         await connectDB();
 
@@ -85,14 +93,32 @@ const orderFormAction = async (form) => {
                 tax: tax,
                 total: totalAmount
             };
-            await Order.create(orderConfirm);
+            // Generate PDF
+            const pdfBuffer = await generatePDF(orderConfirm);
+            const pdfPath = `public/order-confirmation-${Date.now()}.pdf`;
 
+            // Write PDF to file
+            const writeFile = await writeFileAsync(pdfPath, pdfBuffer);
+            console.log(writeFile);
+
+            // Save Order with PDF Path
+            await Order.create({ ...orderConfirm, pdfPath });
             // Carts Empty
-            await User.updateOne({ email: user?.email }, { $set: { carts: [] } });
+            const productIds = cartsData.map(({ carts }) => carts._id);
+            await Promise.all([
+                User.updateOne({ email: user?.email }, { $set: { carts: [] } }),
+                Product.updateMany(
+                    {
+                        _id: { $in: productIds }
+                    },
+                    { $set: { availability: true } }
+                )
+            ]);
 
             return {
                 success: true,
-                message: 'Order Confirm Success'
+                message: 'Order Confirm Success',
+                pdfPath // Return the PDF path to the client
             };
         }
     } catch (error) {

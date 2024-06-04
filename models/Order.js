@@ -16,7 +16,8 @@ const orderSchema = new Schema({
     subTotal: { type: Number, required: true },
     shipping: { type: Number, required: true },
     tax: { type: Number, required: true },
-    total: { type: Number, required: true }
+    total: { type: Number, required: true },
+    pdfPath: String
 });
 
 export default mongoose.models.Order || mongoose.model('Order', orderSchema);
