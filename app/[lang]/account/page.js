@@ -6,6 +6,7 @@ import ProfileAddButton from './_components/buttons/ProfileAddButton';
 import AddressAddButton from './_components/buttons/AddressAddButton';
 import CardInformationAddButton from './_components/buttons/CardInformationAddButton';
 import getAccountInformation from '@/app/server/getData/getAccountInformation';
+import OrderInformation from './_components/OrderInformation';
 
 const AccountPage = async () => {
     const accountInformationReq = await getAccountInformation();
@@ -60,6 +61,9 @@ const AccountPage = async () => {
                     </div>
                 </div>
                 {/* ./info */}
+
+                {/* Order info */}
+                <OrderInformation />
             </div>
         </div>
     );

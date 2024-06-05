@@ -1,23 +1,17 @@
-"use client";
-import FormControl from "./FormControl";
-import OrderSummary from "./OrderSummary";
-import { toast } from "sonner";
-import orderFormAction from "@/app/server/actions/checkout/orderFormAction";
-import { useState } from "react";
-import PDFDownloader from "@/app/components/PDFDownloader/PDFDownloader";
+'use client';
+import FormControl from './FormControl';
+import OrderSummary from './OrderSummary';
+import { toast } from 'sonner';
+import orderFormAction from '@/app/server/actions/checkout/orderFormAction';
+import { useState } from 'react';
 
 const CheckOutForm = ({ cartsData, accountInformation, user }) => {
     const [error, setError] = useState(null);
-    const [pdfPath, setPdfPath] = useState(null);
-    // Form control disabled
     const disabled = cartsData.length > 0 ? false : true;
     const { userProfile, address, cardInformation } = accountInformation;
 
-    // Total Price 
-    const subTotal = cartsData.reduce(
-        (acc, { carts }) => acc + carts.price * carts.quantity,
-        0
-    );
+    // Total Price
+    const subTotal = cartsData.reduce((acc, { carts }) => acc + carts.price * carts.quantity, 0);
     // Shipping Cost
     const shippingCost = subTotal > 1000 ? 100 : 0;
     // Tax
@@ -30,7 +24,7 @@ const CheckOutForm = ({ cartsData, accountInformation, user }) => {
         shippingCost,
         tax,
         totalAmount
-    }
+    };
 
     const handleOrder = async (formData) => {
         setError(null);
@@ -39,159 +33,158 @@ const CheckOutForm = ({ cartsData, accountInformation, user }) => {
 
         try {
             const order = await orderFormAction(allOrderPrice);
+            console.log({ order });
             if (order?.errors) {
-                setError(order.errors)
+                setError(order.errors);
                 return;
-            }
-            else if (order?.success) {
-                setPdfPath(order.pdfPath)
-                toast.success(order.message)
+            } else if (order?.success) {
+                toast.success(order.message);
             }
         } catch (error) {
-            toast.error(error.message)
+            toast.error(error.message);
         }
-    }
+    };
 
     return (
         <>
-            <form action={handleOrder} className='container grid items-start grid-cols-1 gap-6 pt-4 pb-16 lg:grid-cols-12'>
+            <form
+                action={handleOrder}
+                className='container grid items-start grid-cols-1 gap-6 pt-4 pb-16 lg:grid-cols-12'
+            >
                 <div className='p-4 border border-gray-200 rounded md:col-span-2 lg:col-span-8'>
                     <h3 className='mb-4 text-lg font-medium capitalize'>Checkout</h3>
                     <div className='space-y-4'>
                         <FormControl
-                            defaultValue={userProfile?.name || user?.name || ""}
-                            readOnly={userProfile?.name || user?.name || ""}
+                            defaultValue={userProfile?.name || user?.name || ''}
+                            readOnly={userProfile?.name || user?.name || ''}
                             error={error?.name}
                             disabled={disabled}
                             id='name'
                             label='Full Name'
                             required={true}
                         >
-                            {
-                                error && error?.name?.map((n, i) => <p className='text-red-500' key={i}>
-                                    <small>
-                                        {n}
-                                    </small>
-                                </p>)
-                            }
+                            {error &&
+                                error?.name?.map((n, i) => (
+                                    <p className='text-red-500' key={i}>
+                                        <small>{n}</small>
+                                    </p>
+                                ))}
                         </FormControl>
                         <FormControl
-                            defaultValue={userProfile?.email || user?.email || ""}
-                            readOnly={userProfile?.email || user?.email || ""}
+                            defaultValue={userProfile?.email || user?.email || ''}
+                            readOnly={userProfile?.email || user?.email || ''}
                             error={error?.email}
                             disabled={disabled}
                             id='email'
-                            label='Email address' >
-                            {
-                                error && error?.email?.map((n, i) => <p className='text-red-500' key={i}>
-                                    <small>
-                                        {n}
-                                    </small>
-                                </p>)
-                            }
+                            label='Email address'
+                        >
+                            {error &&
+                                error?.email?.map((n, i) => (
+                                    <p className='text-red-500' key={i}>
+                                        <small>{n}</small>
+                                    </p>
+                                ))}
                         </FormControl>
                         <FormControl
-                            defaultValue={userProfile?.phone || ""}
-                            readOnly={userProfile?.phone || ""}
+                            defaultValue={userProfile?.phone || ''}
+                            readOnly={userProfile?.phone || ''}
                             error={error?.phone}
                             disabled={disabled}
                             id='phone'
                             label='Phone Number'
                         >
-                            {
-                                error && error?.phone?.map((n, i) => <p className='text-red-500' key={i}>
-                                    <small>
-                                        {n}
-                                    </small>
-                                </p>)
-                            }
+                            {error &&
+                                error?.phone?.map((n, i) => (
+                                    <p className='text-red-500' key={i}>
+                                        <small>{n}</small>
+                                    </p>
+                                ))}
                         </FormControl>
                         <FormControl
-                            defaultValue={address?.address || ""}
+                            defaultValue={address?.address || ''}
                             error={error?.address}
                             disabled={disabled}
                             id='address'
                             label='Address'
                         >
-                            {
-                                error && error?.address?.map((n, i) => <p className='text-red-500' key={i}>
-                                    <small>
-                                        {n}
-                                    </small>
-                                </p>)
-                            }
+                            {error &&
+                                error?.address?.map((n, i) => (
+                                    <p className='text-red-500' key={i}>
+                                        <small>{n}</small>
+                                    </p>
+                                ))}
                         </FormControl>
-                        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                        <div className='grid grid-cols-1 gap-3 md:grid-cols-2'>
                             <FormControl
-                                defaultValue={address?.city || ""}
+                                defaultValue={address?.city || ''}
                                 error={error?.city}
                                 disabled={disabled}
                                 id='city'
                                 label='City'
                             >
-                                {
-                                    error && error?.city?.map((n, i) => <p className='text-red-500' key={i}>
-                                        <small>
-                                            {n}
-                                        </small>
-                                    </p>)
-                                }
+                                {error &&
+                                    error?.city?.map((n, i) => (
+                                        <p className='text-red-500' key={i}>
+                                            <small>{n}</small>
+                                        </p>
+                                    ))}
                             </FormControl>
                             <FormControl
-                                defaultValue={address?.zipCode || ""}
+                                defaultValue={address?.zipCode || ''}
                                 error={error?.zipCode}
                                 disabled={disabled}
                                 id='zipCode'
                                 label='Zip Code'
                             >
-                                {
-                                    error && error?.zipCode?.map((n, i) => <p className='text-red-500' key={i}>
-                                        <small>
-                                            {n}
-                                        </small>
-                                    </p>)
-                                }
+                                {error &&
+                                    error?.zipCode?.map((n, i) => (
+                                        <p className='text-red-500' key={i}>
+                                            <small>{n}</small>
+                                        </p>
+                                    ))}
                             </FormControl>
                         </div>
-                        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                        <div className='grid grid-cols-1 gap-3 md:grid-cols-2'>
                             <FormControl
-                                defaultValue={address?.state || ""}
+                                defaultValue={address?.state || ''}
                                 error={error?.state}
                                 disabled={disabled}
                                 id='state'
                                 label='State'
                             >
-                                {
-                                    error && error?.state?.map((n, i) => <p className='text-red-500' key={i}>
-                                        <small>
-                                            {n}
-                                        </small>
-                                    </p>)
-                                }
+                                {error &&
+                                    error?.state?.map((n, i) => (
+                                        <p className='text-red-500' key={i}>
+                                            <small>{n}</small>
+                                        </p>
+                                    ))}
                             </FormControl>
                             <FormControl
-                                defaultValue={address?.country || ""}
+                                defaultValue={address?.country || ''}
                                 error={error?.country}
                                 disabled={disabled}
                                 id='country'
                                 label='Country/Region'
                             >
-                                {
-                                    error && error?.country?.map((n, i) => <p className='text-red-500' key={i}>
-                                        <small>
-                                            {n}
-                                        </small>
-                                    </p>)
-                                }
+                                {error &&
+                                    error?.country?.map((n, i) => (
+                                        <p className='text-red-500' key={i}>
+                                            <small>{n}</small>
+                                        </p>
+                                    ))}
                             </FormControl>
                         </div>
                     </div>
                 </div>
 
                 {/* Order Summary */}
-                <OrderSummary error={error} cardInformation={cardInformation} totalPrice={totalPriceObj} cartsData={cartsData} />
+                <OrderSummary
+                    error={error}
+                    cardInformation={cardInformation}
+                    totalPrice={totalPriceObj}
+                    cartsData={cartsData}
+                />
             </form>
-            {pdfPath && <PDFDownloader pdfPath={pdfPath} />}
         </>
     );
 };
