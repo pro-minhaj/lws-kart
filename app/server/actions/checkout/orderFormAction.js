@@ -11,13 +11,15 @@ import generatePDF from '@/lib/GeneratePDF/generatePDF';
 import Product from '@/models/Product';
 import fs from 'fs';
 import { promisify } from 'util';
+import path from 'path';
 
 const writeFileAsync = promisify(fs.writeFile);
 
 const orderFormAction = async (form) => {
     const session = await getServerSession();
     const user = session?.user;
-    if (!user) null;
+    if (!user) return { errors: { user: 'User not authenticated' } };
+
     const { formData, subTotal, shippingCost, tax, totalAmount, cartsData } = form;
 
     // Order Form Data
@@ -66,8 +68,6 @@ const orderFormAction = async (form) => {
         cvc: validatedFields.data.cvc
     };
 
-    console.log(cartsData);
-
     try {
         await connectDB();
 
@@ -76,6 +76,7 @@ const orderFormAction = async (form) => {
             addressAction(address),
             cardInformationAction(cardInformation)
         ]);
+
         if (profileInfo.success && userAddress.success && cardInfo.success) {
             // Order Confirmation
             const products = cartsData.map((item) => {
@@ -93,16 +94,18 @@ const orderFormAction = async (form) => {
                 tax: tax,
                 total: totalAmount
             };
+
             // Generate PDF
             const pdfBuffer = await generatePDF(orderConfirm);
-            const pdfPath = `public/order-confirmation-${Date.now()}.pdf`;
+            const pdfFileName = `order-confirmation-${Date.now()}.pdf`;
+            const pdfPath = path.join(process.cwd(), 'public', pdfFileName); // Use process.cwd() to get the root directory
 
             // Write PDF to file
-            const writeFile = await writeFileAsync(pdfPath, pdfBuffer);
-            console.log(writeFile);
+            await writeFileAsync(pdfPath, pdfBuffer);
 
             // Save Order with PDF Path
-            await Order.create({ ...orderConfirm, pdfPath });
+            await Order.create({ ...orderConfirm, pdfPath: pdfFileName }); // Save only the file name
+
             // Carts Empty
             const productIds = cartsData.map(({ carts }) => carts._id);
             await Promise.all([
@@ -117,12 +120,13 @@ const orderFormAction = async (form) => {
 
             return {
                 success: true,
-                message: 'Order Confirm Success',
-                pdfPath // Return the PDF path to the client
+                message: 'Order Confirmed Successfully',
+                pdfPath: pdfFileName // Return only the file name
             };
         }
     } catch (error) {
-        throw new Error(error);
+        console.error(`Order processing failed: ${error.message}`);
+        throw new Error(`Order processing failed: ${error.message}`);
     }
 };
 
